@@ -45,17 +45,17 @@ public class Controller_Student
 	@RequestMapping(value="/report", method = RequestMethod.GET)
 	public String report()
 	{
-		return "student";
+		return "redirect:/student";
 	}
 	
 	@RequestMapping(value="/report/submit", method = RequestMethod.GET)
-	public String reportSubmit(@PathVariable("report_no") int no)
+	public String reportSubmit()
 	{
 		return "student/report_submit";
 	}
 	
 	@RequestMapping(value="report/submit", method = RequestMethod.POST)
-	public String reportSubmitOK(@PathVariable("report_no") int no)
+	public String reportSubmitOK()
 	{
 		return "redirect:/student/report/1";
 	}
