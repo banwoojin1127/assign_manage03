@@ -13,11 +13,11 @@
         crossorigin="anonymous"></script>
 <!-- bootstrap preset end -->
 <!-- jquery set start -->
-    <script src="../../resources/js/jquery-3.7.1.min.js"></script>
+    <script src="resources/js/jquery-3.7.1.min.js"></script>
 <!-- jquery set end -->
 <!-- stylesheet group start -->
-    <link rel="stylesheet" href="../../resources/css/project_v01.css"/>
-    <link rel="stylesheet" href="../../resources/css/admin_v01.css"/>
+    <link rel="stylesheet" href="resources/css/project_v01.css"/>
+    <link rel="stylesheet" href="resources/css/admin_v01.css"/>
 
 <!-- stylesheet group end -->
 <!-- tab title start -->

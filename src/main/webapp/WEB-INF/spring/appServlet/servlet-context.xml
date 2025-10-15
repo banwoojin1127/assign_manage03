@@ -40,4 +40,6 @@
 	</annotation-driven>
 	
 	<context:component-scan base-package="com.assign_manage.control" />
+	<context:component-scan base-package="com.assign_manage.repository" />
+	<context:component-scan base-package="com.assign_manage.vo" />
 </beans:beans>

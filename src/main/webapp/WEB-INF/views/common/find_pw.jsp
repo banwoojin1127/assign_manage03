@@ -8,7 +8,7 @@
                     &nbsp;&nbsp;
                     <div id="" class="textWideTitle d-flex flex-wrap justify-content-between align-content-center px-1" style="width: 95%;">
                         <p class="m-0" style="font-size: 1.5em;">비밀번호 찾기</p>
-                        <a href="../common/login.jsp" class=" darkBtn btn">이전</a>
+                        <a href="login" class=" darkBtn btn">이전</a>
                     </div>
                 </div>
                 <div id="formFindPWRequest" class="col-12 d-flex flex-wrap justify-content-center align-content-center border border-dark border-1 rounded py-5">
@@ -54,7 +54,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                                        <a href="../common/find-password-ok.jsp" class="btn btn-primary">확인</a>
+                                        <a href="find_pw_ok" class="btn btn-primary">확인</a>
                                     </div>
                                 </div>
                             </div>

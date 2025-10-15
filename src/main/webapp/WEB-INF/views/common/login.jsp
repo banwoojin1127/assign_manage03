@@ -22,13 +22,13 @@
                         <br>
                         아이디 또는 비밀번호가 일치하지 않습니다.
                     </div>
-                    <a href="../common/my-page.jsp" id="btnWideRequest" class="btn align-content-center w-75 my-1" style="height: 50px;" type="button">로그인</a>
+                    <a href="mypage" id="btnWideRequest" class="btn align-content-center w-75 my-1" style="height: 50px;" type="button">로그인</a>
                     <div id="" class="darkText w-75 h-auto my-1 p-2">
-                        <a href="../common/signup.jsp" style="color: white; text-decoration : none;">회원 가입</a>
+                        <a href="signup" style="color: white; text-decoration : none;">회원 가입</a>
                         &nbsp;&nbsp;|&nbsp;&nbsp;
-                        <a href="../common/find-id.jsp" style="color: white; text-decoration : none;">아이디 찾기</a>
+                        <a href="find_id" style="color: white; text-decoration : none;">아이디 찾기</a>
                         &nbsp;&nbsp;|&nbsp;&nbsp;
-                        <a href="../common/find-password.jsp" style="color: white; text-decoration : none;">비밀번호 찾기</a>
+                        <a href="find_pw" style="color: white; text-decoration : none;">비밀번호 찾기</a>
                     </div>
                 </div>
             </div>

@@ -35,7 +35,7 @@
                             </div>
                         </div>
                         <div class="d-flex flex-wrap justify-content-center align-content-start w-75">
-                            <a href="../common/my-page-edit.jsp" id="btnWideRequest" class="btn align-content-center h-75 my-3" type="button"
+                            <a href="mypage_edit" id="btnWideRequest" class="btn align-content-center h-75 my-3" type="button"
                                 style="width: 505px; background-color: white; color: black;
                                 border: solid 1px; font-size: 1.1em;">확인</a>
                         </div>

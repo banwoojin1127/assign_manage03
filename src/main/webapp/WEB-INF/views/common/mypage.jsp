@@ -51,10 +51,10 @@
                 </div>
                 <br><br>
                 <div>
-                    <a href="../common/my-page-auth.jsp" class="btn btn-primary align-content-center" style="font-size: 18px; padding-block: 5px;">수정</a>
+                    <a href="mypage_auth" class="btn btn-primary align-content-center" style="font-size: 18px; padding-block: 5px;">수정</a>
                 </div><br>
                     <div style="text-align: right;">
-                    <a href="../common/login.jsp" type="button" class="btn btn-link"
+                    <a href="login" type="button" class="btn btn-link"
                     style="color: gray; text-decoration-line: none; margin-right: -250px; font-size: 18px;">회원탈퇴</a>
                 </div>
                 <br><br>

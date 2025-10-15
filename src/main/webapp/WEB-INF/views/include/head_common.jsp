@@ -13,11 +13,11 @@
         crossorigin="anonymous"></script>
 <!-- bootstrap preset end -->
 <!-- jquery set start -->
-    <script src="../../resources/js/jquery-3.7.1.min.js"></script>
+    <script src="resources/js/jquery-3.7.1.min.js"></script>
 <!-- jquery set end -->
 <!-- stylesheet group start -->
-    <link rel="stylesheet" href="../../resources/css/project_v01.css"/>
-    <link rel="stylesheet" href="../../resources/css/wide_v01.css"/>
+    <link rel="stylesheet" href="resources/css/project_v01.css"/>
+    <link rel="stylesheet" href="resources/css/wide_v01.css"/>
 <!-- stylesheet group end -->
 <!-- tab title start -->
     <title>비대면 과제관리</title>
@@ -107,7 +107,7 @@
                 </h2>
                 <div id="collapseTrd" class="defCollaps accordion-collapse collapse" style="border-style:none;" data-bs-parent="#navSideBar">
                     <div id="" class="accordion-body row row-cols-2 m-0 p-0" style="width: 100%">
-                        <a href="../student/stundent-main.jsp" id="" class="btn d-flex col flex-wrap justify-content-center align-content-center h-50" style="width: 97%; font-weight: bold;">
+                        <a href="../student/student-main.jsp" id="" class="btn d-flex col flex-wrap justify-content-center align-content-center h-50" style="width: 97%; font-weight: bold;">
                             <span>학생</span>
                         </a>
                         <div class="blank d-flex col flex-wrap m-0 p-0" style="width: 3%;"></div>

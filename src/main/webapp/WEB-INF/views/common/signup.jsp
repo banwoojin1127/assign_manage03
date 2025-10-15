@@ -6,8 +6,9 @@
                 <div id="formJoinTitle" class="d-flex flex-wrap align-content-start my-3" style="width: 100%;">
                     <div id="" class="decoWideTitle" style="width: 12px;"></div>
                     &nbsp;&nbsp;
-                    <div id="" class="textWideTitle d-flex flex-wrap align-content-center px-1" style="width: 95%;">
+                    <div id="" class="textWideTitle d-flex flex-wrap justify-content-between align-content-center px-1" style="width: 95%;">
                         <p class="m-0" style="font-size: 1.5em;">회원가입</p>
+                        <a href="login" class=" darkBtn btn">이전</a>
                     </div>
                 </div>
                 <div id="formJoinRequest" class="col-12 d-flex flex-wrap justify-content-center align-content-center border border-dark border-1 rounded py-5">
@@ -77,7 +78,7 @@
                             이미 등록 된 휴대전화 번호입니다.
                         </div>
                     </form>
-                    <a href="login.jsp" id="btnWideRequest" class="btn align-content-center w-75 my-1" style="height: 50px;" type="button">회원 가입</a>
+                    <a href="login" id="btnWideRequest" class="btn align-content-center w-75 my-1" style="height: 50px;" type="button">회원 가입</a>
                 </div>
             </div>
         </div>

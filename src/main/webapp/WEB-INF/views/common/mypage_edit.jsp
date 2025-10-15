@@ -64,8 +64,8 @@
                 <br><br><br>
                 <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                     <div style="text-align: center; margin-left: 37%;">
-                        <a href="../common/my-page.jsp" type="button" class="btn btn-danger" style="font-size: 18px; padding-block: 5px;">취소</a> &nbsp; &nbsp;
-                        <a href="../common/my-page.jsp" type="button" class="btn btn-primary" style="font-size: 18px; padding-block: 5px;">저장</a>
+                        <a href="mypage" type="button" class="btn btn-danger" style="font-size: 18px; padding-block: 5px;">취소</a> &nbsp; &nbsp;
+                        <a href="mypage" type="button" class="btn btn-primary" style="font-size: 18px; padding-block: 5px;">저장</a>
                     </div>
                 </div>
                 <br><br>

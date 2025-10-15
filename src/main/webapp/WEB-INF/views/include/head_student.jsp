@@ -14,12 +14,12 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <!-- bootstrap preset end -->
 <!-- jquery set start -->
-    <script src="../../resources/js/jquery-3.7.1.min.js"></script>
+    <script src="resources/js/jquery-3.7.1.min.js"></script>
 <!-- jquery set end -->
 <!-- stylesheet group start -->
-    <link rel="stylesheet" href="../../resources/css/project_v01.css"/>
-    <link rel="stylesheet" href="../../resources/css/student_v01.css"/>
-    <link rel="stylesheet" href="../../resources/css/assignment_v01.css"/>
+    <link rel="stylesheet" href="resources/css/project_v01.css"/>
+    <link rel="stylesheet" href="resources/css/student_v01.css"/>
+    <link rel="stylesheet" href="resources/css/assignment_v01.css"/>
 <!-- stylesheet group end -->
 <!-- tab title start -->
     <title>비대면 과제관리</title>
