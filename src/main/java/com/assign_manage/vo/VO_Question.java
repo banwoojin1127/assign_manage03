@@ -1,3 +1,9 @@
+/***********************************
+ * 클래스 기능 : 질문 정보 클래스
+ * 작성자 : 반우진
+ * 작성일 : 2025.10.15
+ **********************************/
+
 package com.assign_manage.vo;
 
 public class VO_Question
@@ -9,6 +15,7 @@ public class VO_Question
 	private String create_date;	// 생성일
 	private String delete_date;	// 삭제일
 	
+	// getter
 	public int getQuest_no()		{ return quest_no;		}
 	public int getAssign_no()		{ return assign_no;		}
 	public String getId()			{ return id;			}
@@ -16,6 +23,7 @@ public class VO_Question
 	public String getCreate_date()	{ return create_date;	}
 	public String getDelete_date()	{ return delete_date;	}
 	
+	// setter
 	public void setQuest_no(int quest_no)			{ this.quest_no = quest_no;			}
 	public void setAssign_no(int assign_no)			{ this.assign_no = assign_no;		}
 	public void setId(String id)					{ this.id = id;						}

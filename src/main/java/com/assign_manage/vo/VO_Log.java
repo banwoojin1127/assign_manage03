@@ -1,3 +1,9 @@
+/***********************************
+ * 클래스 기능 : 로그 정보 클래스
+ * 작성자 : 반우진
+ * 작성일 : 2025.10.15
+ **********************************/
+
 package com.assign_manage.vo;
 
 public class VO_Log
@@ -9,6 +15,7 @@ public class VO_Log
 	private String	leave_time;		// 떠난시간
 	private String	request_value;	// 요청값
 	
+	// getter
 	public int getLog_no()			{ return log_no;		}
 	public String getId()			{ return id;			}
 	public String getVisit_page()	{ return visit_page;	}
@@ -16,6 +23,7 @@ public class VO_Log
 	public String getLeave_time()	{ return leave_time;	}
 	public String getRequest_value(){ return request_value;	}
 	
+	// setter
 	public void setLog_no(int log_no)					{ this.log_no = log_no;					}
 	public void setId(String id)						{ this.id = id;							}
 	public void setVisit_page(String visit_page)		{ this.visit_page = visit_page;			}
