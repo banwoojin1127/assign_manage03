@@ -10,7 +10,7 @@
                     <p class="flex-grow-1 m-0" style="font-size: 1.5em;">과제 상세보기</p>
                 </div>
                 <div class="ms-auto">
-                    <a href="../student/assignment-list.jsp" class="darkBtn btn rounded px-3" style="height: 40px;"><b>이전</b></a>
+                    <a href="../student/assignment_list.jsp" class="darkBtn btn rounded px-3" style="height: 40px;"><b>이전</b></a>
                 </div>
             </div>
             <!-- content main title end -->
@@ -93,10 +93,10 @@
                                     <div class="tableCellValue d-flex justify-content-between flex-grow-1">
                                         <div style="width: 48px;"></div>
                                         <div class="align-content-center">제출 완료</div>
-                                        <div><a href="../student/report-submint.jsp" class="darkBtn btn">수정</a></div>
+                                        <div><a href="../student/report_submint.jsp" class="darkBtn btn">수정</a></div>
                                     </div>
                                     <div class="tableCellValue d-flex justify-content-center" style="min-width: 100px;">
-                                        <a href="../student/report-view.jsp" class="darkBtn btn">확인</a>
+                                        <a href="../student/report_view.jsp" class="darkBtn btn">확인</a>
                                     </div>
                                     <div class="tableCellValue d-flex justify-content-between" style="min-width: 175px;">
                                         <div style="width: 48px;"></div>
@@ -111,10 +111,10 @@
                                     <div class="tableCellValue d-flex justify-content-between flex-grow-1">
                                         <div style="width: 48px;"></div>
                                         <div class="align-content-center">제출 미완료</div>
-                                        <div><a href="../student/report-submint.jsp" class="darkBtn btn">제출</a></div>
+                                        <div><a href="../student/report_submint.jsp" class="darkBtn btn">제출</a></div>
                                     </div>
                                     <div class="tableCellValue d-flex justify-content-center" style="min-width: 100px;">
-                                        <a href="../student/report-view.jsp" class="darkBtn btn">확인</a>
+                                        <a href="../student/report_view.jsp" class="darkBtn btn">확인</a>
                                     </div>
                                     <div class="tableCellValue d-flex justify-content-between" style="min-width: 175px;">
                                         <div style="width: 48px;"></div>

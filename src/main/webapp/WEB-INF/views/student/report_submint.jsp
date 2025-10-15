@@ -49,7 +49,7 @@
                 </div>
             </div>
             <!-- submission file form end -->
-            <a href="../student/report-view.jsp" class="darkBtn btn">확인</a>
+            <a href="../student/report_view.jsp" class="darkBtn btn">확인</a>
         </div>
 <!-- content field end -->
 <%@ include file="../include/tail.jsp" %>
