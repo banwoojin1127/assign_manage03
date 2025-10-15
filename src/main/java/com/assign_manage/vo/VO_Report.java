@@ -1,18 +1,18 @@
 /***********************************
- * Å¬·¡½º ±â´É : °úÁ¦¹° Á¤º¸ Å¬·¡½º
- * ÀÛ¼ºÀÚ : ÀÌÇÏ´Ã
- * ÀÛ¼ºÀÏ : 2025.10.15
+ * í´ë˜ìŠ¤ ê¸°ëŠ¥ : ê³¼ì œë¬¼ ì •ë³´ í´ë˜ìŠ¤
+ * ì‘ì„±ì : ì´í•˜ëŠ˜
+ * ì‘ì„±ì¼ : 2025.10.15
  **********************************/
 package com.assign_manage.vo;
 
 public class VO_Report
 {
-	private int report_no;   //°úÁ¦¹°¹øÈ£
-	private int assign_no;   //°úÁ¦¹øÈ£
-	private int id;          //¾ÆÀÌµğ
-	private int report_note; //Á¦Ãâ³»¿ë
-	private int create_date; //»ı¼ºÀÏ
-	private int delete_date; //»èÁ¦ÀÏ
+	private int report_no;   //ê³¼ì œë¬¼ë²ˆí˜¸
+	private int assign_no;   //ê³¼ì œë²ˆí˜¸
+	private int id;          //ì•„ì´ë””
+	private int report_note; //ì œì¶œë‚´ìš©
+	private int create_date; //ìƒì„±ì¼
+	private int delete_date; //ì‚­ì œì¼
 	
 	public int getReport_no()   { return report_no;   }
 	public int getAssign_no()   { return assign_no;   }
@@ -28,4 +28,4 @@ public class VO_Report
 	public void setCreate_date(int create_date) { this.create_date = create_date; }
 	public void setDelete_date(int delete_date) { this.delete_date = delete_date; }
 
-}
+}	

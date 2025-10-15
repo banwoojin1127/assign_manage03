@@ -1,32 +1,32 @@
 /***********************************
- * Å¬·¡½º ±â´É : °úÁ¦ Á¤º¸ Å¬·¡½º
- * ÀÛ¼ºÀÚ : ÀÌÇÏ´Ã
- * ÀÛ¼ºÀÏ : 2025.10.15
+ * í´ë˜ìŠ¤ ê¸°ëŠ¥ : ê³¼ì œ ì •ë³´ í´ë˜ìŠ¤
+ * ì‘ì„±ì : ì´í•˜ëŠ˜
+ * ì‘ì„±ì¼ : 2025.10.15
  **********************************/
 package com.assign_manage.vo;
 
 public class VO_Assignment 
 {
-	private int assign_no;     //°úÁ¦¹øÈ£
-	private int lecture_no;    //°­ÀÇ¹øÈ£
-	private String assign_name;   //°úÁ¦¸í
-	private String assign_note;   //³»¿ë(¼³¸í)
-	private String assign_method; //Á¦Ãâ¹æ½Ä
-	private String create_date;   //»ı¼ºÀÏ
-	private String end_date;      //Á¾·áÀÏ
-	private String delete_date;   //»èÁ¦ÀÏ
+	private int assign_no;        //ê³¼ì œë²ˆí˜¸
+	private int lecture_no;       //ê°•ì˜ë²ˆí˜¸
+	private String assign_name;   //ê³¼ì œëª…
+	private String assign_note;   //ë‚´ìš©(ì„¤ëª…)
+	private String assign_method; //ì œì¶œë°©ì‹
+	private String create_date;   //ìƒì„±ì¼
+	private String end_date;      //ì¢…ë£Œì¼
+	private String delete_date;   //ì‚­ì œì¼
 	
-	public int getAssign_no()        { return assign_no; }
-	public int getLecture_no()       { return lecture_no; }
-	public String getAssign_name()   { return assign_name; }
-	public String getAssign_note()   { return assign_note; }
+	public int getAssign_no()        { return assign_no;     }
+	public int getLecture_no()       { return lecture_no;    }
+	public String getAssign_name()   { return assign_name;   }
+	public String getAssign_note()   { return assign_note;   }
 	public String getAssign_method() { return assign_method; }
-	public String getCreate_date()   { return create_date; }
-	public String getEnd_date()      { return end_date; }
-	public String getDelete_date()   { return delete_date; }
+	public String getCreate_date()   { return create_date;   }
+	public String getEnd_date()      { return end_date;      }
+	public String getDelete_date()   { return delete_date;   }
 	
 	public void setAssign_no(int assign_no)            { this.assign_no     = assign_no;     }
-	public void setLecture_no(int lecture_no)       { this.lecture_no    = lecture_no;    }
+	public void setLecture_no(int lecture_no)          { this.lecture_no    = lecture_no;    }
 	public void setAssign_name(String assign_name)     { this.assign_name   = assign_name;   }
 	public void setAssign_note(String assign_note)     { this.assign_note   = assign_note;   }
 	public void setAssign_method(String assign_method) { this.assign_method = assign_method; }
