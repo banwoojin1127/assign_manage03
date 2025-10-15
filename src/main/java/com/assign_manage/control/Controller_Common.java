@@ -30,16 +30,16 @@ public class Controller_Common
 		return CF + "login";
 	}
 	
-	@RequestMapping(value = "singup", method = RequestMethod.GET)
+	@RequestMapping(value = "signup", method = RequestMethod.GET)
 	public String Singup()
 	{
-		return CF + "singup";
+		return CF + "signup";
 	}
 	
-	@RequestMapping(value = "singup", method = RequestMethod.POST)
+	@RequestMapping(value = "signup", method = RequestMethod.POST)
 	public String Singup(VO_User voUser)
 	{
-		return CF + "singup";
+		return CF + "signup";
 	}
 	
 	@RequestMapping(value = "find_id", method = RequestMethod.GET)
