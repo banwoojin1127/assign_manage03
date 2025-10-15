@@ -5,7 +5,7 @@
  **********************************/
 package com.assign_manage.vo;
 
-public class Assignment_Vo 
+public class VO_Assignment 
 {
 	private int assign_no;     //과제번호
 	private int lecture_no;    //강의번호

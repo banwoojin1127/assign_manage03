@@ -5,7 +5,7 @@
  **********************************/
 package com.assign_manage.vo;
 
-public class Report_Vo 
+public class VO_Report
 {
 	private int report_no;   //과제물번호
 	private int assign_no;   //과제번호
