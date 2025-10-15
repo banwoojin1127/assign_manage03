@@ -12,7 +12,6 @@ public class VO_Feedback {
 	public String feedback; //피드백
 	public int score;       //점수
 	
-	
 	public int getReport_no()   { return report_no;}
 	public String getId()       { return id;       }
 	public String getFeedback() { return feedback; }
