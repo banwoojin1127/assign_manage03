@@ -12,15 +12,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
+@RequestMapping("/teacher")
 public class Controller_teacher
 {
-	
 	// !!! 페이지명.do <- 사용 자제 할 것 !!!
 
-	@RequestMapping(value = "/homehome", method = RequestMethod.GET)
-	public String home()
+	@RequestMapping(value="")
+	public String main()
 	{
-		return "home";
+		return "teacher/teacher-main";
 	}
-	
 }

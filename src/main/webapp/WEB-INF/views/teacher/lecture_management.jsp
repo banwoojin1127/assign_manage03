@@ -1,6 +1,4 @@
-<!-- <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
-
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../include/head_teacher.jsp" %>
         <!-- content field start -->
         <div style="text-align:center; margin: 5%;">
