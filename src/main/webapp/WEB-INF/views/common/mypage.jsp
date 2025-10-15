@@ -10,7 +10,7 @@
             <br><br>
             <form style="margin: 0 400px; font-size: 20px;">
                 <div>
-                    <img src="../../resources/img/profile.png" style="width: 45%; height: 45%;">
+                    <img src="resources/img/profile.png" style="width: 45%; height: 45%;">
                 </div>
                 <br><br>
                 <div class="row mb-4">
