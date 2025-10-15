@@ -1,0 +1,139 @@
+/* general html */
+.decoWideTitle
+{
+    background-color: #4471c4;
+}
+.textWideTitle
+{
+    font-weight: bold;
+}
+
+.helpWideRequest
+{
+    color: red;
+    text-align: left;
+    font-weight: bold;
+}
+#btnWideRequest
+{
+    color: white;
+    background-color: #4471c4;
+    text-align: center;
+    font-weight: bold;
+}
+#btnWideRequest:active
+{
+    background-color: #355898;
+}
+
+.whiteText
+{
+    color: #223964;
+    background-color: white;
+    text-align: center;
+    font-weight: bold;
+}
+.whiteBtn
+{
+    color: #223964;
+    background-color: white;
+    text-align: center;
+}
+.whiteBtn:hover
+{
+    color: #223964;
+    background-color: white;
+    text-align: center;
+}
+.whiteBtn:active
+{
+    background-color: #a6a6a6;
+}
+
+.darkText
+{
+    color: white;
+    background-color: #223964;
+    text-align: center;
+    font-weight: bold;
+}
+.darkBtn
+{
+    color: white;
+    background-color: #223964;
+    text-align: center;
+    border-radius: 7px;
+}
+.darkBtn:hover
+{
+    color: white;
+    background-color: #223964;
+    text-align: center;
+    border-radius: 7px;
+}
+.darkBtn:active
+{
+    background-color: #47587b;
+}
+
+.clearBtn
+{
+    background-color: #00000000;
+    border-style: none;
+}
+.clearBtn:active
+{
+    background-color: #00000000;
+    border-style: none;
+}
+
+.blank
+{
+    background-color: #4471c4;
+}
+
+/* upper top offcanvas */
+#mainHeader
+{
+    min-width: 500px;
+}
+
+#headerUser
+{ 
+    background-color: white;
+}
+
+#headerTitle
+{
+    background-color: #4471c4;
+}
+#documentTitle
+{
+    margin-left: 50px;
+    color: white;
+    font-size: 2em;
+    font-weight: bold;
+}
+
+/* start side offcanvas */
+#panelNav
+{
+    padding-top: 200px;
+    min-width: 256px;
+    background-color: #223964;
+    border: #223964; 
+    border-style: solid; 
+    border-width: 2px; 
+}
+
+/* 기본 상태 (닫혀 있을 때)의 아이콘 */
+.accordion-button::after {
+    background-image: none;
+    background-image: url("../img/caret-down-fill.png");
+}
+/* 열려 있는 상태의 아이콘 */
+.accordion-button:not(.collapsed)::after {
+    background-image: none;
+    background-image: url("../img/caret-down-fill.png");
+}
+

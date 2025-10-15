@@ -1,0 +1,173 @@
+.boxCased
+{
+    padding: 20px;
+    border: #dfdfdf;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 7px;
+}
+.tableCased
+{
+    border: #dfdfdf;
+    border-style: solid;
+    border-width: 1px;
+}
+.tableCellValue 
+{
+    padding: 5px;
+    border: #dfdfdf;
+    border-style: solid;
+    border-width: 1px;
+}
+.tableCellName
+{
+    padding: 5px;
+    background-color: #c2dcff;
+    border: #dfdfdf;
+    border-style: solid;
+    border-width: 1px;
+    font-weight: bold;
+}
+
+.accordionItem
+{
+    border: white;
+    border-style: none;
+    border-width: 0px;
+}
+#submissionStatus
+{
+    color: white;
+    background-color: #223964;
+}
+
+.miniIcon
+{
+    width: 50px;
+    height: 50px;
+
+    min-width: 50px;
+    max-width: 50px;
+    min-height: 50px;
+    max-height: 50px;
+}
+.microIcon
+{
+    width: 25px;
+    height: 25px;
+
+    min-width: 25px;
+    max-width: 25px;
+    min-height: 25px;
+    max-height: 25px;
+}
+
+#submissionWriteTextarea
+{
+    resize: none;
+}
+
+.lectureText
+{
+    color:#000000;
+    padding-block: 5px;
+    font-weight: bold;
+}
+
+.lectureText:hover
+{
+    background-color: white;
+    color: black    ;
+}
+
+#assignment-list tr
+{
+    height: 70px;
+}
+
+#assignment-list th, td
+{
+    border: 1px solid gray;
+}
+
+#lectureName
+{
+    font-size: 30px;
+    letter-spacing: 10px;
+}
+
+.lectureBtn
+{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    line-height: 5px;
+    width: 1310px;
+    text-align: left;
+}
+
+#teacherName
+{
+    font-size: 30px;
+    letter-spacing: 5px;
+}
+
+.listMargin
+{
+    margin-left: 50px;
+}
+
+.endDate
+{
+    color: red;
+}
+
+#teacherInfo1
+{
+    width: 1260px;
+    font-size: 20px;
+    border:2px solid black;
+    border-radius: 15px;
+    border-color:#c2dcff;
+    display: flex;
+}
+
+#teacherInfo2
+{
+    width: 700px;
+    height: 200px;
+    border:2px solid #c2dcff;
+    border-radius: 15px;
+    background-color: #c2dcff;
+    margin-left: 90px;
+    margin-top: 25px;
+}
+
+.mainText
+{
+    border-radius: 20px;
+}
+
+.lectureLink
+{
+    text-decoration: none;
+    color: black;
+}
+
+.lectureList
+{
+    background-color: #c2dcff;
+    padding: 10px;
+}
+
+.lectureListView
+{
+    background-color: white;
+    padding: 20px;
+}
+
+
+
+
+
+
+

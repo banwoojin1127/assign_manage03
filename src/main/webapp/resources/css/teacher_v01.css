@@ -1,0 +1,52 @@
+/* assign-### */
+.tea-lecture
+{
+    color:#000000;
+    padding-block: 5px;
+    font-weight: bold;
+    
+}
+.tea-lecture:hover
+{
+    background-color: white;
+    color: black    ;
+}
+
+.tea-tr
+{
+    height: 70px;
+}
+.tea-th
+{
+    background-color: #c2dcff;
+}
+.tea-th, .tea-td
+{
+    border: 1px solid gray;
+}
+
+/* lecture-### */
+#class_content, #table_add{
+    border-collapse: collapse;
+    width: 100%;
+    padding-right: 500px;
+    border-color: gray;
+}
+.chwidth1 {
+    width: 3%;
+}
+.thwidth1 {
+    width: 80px;
+}
+.thwidth2 {
+    width: 150px;
+}
+.thwidth3 {
+    width: 200px;
+}
+
+/* teacher-### */
+.tea-text
+{
+    border-radius: 20px;
+}

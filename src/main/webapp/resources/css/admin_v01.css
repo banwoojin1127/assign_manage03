@@ -1,0 +1,217 @@
+/* ===== 통합된 admin CSS ===== */
+
+/* ===== 공통 스타일 ===== */
+/* 상단 마진 */
+#marginhead {
+    margin-top: 200px;
+    margin-left: 256px;
+}
+
+/* 컨텐츠 */
+#body {
+    padding: 80px 130px;
+    text-align: center;
+    width: 1649px;
+}
+
+/* 타이틀 */
+#title {
+    text-align: left;
+    width: 500px;
+}
+
+/* 컨텐츠 중앙 여백 */
+/* admin_new.css의 form과 admin_set_v01.0.css의 .content_margin이 유사한 역할 */
+form {
+    margin: 0 400px;
+    font-size: 20px;
+}
+
+.content_margin {
+    margin: 0 400px;
+    font-size: 20px;
+}
+
+/* 아이콘 */
+#icon {
+    margin-left: 90px;
+    width: 45%;
+    height: 45%;
+}
+
+/* 파란 칸 */
+.col-form-label {
+    background-color: #223964;
+    color: white;
+    border-radius: 5px;
+    padding: 10px 0px;
+}
+
+/* 라벨 */
+label {
+    text-align: center;
+}
+
+/* 회색 칸 */
+.mypage_g {
+    border-color: rgb(222, 222, 222);
+    font-size: 18px;
+    padding: 10px 15px;
+    background-color: rgb(222, 222, 222);
+}
+
+.mypage_g:focus {
+    box-shadow: none;
+    border-color: rgb(222, 222, 222);
+    background-color: rgb(222, 222, 222);
+}
+
+/* 하얀색 칸 */
+.mypage_w {
+    border-color: rgb(222, 222, 222);
+    font-size: 18px;
+    padding: 10px 15px;
+}
+
+/* mypage focus */
+.mypage:focus {
+    box-shadow: none;
+    border-color: rgb(0, 182, 0);
+}
+
+/* 수정 버튼 */
+#edit {
+    font-size: 18px;
+    padding-block: 5px;
+    margin-left: 90px;
+}
+
+/* 탈퇴 버튼 */
+#leave {
+    text-align: right;
+    margin-right: -150px;
+    font-size: 18px;
+}
+
+/* 링크 밑줄 감추기 */
+#noline {
+    color: gray;
+    text-decoration-line: none;
+}
+
+/* 취소 버튼 */
+#cancel {
+    font-size: 18px;
+    padding-block: 5px;
+    margin-left: 35px;
+}
+
+/* 저장 버튼 */
+#save {
+    font-size: 18px;
+    padding-block: 5px;
+    margin-left: 10px;
+}
+
+/* ===== admin_v01.0.css 고유 스타일 ===== */
+.lecture {
+    color: #000000;
+    padding-block: 5px;
+    font-weight: bold;
+}
+
+.lecture:hover {
+    background-color: white;
+    color: black;
+}
+
+tr {
+    height: 70px;
+}
+
+th, td {
+    border: 1px solid gray;
+}
+
+.star {
+    border: 0;
+    background-color: white;
+}
+
+#lectureName {
+    font-size: 30px;
+    letter-spacing: 10px;
+}
+
+.lectureBtn {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+#teacherName {
+    font-size: 30px;
+    letter-spacing: 5px;
+}
+
+/* ===== admin_set_v01.0.css 고유 스타일 ===== */
+/* 이름 */
+.view {
+    color: black;
+    text-decoration: none;
+    text-decoration-line: none;
+}
+
+.view:hover {
+    font-weight: bold;
+}
+
+/* 페이지 */
+.page {
+    margin-top: -40px;
+    width: 1600px;
+}
+
+/* ===== lecture-management.html 스타일 ===== */
+#class_content, #table_add {
+    border-collapse: collapse;
+    width: 100%;
+    padding-right: 500px;
+    border-color: gray;
+}
+
+.chwidth1, .thwidth1, .thwidth2, .thwidth3 {
+    background-color: #c2dcff;
+}
+
+.chwidth1 {
+    width: 3%;
+    height: 15px;
+}
+
+.thwidth1 {
+    width: 80px;
+    height: 15px;   
+}
+
+.thwidth2 {
+    width: 150px;
+    height: 15px;
+}
+
+.thwidth3 {
+    width: 200px;
+    height: 15px;
+}
+
+.he {
+    height: 25px;
+}
+
+.assigment {
+    color: black;
+    text-decoration: none;
+}
+
+.assigment:hover {
+    font-weight: bold;
+}
