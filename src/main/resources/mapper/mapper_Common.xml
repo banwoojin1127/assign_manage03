@@ -1,9 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <!-- Namespace를 통해 JAVA 클래스와 Annotation클래스와 동기 -->
 <mapper namespace="common">
 
+<insert id="join" parameterType="com.assign_manage.vo.VO_User">
+	insert into user
+		(id,pw,user_name,user_class,gender,user_icon,birth,tel,email)
+	value
+		(#{id},md5(#{pw}),#{user_name},#{user_class},#{gender},#{user_icon}
+		,#{birth},#{tel}
+		,#{email})
+</insert>
 
+<select id="checkID" parameterType="java.lang.String"
+	resultType="java.lang.Integer">
+	select count(*) as total
+	from user
+	where id = #{id}
+</select>
+
+<select id="login" parameterType="com.assign_manage.vo.VO_User"
+	resultType="com.assign_manage.vo.VO_User">
+	
+</select>
 
 </mapper>
