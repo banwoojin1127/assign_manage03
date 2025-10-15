@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ include file="../include/head_wide.jsp" %>
+<%@ include file="/WEB-INF/views/include/head_wide.jsp" %>
 <!-- content field start -->
         <div id="panelContent" class="d-flex flex-wrap justify-content-center align-content-center p-5" style="width: 100%;">
             <div id="formLogin" class="d-flex flex-wrap justify-content-center align-content-center p-0 m-0" style="min-width: 500px; max-width: 500px;">
@@ -34,4 +34,4 @@
             </div>
         </div>
 <!-- content field end -->
-<%@ include file="../include/tail.jsp" %>
+<%@ include file="/WEB-INF/views/include/tail.jsp" %>

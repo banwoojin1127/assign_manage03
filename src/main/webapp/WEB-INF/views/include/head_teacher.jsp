@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%-- <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> --%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,15 +11,17 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
-            <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <!-- bootstrap preset end -->
+<!-- chart set start -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<!-- chart set end -->
 <!-- jquery set start -->
-    <script src="resources/js/jquery-3.7.1.min.js"></script>
+    <script src="<c:url value="/resources/js/jquery-3.7.1.min.js"/>"></script>
 <!-- jquery set end -->
 <!-- stylesheet group start -->
-    <link rel="stylesheet" href="resources/css/project_v01.css"/>
-    <link rel="stylesheet" href="resources/css/teacher_v01.css"/>
-    <link rel="stylesheet" href="resources/css/assignment_v01.css"/>
+    <link rel="stylesheet" href="<c:url value="/resources/css/project_v01.css"/>"/>
+    <link rel="stylesheet" href="<c:url value="/resources/css/teacher_v01.css"/>"/>
+    <link rel="stylesheet" href="<c:url value="/resources/css/assignment_v01.css"/>"/>
 <!-- stylesheet group end -->
 <!-- tab title start -->
     <title>비대면 과제관리</title>
@@ -27,34 +29,7 @@
 </head>
 <body>
 <!-- top main header start -->
-    <div id="mainHeader" 
-        class="justify-content-center align-content-start offcanvas offcanvas-top show m-0 p-0"
-        data-bs-scroll="true" data-bs-backdrop="false" data-bs-keyboard="false" tabindex="-1" 
-        aria-labelledby="offcanvasLabel"
-        style="width: 100vw; height: min-content; z-index: 1046;">
-        <div id="headerUser" class="d-flex justify-content-end align-content-center flex-wrap" style="height: 50px;">
-            <span class="d-flex align-content-center flex-wrap" style="height: 50px;">
-                <span id="">반갑습니다. 홍길동 님</span>
-            </span>
-            &nbsp;&nbsp;&nbsp;
-            <span class="d-flex align-content-center flex-wrap h-100">
-                <a href="../common/my-page.jsp" id="" class="darkBtn btn rounded" style="height: 75%;">마이 페이지</a>
-            </span>
-            &nbsp;&nbsp;&nbsp;
-            <span class="d-flex align-content-center flex-wrap h-100">
-                <a href="../common/login.jsp" id="" class="darkBtn btn rounded" style="height: 75%;">로그아웃</a>
-            </span>
-            &nbsp;&nbsp;&nbsp;
-        </div>
-        <div id="headerTitle" class="d-flex justify-content-between flex-wrap" style="height: 150px;">
-            <div id="documentTitle" class="d-flex flex-wrap align-content-center">
-                <p>
-                    비대면 과제관리<br>
-                    시스템
-                </p>
-            </div>
-        </div>
-    </div>
+<%@ include file="/WEB-INF/views/include/head_top_user.jsp" %>
 <!-- top main header end -->
 <!-- side nav menu accordion start -->
     <div id="panelNav" class="offcanvas offcanvas-bottom show" 
@@ -73,7 +48,7 @@
                 </h2>
                 <div id="collapseFst" class="defCollaps accordion-collapse collapse show" style="border-style:none;" data-bs-parent="#navSideBar">
                     <div id="" class="accordion-body row row-cols-2 m-0 p-0" style="width: 100%">
-                        <a href="../teacher/lecture-management.jsp" id="" class="btn d-flex col flex-wrap justify-content-center align-content-center h-50" style="width: 97%; font-weight: bold;">
+                        <a href="<!-- lecture_management -->" id="" class="btn d-flex col flex-wrap justify-content-center align-content-center h-50" style="width: 97%; font-weight: bold;">
                             <span>강의 관리</span>
                         </a>
                         <div class="blank d-flex col flex-wrap m-0 p-0" style="width: 3%;"></div>
@@ -91,7 +66,7 @@
                 </h2>
                 <div id="collapseSnd" class="defCollaps accordion-collapse collapse" style="border-style:none;" data-bs-parent="#navSideBar">
                     <div id="" class="accordion-body row row-cols-2 m-0 p-0" style="width: 100%">
-                        <a href="../teacher/assignment-list.jsp" id="" class="btn d-flex col flex-wrap justify-content-center align-content-center h-50" style="width: 97%; font-weight: bold;">
+                        <a href="<!-- /assignment_list -->" id="" class="btn d-flex col flex-wrap justify-content-center align-content-center h-50" style="width: 97%; font-weight: bold;">
                             <span>과제 관리</span>
                         </a>
                         <div class="blank d-flex col flex-wrap m-0 p-0" style="width: 3%;"></div>
@@ -109,7 +84,7 @@
                 </h2>
                 <div id="collapseTrd" class="defCollaps accordion-collapse collapse" style="border-style:none;" data-bs-parent="#navSideBar">
                     <div id="" class="accordion-body row row-cols-2 m-0 p-0" style="width: 100%">
-                        <a href="../teacher/student-list.jsp" id="" class="btn d-flex col flex-wrap justify-content-center align-content-center h-50" style="width: 97%; font-weight: bold;">
+                        <a href="<!-- student_list -->" id="" class="btn d-flex col flex-wrap justify-content-center align-content-center h-50" style="width: 97%; font-weight: bold;">
                             <span>학생 명단</span>
                         </a>
                         <div class="blank d-flex col flex-wrap m-0 p-0" style="width: 3%;"></div>
@@ -127,7 +102,7 @@
                 </h2>
                 <div id="collapseFth" class="defCollaps accordion-collapse collapse" style="border-style:none;" data-bs-parent="#navSideBar">
                     <div id="" class="accordion-body row row-cols-2 m-0 p-0" style="width: 100%">
-                        <a href="../teacher/statistics.jsp" id="" class="btn d-flex col flex-wrap justify-content-center align-content-center h-50" style="width: 97%; font-weight: bold;">
+                        <a href="<!-- statistics -->" id="" class="btn d-flex col flex-wrap justify-content-center align-content-center h-50" style="width: 97%; font-weight: bold;">
                             <span>통계</span>
                         </a>
                         <div class="blank d-flex col flex-wrap m-0 p-0" style="width: 3%;"></div>

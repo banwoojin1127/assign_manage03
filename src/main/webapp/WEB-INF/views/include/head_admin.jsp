@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%-- <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> --%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,13 +12,16 @@
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
 <!-- bootstrap preset end -->
+<!-- chart set start -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<!-- chart set end -->
 <!-- jquery set start -->
-    <script src="resources/js/jquery-3.7.1.min.js"></script>
+    <script src="<c:url value="/resources/js/jquery-3.7.1.min.js"/>"></script>
 <!-- jquery set end -->
 <!-- stylesheet group start -->
-    <link rel="stylesheet" href="resources/css/project_v01.css"/>
-    <link rel="stylesheet" href="resources/css/admin_v01.css"/>
-
+    <link rel="stylesheet" href="<c:url value="/resources/css/project_v01.css" />"/>
+    <link rel="stylesheet" href="<c:url value="/resources/css/admin_v01.css" />"/>
+    
 <!-- stylesheet group end -->
 <!-- tab title start -->
     <title>비대면 과제관리</title>
@@ -26,38 +29,10 @@
 </head>
 <body>
 <!-- top main header start -->
-    <div id="mainHeader" 
-        class="justify-content-center align-content-start offcanvas offcanvas-top show m-0 p-0"
-        data-bs-scroll="true" data-bs-backdrop="false" data-bs-keyboard="false" tabindex="-1" 
-        aria-labelledby="offcanvasLabel"
-        
-        style="width: 100vw; height: min-content; z-index: 1046;">
-        <div id="headerUser" class="d-flex justify-content-end align-content-center flex-wrap" style="height: 50px;">
-            <span class="d-flex align-content-center flex-wrap" style="height: 50px;">
-                <span id="">반갑습니다. 홍길동 님</span>
-            </span>
-            &nbsp;&nbsp;&nbsp;
-            <span class="d-flex align-content-center flex-wrap h-100">
-                <a href="../common/my-page.jsp" id="" class="darkBtn btn rounded" style="height: 75%;">마이 페이지</a>
-            </span>
-            &nbsp;&nbsp;&nbsp;
-            <span class="d-flex align-content-center flex-wrap h-100">
-                <a href="../common/login.jsp" id="" class="darkBtn btn rounded" style="height: 75%;">로그아웃</a>
-            </span>
-            &nbsp;&nbsp;&nbsp;
-        </div>
-        <div id="headerTitle" class="d-flex justify-content-between flex-wrap" style="height: 150px;">
-            <div id="documentTitle" class="d-flex flex-wrap align-content-center">
-                <p>
-                    비대면 과제관리<br>
-                    시스템
-                </p>
-            </div>
-        </div>
-    </div>
+<%@ include file="/WEB-INF/views/include/head_top_user.jsp" %>
 <!-- top main header end -->
 <!-- side nav menu accordion start -->
-        <div id="panelNav" class="offcanvas offcanvas-bottom show" 
+    <div id="panelNav" class="offcanvas offcanvas-bottom show" 
         data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" 
         aria-labelledby="offcanvasLabel"
         style="width: 256px; height: 100vh;">
