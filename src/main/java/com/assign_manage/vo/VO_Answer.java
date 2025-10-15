@@ -2,11 +2,11 @@ package com.assign_manage.vo;
 
 public class VO_Answer
 {
-	public int quest_no;		// 질문번호
-	public String id;			// 아이디
-	public String answer_note;	// 답변내용
-	public String create_date;	// 생성일
-	public String delete_date;	// 삭제일
+	private int quest_no;		// 질문번호
+	private String id;			// 아이디
+	private String answer_note;	// 답변내용
+	private String create_date;	// 생성일
+	private String delete_date;	// 삭제일
 	
 	public int getQuest_no()		{ return quest_no;		}
 	public String getId()			{ return id;			}

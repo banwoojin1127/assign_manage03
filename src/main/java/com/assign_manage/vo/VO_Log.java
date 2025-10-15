@@ -2,12 +2,12 @@ package com.assign_manage.vo;
 
 public class VO_Log
 {
-	public int		log_no;			// 로그번호
-	public String	id;				// id
-	public String	visit_page;		// 방문페이지
-	public String	visit_time;		// 방문시간
-	public String	leave_time;		// 떠난시간
-	public String	request_value;	// 요청값
+	private int		log_no;			// 로그번호
+	private String	id;				// id
+	private String	visit_page;		// 방문페이지
+	private String	visit_time;		// 방문시간
+	private String	leave_time;		// 떠난시간
+	private String	request_value;	// 요청값
 	
 	public int getLog_no()			{ return log_no;		}
 	public String getId()			{ return id;			}
