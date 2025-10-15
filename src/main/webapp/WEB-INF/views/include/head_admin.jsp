@@ -32,7 +32,7 @@
 <%@ include file="/WEB-INF/views/include/head_top_user.jsp" %>
 <!-- top main header end -->
 <!-- side nav menu accordion start -->
-        <div id="panelNav" class="offcanvas offcanvas-bottom show" 
+    <div id="panelNav" class="offcanvas offcanvas-bottom show" 
         data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" 
         aria-labelledby="offcanvasLabel"
         style="width: 256px; height: 100vh;">
