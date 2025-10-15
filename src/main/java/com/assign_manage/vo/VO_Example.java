@@ -1,5 +1,6 @@
 package com.assign_manage.vo;
 
-public class TempVo {
+public class VO_Example
+{
 
 }
