@@ -48,11 +48,11 @@
                 </h2>
                 <div id="collapseFst" class="defCollaps accordion-collapse collapse show" style="border-style:none;" data-bs-parent="#navSideBar">
                     <div id="" class="accordion-body row row-cols-2 m-0 p-0" style="width: 100%">
-                        <a href="lecture" id="" class="btn d-flex col flex-wrap justify-content-center align-content-center h-50" style="width: 97%; font-weight: bold;">
+                        <a href="<c:url value='/student/lecture'/>" id="" class="btn d-flex col flex-wrap justify-content-center align-content-center h-50" style="width: 97%; font-weight: bold;">
                             <span>강의 조회</span>
                         </a>
                         <div class="blank d-flex col flex-wrap m-0 p-0" style="width: 3%;"></div>
-                        <a href="assign" id="" class="btn d-flex col flex-wrap justify-content-center align-content-center h-50" style="width: 97%;">
+                        <a href="<c:url value='/student/assign'/>" id="" class="btn d-flex col flex-wrap justify-content-center align-content-center h-50" style="width: 97%;">
                             <span>과제 조회</span>
                         </a>
                         <div class="blank d-flex col flex-wrap m-0 p-0" style="width: 3%;"></div>
@@ -70,7 +70,7 @@
                 </h2>
                 <div id="collapseSnd" class="defCollaps accordion-collapse collapse" style="border-style:none;" data-bs-parent="#navSideBar">
                     <div id="" class="accordion-body row row-cols-2 m-0 p-0" style="width: 100%">
-                        <a href="statistics" id="" class="btn d-flex col flex-wrap justify-content-center align-content-center h-50" style="width: 97%; font-weight: bold;">
+                        <a href="<c:url value='/student/statistics'/>" id="" class="btn d-flex col flex-wrap justify-content-center align-content-center h-50" style="width: 97%; font-weight: bold;">
                             <span>통계</span>
                         </a>
                         <div class="blank d-flex col flex-wrap m-0 p-0" style="width: 3%;"></div>

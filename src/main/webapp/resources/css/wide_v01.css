@@ -16,7 +16,7 @@
 .val-gender:checked + .btn-gender
 {
     color: black;
-    border: #4471c4;
+    border: #198754;
     border-style: solid;
     border-width: 1px;
 }
