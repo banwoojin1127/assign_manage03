@@ -68,10 +68,10 @@
                         </div>
                         <div style="text-align: right;"><img id="arrow1" src="../../resources/img/arrow1.png" style="width: 80px;"></div>
                     </div>
-                    <a href="../teacher/assignment-list.html" style="text-decoration: none;">
+                    <a href="./assignment_list" style="text-decoration: none;">
                         <div id="view1" class="tea-text" style="background-color: white; padding: 20px;">
                             <div style="display: grid; grid-template-columns: repeat(2, 1fr);">
-                                <div style="text-align: left;"><b>바위와 ROCK 페스티벌의 연관성</b></div>
+                                <div style="text-align: left;"><b>1바위와 ROCK 페스티벌의 연관성</b></div>
                                 <br><br>
                                 <div style="text-align: left;">돌맹이 강사님</div>
                                 <div style="text-align: right;">
@@ -91,10 +91,10 @@
                         </div>
                         <div style="text-align: right;"><img id="arrow2" src="../../resources/img/arrow1.png" style="width: 80px;"></div>
                     </div>
-                    <a href="../teacher/assignment-list.html" style="text-decoration: none;">
+                    <a href="./assignment_list" style="text-decoration: none;">
                         <div id="view2" class="tea-text" style="background-color: white; padding: 20px;">
                             <div style="display: grid; grid-template-columns: repeat(2, 1fr);">
-                                <div style="text-align: left;"><b>바위와 ROCK 페스티벌의 연관성</b></div>
+                                <div style="text-align: left;"><b>2바위와 ROCK 페스티벌의 연관성</b></div>
                                 <br><br>
                                 <div style="text-align: left;">돌맹이 강사님</div>
                                 <div style="text-align: right;">
@@ -114,10 +114,10 @@
                         </div>
                         <div style="text-align: right;"><img id="arrow3" src="../../resources/img/arrow2.png" style="width: 80px;"></div>
                     </div>
-                    <a href="../teacher/assignment-list.html" style="text-decoration: none;">
+                    <a href="./assignment_list." style="text-decoration: none;">
                         <div id="view3" class="tea-text" style="background-color: white; padding: 20px; display: none;">
                             <div style="display: grid; grid-template-columns: repeat(2, 1fr);">
-                                <div style="text-align: left;"><b>바위와 ROCK 페스티벌의 연관성</b></div>
+                                <div style="text-align: left;"><b>3바위와 ROCK 페스티벌의 연관성</b></div>
                                 <br><br>
                                 <div style="text-align: left;">돌맹이 강사님</div>
                                 <div style="text-align: right;">
@@ -137,10 +137,10 @@
                         </div>
                         <div style="text-align: right;"><img id="arrow4" src="../../resources/img/arrow2.png" style="width: 80px;"></div>
                     </div>
-                    <a href="../teacher/assignment-list.html" style="text-decoration: none;">
+                    <a href="./assignment_list" style="text-decoration: none;">
                         <div id="view4" class="tea-text" style="background-color: white; padding: 20px; display: none;">
                             <div style="display: grid; grid-template-columns: repeat(2, 1fr);">
-                                <div style="text-align: left;"><b>바위와 ROCK 페스티벌의 연관성</b></div>
+                                <div style="text-align: left;"><b>4바위와 ROCK 페스티벌의 연관성</b></div>
                                 <br><br>
                                 <div style="text-align: left;">돌맹이 강사님</div>
                                 <div style="text-align: right;">

@@ -11,7 +11,7 @@
                     <p class="flex-grow-1 m-0" style="font-size: 1.5em;">과제 상세보기</p>
                 </div>
                 <div class="ms-auto">
-                    <a href="../teacher/assignment-view.jsp" class="darkBtn btn rounded px-3" style="height: 40px;"><b>이전</b></a>
+                    <a href="../teacher/assignment_view" class="darkBtn btn rounded px-3" style="height: 40px;"><b>이전</b></a>
                 </div>
             </div>
             <!-- content main title end -->
@@ -59,7 +59,7 @@
                         <div class="d-flex flex-wrap align-content-center px-3">
                             00 / 00
                         </div>
-                        <a href="../teacher/report-feedback.jsp" class="whiteBtn btn d-flex flex-wrap align-content-center rounded my-1">
+                        <a href="../teacher/report_feedback" class="whiteBtn btn d-flex flex-wrap align-content-center rounded my-1">
                             수정
                         </a>
                     </div>
