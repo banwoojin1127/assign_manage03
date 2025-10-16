@@ -7,7 +7,7 @@
                 <div id="" class="decoWideTitle" style="width: 12px; height: 40px;"></div>
                 &nbsp;&nbsp;
                 <div id="" class="textWideTitle d-flex flex-wrap align-content-center px-1">
-                    <p class="flex-grow-1 m-0" style="font-size: 1.5em;">과제 상세보기</p>
+                    <p class="flex-grow-1 m-0" style="font-size: 1.5em;">과제 수정</p>
                 </div>
             </div>
             <!-- content main title end -->
@@ -25,46 +25,31 @@
             <!-- assignment info box end -->
             <!-- submission write form start -->
             <div class="d-flex flex-wrap justify-content-center align-content-start my-3 w-100">
-                <div id="" class="darkText d-flex flex-wrap justify-content-between align-content-center rounded px-1 w-100">
-                    <p class="d-flex m-0 p-2" style="text-align: left;">제출 내용</p>
-                    <a href="1/modify" class="whiteBtn btn d-flex flex-wrap align-content-center rounded my-1">
-                        수정
-                    </a>
-                </div>
-                <div id="submissionNote" name="" class="boxCased d-flex w-100">
-                    홍길동이 조선시대에 한반도에서 의적으로서 백성을 도왔다.
-                </div>
+                <label id="" for="submissionWriteTextarea" class="darkText d-flex flex-wrap align-content-center rounded px-1 w-100">
+                    <p class="m-0 p-2" style="text-align: left;">제출 내용</p>
+                </label>
+                <textarea id="submissionWriteTextarea" name="" class="boxCased d-flex form-control" rows="10"></textarea>
             </div>
             <!-- submission write form end -->
             <!-- submission file form start -->
-            <div class="darkText d-flex flex-wrap justify-content-start align-content-start rounded mt-3 w-100">
+            <div class="darkText d-flex flex-wrap justify-content-between align-content-start rounded mt-3 w-100">
                 <div class="d-flex flex-wrap align-content-center px-1">
                     <p class="m-0 p-2" style="text-align: left;">첨부 파일</p>
                 </div>
+                <div class="align-content-center">
+                    <label for="submissionWriteFiles" class="mx-1 px-1">
+                        <img src="../../resources/img/file-earmark-plus-fill.png" class="microIcon">
+                    </label>
+                </div>
             </div>
             <div class="boxCased d-flex flex-wrap justify-content-end align-content-center mb-3 w-100">
+                <input id="submissionWriteFiles" class="form-control" style="display: none;" type="file">
                 <div id="fileNameDisply">
                     선택된 파일 없음
                 </div>
             </div>
             <!-- submission file form end -->
-            <!-- feedback / score info box start-->
-            <div class="d-flex flex-wrap justify-content-center align-content-start my-3 w-100">
-                <div class="darkText d-flex flex-wrap justify-content-between align-content-start rounded w-100">
-                    <div class="d-flex flex-wrap align-content-center px-1">
-                        <p class="m-0 p-2" style="text-align: left;">평가 및 피드백</p>
-                    </div>
-                    <div class="d-flex px-1">
-                        <div class="d-flex flex-wrap align-content-center px-3">
-                            00 / 00
-                        </div>
-                    </div>
-                </div>
-                <div class="boxCased d-flex align-content-center w-100">
-                    더 노력합시다.
-                </div>
-            </div>
-            <!-- feedback / score info box end-->
+            <a href="../1" class="darkBtn btn">확인</a>
         </div>
 <!-- content field end -->
 <%@ include file="../include/tail.jsp" %>
