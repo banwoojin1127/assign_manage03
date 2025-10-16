@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-@RequestMapping("/student")
+@RequestMapping("/student/")
 public class Controller_Student
 {
 	// !!! 페이지명.do <- 사용 자제 할 것 !!!
