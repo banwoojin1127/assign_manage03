@@ -61,7 +61,7 @@
                         <select class="form-select form-select-sm" aria-label="Small select example">
                             <option selected>10개씩</option>
                             <option value="1">20개씩</option>
-                            <option value="2">30개씩</option>
+                            <option value="2">50개씩</option>
                         </select>
                     </div>
                 </div>

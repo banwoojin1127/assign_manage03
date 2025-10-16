@@ -54,27 +54,33 @@ public class Controller_Student
 		return "student/report_submit";
 	}
 	
-	@RequestMapping(value="report/submit", method = RequestMethod.POST)
+	@RequestMapping(value="/report/submit", method = RequestMethod.POST)
 	public String reportSubmitOK()
 	{
 		return "redirect:/student/report/1";
 	}
 	
-	@RequestMapping(value="report/{report_no}", method = RequestMethod.GET)
+	@RequestMapping(value="/report/{report_no}", method = RequestMethod.GET)
 	public String reportView(@PathVariable("report_no") int no)
 	{
 		return "student/report_view";
 	}
 	
-	@RequestMapping(value="report/{report_no}/modify", method = RequestMethod.GET)
-	public String reportMidify(@PathVariable("report_no") int no)
+	@RequestMapping(value="/report/{report_no}/modify", method = RequestMethod.GET)
+	public String reportModify(@PathVariable("report_no") int no)
 	{
-		return "student/report_submit";
+		return "student/report_modify";
 	}
 	
-	@RequestMapping(value="report/{report_no}/modify", method = RequestMethod.POST)
-	public String reportMidifyOK(@PathVariable("report_no") int no)
+	@RequestMapping(value="/report/{report_no}/modify", method = RequestMethod.POST)
+	public String reportModifyOK(@PathVariable("report_no") int no)
 	{
 		return "redirect:/student/report/1";
+	}
+	
+	@RequestMapping(value="/statistics", method = RequestMethod.GET)
+	public String statistics()
+	{
+		return "student/statistics";
 	}
 }

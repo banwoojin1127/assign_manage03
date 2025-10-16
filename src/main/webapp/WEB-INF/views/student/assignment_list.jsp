@@ -28,7 +28,7 @@
             <br><br>
             
             <div class="listMargin" id="teacherInfo1">
-                <img src="../../resources/img/profile.png" style="margin-left: 100px; width:250px; height:250px;">
+                <img src="<c:url value="/resources/img/profile.png"/>" style="margin-left: 100px; width:250px; height:250px;">
                 <div id="teacherInfo2">
                     <b id="lectureName" style="display: block; margin-top: 20px;">
                     floccinaucinihil
@@ -52,19 +52,19 @@
                 <tr>
                     <th>1</th>
                     <td>1주차</td>
-                    <td><a href="../student/assignment_view.jsp">과제 A</a></td>
+                    <td><a href="assign/1">과제 A</a></td>
                     <td class="endDate">09-29-00:00</td>
                 </tr>
                 <tr>
                     <th>2</th>
                     <td>2주차</td>
-                    <td><a href="../student/assignment_view.jsp">과제 B</a></td>
+                    <td><a href="assign/1">과제 B</a></td>
                     <td class="endDate">09-30-00:00</td>
                 </tr>
                 <tr>
                     <th>3</th>
                     <td>3주차</td>
-                    <td><a href="../student/assignment_view.jsp">과제 C</a></td>
+                    <td><a href="assign/1">과제 C</a></td>
                     <td>10-04-00:00</td>
                 </tr>
             </table>

@@ -14,7 +14,7 @@
             <!-- assignment info box start -->
             <div class="boxCased d-flex flex-wrap justify-content-start align-content-start my-3" style="width: 100%;">
                 <div class="d-flex justify-content-between w-100">
-                    <div><b>강좌 : </b>HTML</div>
+                    <div><b>강의 : </b>HTML</div>
                     <div><b>이름 : </b>홍길동</div>
                 </div>
                 <div class="d-flex justify-content-between w-100">
@@ -49,7 +49,7 @@
                 </div>
             </div>
             <!-- submission file form end -->
-            <a href="../student/report_view.jsp" class="darkBtn btn">확인</a>
+            <a href="../report/1" class="darkBtn btn">확인</a>
         </div>
 <!-- content field end -->
 <%@ include file="../include/tail.jsp" %>
