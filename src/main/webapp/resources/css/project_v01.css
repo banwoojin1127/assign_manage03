@@ -13,14 +13,15 @@
     color: red;
     text-align: left;
 }
-#btnWideRequest
+.btnWide
 {
     color: white;
     background-color: #4471c4;
+    border-radius: 5px;
     text-align: center;
     font-weight: bold;
 }
-#btnWideRequest:active
+.btnWide:active
 {
     background-color: #355898;
 }
