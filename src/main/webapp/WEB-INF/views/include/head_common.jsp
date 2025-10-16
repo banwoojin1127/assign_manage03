@@ -48,7 +48,7 @@
                 </h2>
                 <div id="collapseFst" class="defCollaps accordion-collapse collapse show" style="border-style:none;" data-bs-parent="#navSideBar">
                     <div id="" class="accordion-body row row-cols-2 m-0 p-0" style="width: 100%">
-                        <a href="../admin/user_management" id="" class="btn d-flex col flex-wrap justify-content-center align-content-center h-50" style="width: 97%; font-weight: bold;">
+                        <a href="../admin/" id="" class="btn d-flex col flex-wrap justify-content-center align-content-center h-50" style="width: 97%; font-weight: bold;">
                             <span>관리자</span>
                         </a>
                         <div class="blank d-flex col flex-wrap m-0 p-0" style="width: 3%;"></div>
@@ -66,7 +66,7 @@
                 </h2>
                 <div id="collapseSnd" class="defCollaps accordion-collapse collapse" style="border-style:none;" data-bs-parent="#navSideBar">
                     <div id="" class="accordion-body row row-cols-2 m-0 p-0" style="width: 100%">
-                        <a href="../teacher/teacher_main" id="" class="btn d-flex col flex-wrap justify-content-center align-content-center h-50" style="width: 97%; font-weight: bold;">
+                        <a href="../teacher/" id="" class="btn d-flex col flex-wrap justify-content-center align-content-center h-50" style="width: 97%; font-weight: bold;">
                             <span>교사</span>
                         </a>
                         <div class="blank d-flex col flex-wrap m-0 p-0" style="width: 3%;"></div>
@@ -84,7 +84,7 @@
                 </h2>
                 <div id="collapseTrd" class="defCollaps accordion-collapse collapse" style="border-style:none;" data-bs-parent="#navSideBar">
                     <div id="" class="accordion-body row row-cols-2 m-0 p-0" style="width: 100%">
-                        <a href="../student/student_main" id="" class="btn d-flex col flex-wrap justify-content-center align-content-center h-50" style="width: 97%; font-weight: bold;">
+                        <a href="../student/" id="" class="btn d-flex col flex-wrap justify-content-center align-content-center h-50" style="width: 97%; font-weight: bold;">
                             <span>학생</span>
                         </a>
                         <div class="blank d-flex col flex-wrap m-0 p-0" style="width: 3%;"></div>
