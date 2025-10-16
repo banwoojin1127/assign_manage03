@@ -19,104 +19,112 @@ import com.assign_manage.vo.*;
 @Controller
 public class Controller_Common
 {
-	private static final String CF = "common/";	// Common Folder
+	private static final String CF = "/common/";	// Common Folder
 	
 	@Autowired
 	Repository_Common repos_Com;
 	
 	/*
-	@RequestMapping(value = "")
+	@RequestMapping(value = CF + "")
 	public String Temp()
 	{
 		return CF + "";
 	}
 	*/
 	
-	@RequestMapping(value = "login", method = RequestMethod.GET)
+	@RequestMapping(value = CF + "logout")
+	public String Logout()
+	{
+		return CF + "login";
+	}
+	
+	@RequestMapping(value = CF + "login", method = RequestMethod.GET)
 	public String Login()
 	{
 		return CF + "login";
 	}
 	
-	@RequestMapping(value = "login", method = RequestMethod.POST)
+	@RequestMapping(value = CF + "login", method = RequestMethod.POST)
 	public String Login(VO_User voIDnPW)
 	{
 		return CF + "login";
 	}
 	
-	@RequestMapping(value = "signup", method = RequestMethod.GET)
+	@RequestMapping(value = CF + "signup", method = RequestMethod.GET)
 	public String Singup()
 	{
 		return CF + "signup";
 	}
 	
-	@RequestMapping(value = "signup", method = RequestMethod.POST)
+	@RequestMapping(value = CF + "signup", method = RequestMethod.POST)
 	public String Singup(VO_User voAllUserInfo)
 	{
-		return CF + "signup";
+		repos_Com.Join(voAllUserInfo);
+		
+		return "redirect:" + CF + "login";
 	}
 	
-	@RequestMapping(value = "find_id", method = RequestMethod.GET)
+	@RequestMapping(value = CF + "find_id", method = RequestMethod.GET)
 	public String Find_ID()
 	{
 		return CF + "find_id";
 	}
 	
-	@RequestMapping(value = "find_id", method = RequestMethod.POST)
+	@RequestMapping(value = CF + "find_id", method = RequestMethod.POST)
 	public String Find_ID(VO_User voIDQuestion)
 	{
-		return "find_id_ok";
+		return CF + "find_id_ok";
 	}
 	
-	@RequestMapping(value = "find_id_ok")
+	@RequestMapping(value = CF + "find_id_ok")
 	public String Find_ID_Ok()
 	{
 		return CF + "find_id_ok";
 	}
 	
-	@RequestMapping(value = "find_pw", method = RequestMethod.GET)
+	@RequestMapping(value = CF + "find_pw", method = RequestMethod.GET)
 	public String Find_PW()
 	{
 		return CF + "find_pw";
 	}
 	
-	@RequestMapping(value = "find_pw", method = RequestMethod.POST)
+	@RequestMapping(value = CF + "find_pw", method = RequestMethod.POST)
 	public String Find_PW(VO_User voPWQuestion)
 	{
-		return "find_pw_ok";
+		return CF + "find_pw_ok";
 	}
 	
-	@RequestMapping(value = "find_pw_ok")
+	@RequestMapping(value = CF + "find_pw_ok")
 	public String Find_PW_Ok()
 	{
 		return CF + "find_pw_ok";
 	}
 	
-	@RequestMapping(value = "mypage")
+	@RequestMapping(value = CF + "mypage")
 	public String MyPage()
 	{
 		return CF + "mypage";
 	}
 	
-	@RequestMapping(value = "mypage_auth", method = RequestMethod.GET)
+	@RequestMapping(value = CF + "mypage_auth", method = RequestMethod.GET)
 	public String MyPage_Auth()
 	{
 		return CF + "mypage_auth";
 	}
 	
-	@RequestMapping(value = "mypage_auth", method = RequestMethod.POST)
+	@RequestMapping(value = CF + "mypage_auth", method = RequestMethod.POST)
 	public String MyPage_Auth(String PW)
 	{
 		return CF + "mypage_auth";
 	}
 	
-	@RequestMapping(value = "mypage_edit", method = RequestMethod.GET)
+	@RequestMapping(value = CF + "mypage_edit", method = RequestMethod.GET)
 	public String MyPage_Edit()
 	{
 		return CF + "mypage_edit";
 	}
 	
-	@RequestMapping(value = "mypage_edit", method = RequestMethod.POST)
+	@RequestMapping(value = CF + "mypage_edit", method = RequestMethod.POST)
 	public String MyPage_Edit(VO_User userInfo)
 	{
 		return CF + "mypage_edit";

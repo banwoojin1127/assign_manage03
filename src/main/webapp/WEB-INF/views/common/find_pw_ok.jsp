@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ include file="../include/head_wide.jsp" %>
+<%@ include file="/WEB-INF/views/include/head_wide.jsp" %>
 <!-- content field start -->
         <div id="panelContent" class="d-flex flex-wrap justify-content-center align-content-center p-5" style="width: 100%;">
             <div id="formFindID" class="d-flex flex-wrap justify-content-center align-content-center p-0 m-0" style="min-width: 500px; max-width: 500px;">
@@ -13,7 +13,7 @@
                 </div>
                 <div id="formFindIDRequest" class="col-12 d-flex flex-wrap justify-content-center align-content-center border border-dark border-1 rounded py-5">
                     <div id="doneFindID" class="d-flex flex-wrap justify-content-center align-content-center w-75">
-                        <div id="imgCheck" class="p-2"><img src="resources/img/check2.svg" style="width: 100%; height: 100%;"></div>
+                        <div id="imgCheck" class="p-2"><img src="<c:url value='/resources/img/check2.svg'/>" style="width: 100%; height: 100%;"></div>
                         <div id="textInfo" class="d-flex flex-wrap justify-content-center align-content-center">
                             <div class="my-1"><span class="vipText fontSize-L">임시 비밀번호</span> 가</div>
                             <div class="my-1"><span class="vipText fontSize-L">발송 완료</span> 되었습니다.</div>
