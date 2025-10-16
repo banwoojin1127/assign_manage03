@@ -9,7 +9,8 @@
 	insert into user
 		(id,pw,user_name,user_class,gender,user_icon,birth,tel,email)
 	value
-		(#{id},md5(#{pw}),#{user_name},#{user_class},#{gender},#{user_icon}
+		(#{id},md5( #{pw} ),#{user_name}
+		,#{user_class},#{gender},#{user_icon}
 		,#{birth},#{tel}
 		,#{email})
 </insert>
@@ -22,8 +23,10 @@
 </select>
 
 <select id="login" parameterType="com.assign_manage.vo.VO_User"
-	resultType="com.assign_manage.vo.VO_User">
-	
+	resultType="com.assign_manage.vo.VO_User">		
+		select * 
+		from user
+		where id = #{id} and pw = md5( #{pw} )	
 </select>
 
 </mapper>

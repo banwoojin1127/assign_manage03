@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ include file="../include/head_wide.jsp" %>
+<%@ include file="/WEB-INF/views/include/head_wide.jsp" %>
 <!-- content field start -->
         <div id="panelContent" class="d-flex flex-wrap justify-content-center align-content-center p-5" style="width: 100%;">
             <div id="formJoin" class="d-flex flex-wrap justify-content-center align-content-center p-0 m-0" style="min-width: 500px; max-width: 500px;">
@@ -12,16 +12,16 @@
                     </div>
                 </div>
                 <div id="formJoinRequest" class="col-12 d-flex flex-wrap justify-content-center align-content-center border border-dark border-1 rounded py-5">
-                    <form id="" class="d-flex flex-wrap justify-content-center align-content-center w-100" action="" method="post">
-                        <input id="" class="form-control w-75 my-1" name="" type="text" placeholder="아이디"><br>
-                        <div id="" class="helpWideRequest form-text w-75 h-auto">
+                    <form id="join" name="join" class="needs-validation d-flex flex-wrap justify-content-center align-content-center w-100" action="signup" method="post">
+                        <input id="id" name="id" class="form-control w-75 my-1" type="text" placeholder="아이디" required><br>
+                        <div class="helpWideRequest invalid-feedback form-text w-75 h-auto">
                             아이디를 입력하세요.
                             <br>
                             아이디는 5~20자의 영문 소문자, 숫자와 <br>특수기호(_),(-)만 사용 가능합니다.
                             <br>
                             중복된 아이디입니다.
                         </div>
-                        <input id="" class="form-control w-75 my-1" name="" type="password" placeholder="비밀번호"><br>
+                        <input id="" name="" class="form-control w-75 my-1" type="password" placeholder="비밀번호"><br>
                         <div id="" class="helpWideRequest form-text w-75 h-auto">
                             비밀번호를 입력하세요.
                             <br>
@@ -77,6 +77,7 @@
                             <br>
                             이미 등록 된 휴대전화 번호입니다.
                         </div>
+                        <button class="btn btn-primary" type="submit">Submit form</button>
                     </form>
                     <a href="login" id="btnWideRequest" class="btn align-content-center w-75 my-1" style="height: 50px;" type="button">회원 가입</a>
                 </div>

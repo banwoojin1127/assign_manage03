@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ include file="../include/head_common.jsp" %>
+<%@ include file="/WEB-INF/views/include/head_common.jsp" %>
 <!-- content field start -->
         <div style="padding: 80px 130px; text-align: center; width: 1649px;">
             <h3 style="text-align: left; width: 500px;">
@@ -10,7 +10,7 @@
             <br><br>
             <form id="" class="" style="margin: 0 400px; font-size: 20px;" action="" method="post">
                 <div>
-                    <img src="resources/img/profile.png" style="width: 45%; height: 45%;">
+                    <img src="<c:url value='/resources/img/profile.png'/>" style="width: 45%; height: 45%;">
                 </div>
                 <br><br>
                 <div class="row mb-4">

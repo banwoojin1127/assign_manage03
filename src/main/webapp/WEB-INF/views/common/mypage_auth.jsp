@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ include file="../include/head_common.jsp" %>
+<%@ include file="/WEB-INF/views/include/head_common.jsp" %>
 <!-- content field start -->
         <div style="padding: 80px 130px; text-align: center; width: 1649px;">
             <h3 style="text-align: left; width: 500px;">

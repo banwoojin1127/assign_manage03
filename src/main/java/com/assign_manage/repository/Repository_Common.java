@@ -23,13 +23,13 @@ public class Repository_Common
 	// 회원 가입
 	// return true : 가입 성공, false : 가입 실패
 	public boolean Join(VO_User uVO)
-	{
+	{/*
 		// id 중복 있습니까?
 		if(CheckID(uVO.getId()) == true)
 		{
 			return false;
 		}
-		
+		*/
 		// id 중복 없습니다.
 		session.insert(namespace + ".join", uVO);
 		
