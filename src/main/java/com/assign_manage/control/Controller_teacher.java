@@ -60,10 +60,6 @@ public class Controller_teacher
 		return "teacher/assignment_view";
 	}	
 	
-
-	
-
-	
 	
 	//레포트 상세보기
 	@RequestMapping(value="/report_view", method = RequestMethod.GET)
@@ -74,14 +70,12 @@ public class Controller_teacher
 	
 	
 	
-	// 레포트번호에 따라 
+	//레포트 상세보기(번호)
 	@RequestMapping(value="/report_view/{report_no}", method = RequestMethod.GET)
 	public String report_view(@PathVariable("report_no") int no)
 	{
 		return "teacher/report_view";
 	}	
-	
-
 	
 	
 	//과제 피드백
