@@ -100,10 +100,10 @@ public class Controller_Admin
 	}
 	
 	// 과제 상세보기 수정 처리
-	@RequestMapping(value = "/assignment_view", method = RequestMethod.GET) 
+	@RequestMapping(value = "/assignment_view_ok", method = RequestMethod.POST) 
 	public String assignment_view_ok()
 	{
-		return  AF + "/assignment_view";
+		return  AF + "/assignment_view_ok";
 	}
 	
 	
