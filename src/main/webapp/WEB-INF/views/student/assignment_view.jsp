@@ -93,10 +93,10 @@
                                     <div class="tableCellValue d-flex justify-content-between flex-grow-1">
                                         <div style="width: 48px;"></div>
                                         <div class="align-content-center">제출 완료</div>
-                                        <div><a href="../student/report_submint.jsp" class="darkBtn btn">수정</a></div>
+                                        <div><a href="report/submit" class="darkBtn btn">수정</a></div>
                                     </div>
                                     <div class="tableCellValue d-flex justify-content-center" style="min-width: 100px;">
-                                        <a href="../student/report_view.jsp" class="darkBtn btn">확인</a>
+                                        <a href="report/view" class="darkBtn btn">확인</a>
                                     </div>
                                     <div class="tableCellValue d-flex justify-content-between" style="min-width: 175px;">
                                         <div style="width: 48px;"></div>
