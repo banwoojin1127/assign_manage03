@@ -18,17 +18,31 @@
             </h3>
             <br>
             <form style="line-height: 5px; width: 1310px; text-align: left;">
-                <button type="submit" class="btn tea-lecture btn-outline-primary">암석 탐구</button>
-                <button type="submit" class="btn tea-lecture btn-outline-secondary">하늘에서 음식이 내린다면</button>
-                <button type="submit" class="btn tea-lecture btn-outline-secondary">
-                    floccinaucinihilipilificastically</button>
-                <button type="submit" class="btn tea-lecture btn-outline-secondary">호박고구마 vs 밤고구마</button>
-                <br><br>
-                <button type="submit" class="btn tea-lecture btn-outline-secondary">감자는 왜 맛있을까</button>
-                <button type="submit" class="btn tea-lecture btn-outline-secondary">주말이 짧은 과학적 이유</button>
-                <button type="submit" class="btn tea-lecture btn-outline-secondary">수학</button>
+            
+            
+            
+<!-- 기존 하드코딩 강의 버튼 -->
+<div style="line-height: 5px; width: 1310px; text-align: left;">
+    <a href="/control/teacher/assignment_list/1" 
+       class="btn tea-lecture btn-outline-primary" >강의1</a>
+    <a href="/control/teacher/assignment_list/2" 
+       class="btn tea-lecture btn-outline-secondary">강의2</a>
+    <a href="/control/teacher/assignment_list/3" 
+       class="btn tea-lecture btn-outline-secondary" >강의3</a>
+    <a href="/control/teacher/assignment_list/4" 
+       class="btn tea-lecture btn-outline-secondary" >긴글강의예시입니다긴글강의예시입니다긴글강의예시입니다4</a>
+    <a href="/control/teacher/assignment_list/5" 
+       class="btn tea-lecture btn-outline-secondary" >강의5</a>
+    <a href="/control/teacher/assignment_list/6" 
+       class="btn tea-lecture btn-outline-secondary" >강의6</a>
+    <a href="/control/teacher/assignment_list/7" 
+       class="btn tea-lecture btn-outline-secondary" >강의7</a>
+</div>
+
+
+
                 
-                <button type="submit" class="btn tea-lecture btn-outline-secondary">. . .</button>
+                
                 <br><br><br>
                 <button type="submit" class="btn tea-ecture btn-outline-secondary" style="float: right;">편집</button>
             </form>
@@ -43,19 +57,19 @@
                 <tr class="tea-tr">
                     <th class="tea-th">1</th>
                     <td class="tea-td">1주차</td>
-                    <td class="tea-td"><a href="../teacher/assignment_view">과제 A</a></td>
+                    <td class="tea-td"><a href="/control/teacher/assignment_view/1">과제 A</a></td>
                     <td class="tea-td" style="color: red;">09-29-00:00</td>
                 </tr>
                 <tr class="tea-tr">
                     <th class="tea-th">2</th>
                     <td class="tea-td">2주차</td>
-                    <td class="tea-td"><a href="../teacher/assignment_view">과제 B</a></td>
+                    <td class="tea-td"><a href="/control/teacher/assignment_view/2">과제 B</a></td>
                     <td class="tea-td" style="color: red;">09-30-00:00</td>
                 </tr>
                 <tr class="tea-tr">
                     <th class="tea-th">3</th>
                     <td class="tea-td">3주차</td>
-                    <td class="tea-td"><a href="../teacher/assignment_view">과제 C</a></td>
+                    <td class="tea-td"><a href="/control/teacher/assignment_view/3">과제 C</a></td>
                     <td class="tea-td">10-04-00:00</td>
                 </tr>
             </table>
@@ -86,5 +100,25 @@
             </div>
         </div>
         <br><br><br><br>
+        
+        
+        
+        
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
 <!-- content field end -->
 <%@ include file="../include/tail.jsp" %>

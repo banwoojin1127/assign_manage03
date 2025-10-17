@@ -38,9 +38,18 @@ public class Controller_teacher
 	}
 	
 	
-	//과제 조회
+	//강의에서 과제 조회
 	@RequestMapping(value="/assignment_list", method = RequestMethod.GET)
 	public String assignment_list()
+	{
+		return "teacher/assignment_list";
+	}	
+	
+	
+	
+	//강의에서 과제 조회(번호)
+	@RequestMapping(value="/assignment_list/{report_no}", method = RequestMethod.GET)
+	public String assignment_list(@PathVariable("report_no") int no)
 	{
 		return "teacher/assignment_list";
 	}	
