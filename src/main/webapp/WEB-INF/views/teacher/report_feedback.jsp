@@ -49,7 +49,7 @@
                 </div>
             </div>
             <!-- score file form end -->
-            <a href="../teacher/report-view.jsp" class="darkBtn btn">확인</a>
+            <a href="../teacher/assignment_view" class="darkBtn btn">확인</a>
         </div>
 <!-- content field end -->
 <%@ include file="../include/tail.jsp" %>

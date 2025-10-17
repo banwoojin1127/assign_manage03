@@ -115,107 +115,105 @@ function CheckPWConfirm()
     }
 }
 
-//*회원가입 요청 검사 함수
-function DoJoin()
-{
-	// id 입력값이 없으면 메세지 출력하고 submit 중지
-	if($("#id").val() == "")
-	{
-		alert("아이디를 입력하세요");
-		$("#id").focus();
-		return;
-	}	
-	
-	if($("#userpw").val() == "")
-	{
-		alert("비밀번호를 입력하세요");
-		$("#userpw").focus();
-		return;
-	}
-	
-	if($("#userpw").val() != $("#pwcheck").val())
-	{
-		alert("비밀번호가 일치하지 않습니다.");
-		$("#userpw").focus();
-		return;
-	}	
-	
-	if($("#name").val() == "")
-	{
-		alert("이름을 입력하세요");
-		$("#name").focus();
-		return;
-	}	
-	
-	if( dupCheckID != "NOT_DUPLICATED")
-	{
-		alert("사용가능한 아이디가 아닙니다.");
-		return ;
-	}
-	
-	if( $("#code").val() == "")
-	{
-		alert("인증코드를 입력하세요");
-		$("#code").focus();
-		return;		
-	}
-	if( $("#code").val() != $("#sendcode").val())
-	{
-		alert("인증코드가 일치하지 않습니다.");
-		$("#code").focus();
-		return;		
-	}	
-	
-	//가입방지코드가 일치하는지 검사
-	$.ajax({
-		url : "getsign.do",
-		type: "get",
-		dataType: "html",
-		success : function(res)
-		{
-			sign = res.trim();
-			if( $("#sign").val() != sign )
-			{
-				alert("자동가입 방지코드가 일치하지 않습니다.");
-			}else
-			{
-				if(confirm("회원가입을 진행하시겠습니까?") == false)
-				{
-					return;
-				}
-				//document.join.submit();
-				$("#join").submit();
-			}
-		}
-	});
-}
-
 //메일 검사 함수
+function CheckEmail()
+{
+    email = $("#email").val();
+    domain = $("#domain").val();
+    address = email + "@" + domain;
+    if( email == "")
+    {
+        $("#msg_email").html("<span style='color:#dc3545'>메일주소를 입력하세요.</span>");
+        return;
+    }
+    if(/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/.test(address))
+    {
+        $("#msg_email").html("<span style='color:#198754'>가능한 메일주소입니다.</span>");
+    }
+    else
+    {
+        $("#msg_email").html("<span style='color:#dc3545'>불가능한 메일주소입니다.</span>");
+        return;
+    }	
+}
+//메일 인증 함수
 function SendMail()
 {
-	if( $("#mail").val() == "")
+	if( $("#email").val() == "")
 	{
-		alert("메일주소를 입력하세요");
-		$("#mail").focus();
-		return;		
-	}	
+		$("#msg_email").html("<span style='color:#dc3545'>메일주소를 입력하세요.</span>");
+		$("#email").focus();
+		return;
+    }/*
 	$.ajax({
 		url : "sendmail.do?mail=" + $("#mail").val(),
 		type: "get",
 		dataType: "html",
 		success : function(res)
 		{
-			code = res.trim();
+            code = res.trim();
 			if( code == "ERROR" )
 			{
-				alert("인증메일 발송 오류가 발생하였습니다.");
+                alert("인증메일 발송 오류가 발생하였습니다.");
 			}else
 			{
-				alert("인증코드를 메일로 발송하였습니다.");
+                alert("인증코드를 메일로 발송하였습니다.");
 				$("#sendcode").val(code);
 			}
 		}
-	});	
+	});*/
+}
+
+//*회원가입 요청 검사 함수
+function DoJoin()
+{
+    // id 입력값이 없으면 메세지 출력하고 submit 중지
+    if($("#id").val() == "")
+    {
+        alert("아이디를 입력하세요");
+        $("#id").focus();
+        return;
+    }	
+    
+    if($("#userpw").val() == "")
+    {
+        alert("비밀번호를 입력하세요");
+        $("#userpw").focus();
+        return;
+    }
+    
+    if($("#userpw").val() != $("#pwcheck").val())
+    {
+        alert("비밀번호가 일치하지 않습니다.");
+        $("#userpw").focus();
+        return;
+    }	
+    
+    if($("#name").val() == "")
+    {
+        alert("이름을 입력하세요");
+        $("#name").focus();
+        return;
+    }	
+    
+    if( dupCheckID != "NOT_DUPLICATED")
+    {
+        alert("사용가능한 아이디가 아닙니다.");
+        return ;
+    }
+    
+    if( $("#code").val() == "")
+    {
+        alert("인증코드를 입력하세요");
+        $("#code").focus();
+        return;		
+    }
+    if( $("#code").val() != $("#sendcode").val())
+    {
+        alert("인증코드가 일치하지 않습니다.");
+        $("#code").focus();
+        return;		
+    }	
 }
 </script>
 <!-- content field start -->
@@ -252,10 +250,10 @@ function SendMail()
                         </div>
                         <!-- email input group start -->
                         <div class="input-group w-75 my-1">
-                            <input id="email" name="email"class="form-control" type="text" placeholder="이메일" required>
+                            <input id="email" name="email"class="form-control" type="text" placeholder="이메일">
                             <span class="input-group-text">@</span>
                             <!-- mail get in field start -->
-                            <select id="emailDomain" name="emailDomain" class="form-select rounded-end" required>
+                            <select id="domain" name="domain" class="form-select rounded-end">
                                 <option value="" >선택</option>
                                 <option value="naver.com">naver.com</option>
                                 <option value="gmail.com">gmail.com</option>
@@ -263,14 +261,20 @@ function SendMail()
                                 <option value="hanmail.net">hanmail.net</option>
                             </select>
                             <!-- mail get in field end -->
-                            <div id="" class="form-text h-auto">
-                                올바른 이메일을 입력해주세요.
-                            </div>
+                        </div>
+                        <div id="msg_email" class="form-text w-75 h-auto">
+                            <span style='color:#dc3545'>메일주소를 입력하세요.</span>
                             <!-- 이미 등록 된 이메일 주소입니다. -->
+                        </div>
+                        <div class="d-flex flex-column align-content-center w-75 my-3">
+                            <input type="hidden" id="sendcode" name="sendcode">
+                            <label for="code" class="form-label m-0" style="font-weight: bold;">인증 코드 입력 : </label>
+                            <input id="code" name="code" class="form-control my-2" type="text">
+                            <input id="btnEmail" class="btnWide" type="button" value="인증 메일 발송">
                         </div>
                         <!-- email input group end -->
                         <div class="w-75 my-1">
-                            <input id="user_name" name="user_name" class="form-control" type="text" placeholder="이름" required>
+                            <input id="user_name" name="user_name" class="form-control" type="text" placeholder="이름">
                             <div id="" class="form-text h-auto">
                                 이름을 입력해주세요.
                             </div>
@@ -279,7 +283,7 @@ function SendMail()
                             </div>
                         </div>
                         <div class="w-75 my-1">
-                            <input id="birth" name="birth" class="form-control" type="text" placeholder="생년월일" required>
+                            <input id="birth" name="birth" class="form-control" type="text" placeholder="생년월일">
                             <div id="" class="form-text h-auto">
                                 생년월일을 입력해주세요.
                             </div>
@@ -289,9 +293,9 @@ function SendMail()
                         </div>
                         <div class="w-75 my-1">
                             <div id="genderSelectGroup" class="btn-group w-100">
-                                <input id="genderM" name="gender" class="val-gender btn-check" type="radio" value="M" required autocomplete="off">
+                                <input id="genderM" name="gender" class="val-gender btn-check" type="radio" value="M" autocomplete="off">
                                 <label id="" class="btn-gender btn" for="genderM">남성</label>
-                                <input id="genderF" name="gender" class="val-gender btn-check" type="radio" value="F" required autocomplete="off">
+                                <input id="genderF" name="gender" class="val-gender btn-check" type="radio" value="F" autocomplete="off">
                                 <label id="" class="btn-gender btn" for="genderF">여성</label>
                             </div>
                             <div id="" class="helpWideRequest form-text h-auto">
@@ -311,7 +315,9 @@ function SendMail()
                                 확인되었습니다.
                             </div>
                         </div>
-                        <button type="submit" id="btnWideRequest" class="btn align-content-center w-75 my-1" style="height: 50px;">회원 가입</button>
+                        <button id="" class="btnWide align-content-center w-75 my-1" style="height: 50px;" type="submit">
+                            회원 가입
+                        </button>
                     </form>
                 </div>
             </div>

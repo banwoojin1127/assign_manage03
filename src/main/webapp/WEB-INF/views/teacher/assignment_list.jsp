@@ -43,19 +43,19 @@
                 <tr class="tea-tr">
                     <th class="tea-th">1</th>
                     <td class="tea-td">1주차</td>
-                    <td class="tea-td"><a href="../teacher/assignment-view.jsp">과제 A</a></td>
+                    <td class="tea-td"><a href="../teacher/assignment_view">과제 A</a></td>
                     <td class="tea-td" style="color: red;">09-29-00:00</td>
                 </tr>
                 <tr class="tea-tr">
                     <th class="tea-th">2</th>
                     <td class="tea-td">2주차</td>
-                    <td class="tea-td"><a href="../teacher/assignment-view.jsp">과제 B</a></td>
+                    <td class="tea-td"><a href="../teacher/assignment_view">과제 B</a></td>
                     <td class="tea-td" style="color: red;">09-30-00:00</td>
                 </tr>
                 <tr class="tea-tr">
                     <th class="tea-th">3</th>
                     <td class="tea-td">3주차</td>
-                    <td class="tea-td"><a href="../teacher/assignment-view.jsp">과제 C</a></td>
+                    <td class="tea-td"><a href="../teacher/assignment_view">과제 C</a></td>
                     <td class="tea-td">10-04-00:00</td>
                 </tr>
             </table>

@@ -67,7 +67,7 @@
                         </div>
                         <div style="text-align: right;"><img id="lectureArrow1" src="<c:url value="/resources/img/arrow1.png"/>" style="width: 80px;"></div>
                     </div>
-                    <a href="../student/assignment_list.jsp" class="lectureLink">
+                    <a href="student/assign/1" class="lectureLink">
                         <div id="lectureListView1" class="mainText lectureListView">
                             <div style="display: grid; grid-template-columns: repeat(2, 1fr);">
                                 <div style="text-align: left;"><b>바위와 ROCK 페스티벌의 연관성</b></div>
@@ -89,7 +89,7 @@
                         </div>
                         <div style="text-align: right;"><img id="lectureArrow2" src="<c:url value="/resources/img/arrow1.png"/>" style="width: 80px;"></div>
                     </div>
-                    <a href="../student/assignment_list.jsp" class="lectureLink">
+                    <a href="student/assign/1" class="lectureLink">
                         <div id="lectureListView2" class="mainText lectureListView">
                             <div style="display: grid; grid-template-columns: repeat(2, 1fr);">
                                 <div style="text-align: left;"><b>바위와 ROCK 페스티벌의 연관성</b></div>
@@ -111,7 +111,7 @@
                         </div>
                         <div style="text-align: right;"><img id="lectureArrow3" src="<c:url value="/resources/img/arrow2.png"/>" style="width: 80px;"></div>
                     </div>
-                    <a href="../student/assignment_list.jsp" class="lectureLink">
+                    <a href="student/assign/1" class="lectureLink">
                         <div id="lectureListView3" class="mainText lectureListView" style="display: none;">
                             <div style="display: grid; grid-template-columns: repeat(2, 1fr);">
                                 <div style="text-align: left;"><b>바위와 ROCK 페스티벌의 연관성</b></div>
@@ -133,7 +133,7 @@
                         </div>
                         <div style="text-align: right;"><img id="lectureArrow4" src="<c:url value="/resources/img/arrow2.png"/>" style="width: 80px;"></div>
                     </div>
-                    <a href="../student/assignment_list.jsp" class="lectureLink">
+                    <a href="student/assign/1" class="lectureLink">
                         <div id="lectureListView4" class="mainText lectureListView" style="display: none;">
                             <div style="display: grid; grid-template-columns: repeat(2, 1fr);">
                                 <div style="text-align: left;"><b>바위와 ROCK 페스티벌의 연관성</b></div>
