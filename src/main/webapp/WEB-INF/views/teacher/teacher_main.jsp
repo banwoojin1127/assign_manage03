@@ -5,48 +5,48 @@
             $(document).ready(function(){
                 $("#arrow1").click(function(){
                     var check = $(this).attr("src");
-                    if(check == "../../resources/img/arrow1.png")
+                    if(check == "<c:url value="/resources/img/arrow1.png"/>")
                     {
-                        $(this).attr("src", "../../resources/img/arrow2.png")
+                        $(this).attr("src", "<c:url value="/resources/img/arrow2.png"/>")
                     }else
                     {
-                        $(this).attr("src", "../../resources/img/arrow1.png")
+                        $(this).attr("src", "<c:url value="/resources/img/arrow1.png"/>")
                     }
                     $("#view1").slideToggle();
                 })
 
                 $("#arrow2").click(function(){
                     var check = $(this).attr("src");
-                    if(check == "../../resources/img/arrow1.png")
+                    if(check == "<c:url value="/resources/img/arrow1.png"/>")
                     {
-                        $(this).attr("src", "../../resources/img/arrow2.png")
+                        $(this).attr("src", "<c:url value="/resources/img/arrow2.png"/>")
                     }else
                     {
-                        $(this).attr("src", "../../resources/img/arrow1.png")
+                        $(this).attr("src", "<c:url value="/resources/img/arrow1.png"/>")
                     }
                     $("#view2").slideToggle();
                 })
 
                 $("#arrow3").click(function(){
                     var check = $(this).attr("src");
-                    if(check == "../../resources/img/arrow1.png")
+                    if(check == "<c:url value="/resources/img/arrow1.png"/>")
                     {
-                        $(this).attr("src", "../../resources/img/arrow2.png")
+                        $(this).attr("src", "<c:url value="/resources/img/arrow2.png"/>")
                     }else
                     {
-                        $(this).attr("src", "../../resources/img/arrow1.png")
+                        $(this).attr("src", "<c:url value="/resources/img/arrow1.png"/>")
                     }
                     $("#view3").slideToggle();
                 })
 
                 $("#arrow4").click(function(){
                     var check = $(this).attr("src");
-                    if(check == "../../resources/img/arrow1.png")
+                    if(check == "<c:url value="/resources/img/arrow1.png"/>")
                     {
-                        $(this).attr("src", "../../resources/img/arrow2.png")
+                        $(this).attr("src", "<c:url value="/resources/img/arrow2.png"/>")
                     }else
                     {
-                        $(this).attr("src", "../../resources/img/arrow1.png")
+                        $(this).attr("src", "<c:url value="/resources/img/arrow1.png"/>")
                     }
                     $("#view4").slideToggle();
                 })
@@ -56,7 +56,7 @@
             <br><br><br>
             <form style="margin: 0px 350px; font-size: 23px;">
                 <div class="tea-text" style="border: 2px solid #c2dcff; padding: 20px 50px 20px 0px;">
-                    <img src="../../resources/img/folder.png" style="width: 90px;">&nbsp;&nbsp;
+                     <img src="<c:url value="/resources/img/folder.png"/>" style="width: 90px;">&nbsp;&nbsp;
                     <b>홍길동</b> 교사님이 생성한 <b style="color: red;">마감 임박</b> 과제가 <b>2개</b> 있습니다.
                 </div>
                 <br>
@@ -66,7 +66,7 @@
                             &nbsp;
                             <b>&nbsp;&nbsp;암석 탐구</b>
                         </div>
-                        <div style="text-align: right;"><img id="arrow1" src="../../resources/img/arrow1.png" style="width: 80px;"></div>
+                        <div style="text-align: right;"><img id="arrow1" src="<c:url value="/resources/img/arrow1.png"/>" style="width: 80px;"></div>
                     </div>
                     <a href="./assignment_list" style="text-decoration: none;">
                         <div id="view1" class="tea-text" style="background-color: white; padding: 20px;">
@@ -89,7 +89,7 @@
                             &nbsp;
                             <b>&nbsp;&nbsp;암석 탐구</b>
                         </div>
-                        <div style="text-align: right;"><img id="arrow2" src="../../resources/img/arrow1.png" style="width: 80px;"></div>
+                          <div style="text-align: right;"><img id="arrow2" src="<c:url value="/resources/img/arrow1.png"/>" style="width: 80px;"></div>
                     </div>
                     <a href="./assignment_list" style="text-decoration: none;">
                         <div id="view2" class="tea-text" style="background-color: white; padding: 20px;">
@@ -112,7 +112,7 @@
                             &nbsp;
                             <b>&nbsp;&nbsp;암석 탐구</b>
                         </div>
-                        <div style="text-align: right;"><img id="arrow3" src="../../resources/img/arrow2.png" style="width: 80px;"></div>
+                        <div style="text-align: right;"><img id="arrow3" src="<c:url value="/resources/img/arrow1.png"/>" style="width: 80px;"></div>
                     </div>
                     <a href="./assignment_list." style="text-decoration: none;">
                         <div id="view3" class="tea-text" style="background-color: white; padding: 20px; display: none;">
@@ -135,7 +135,7 @@
                             &nbsp;
                             <b>&nbsp;&nbsp;암석 탐구</b>
                         </div>
-                        <div style="text-align: right;"><img id="arrow4" src="../../resources/img/arrow2.png" style="width: 80px;"></div>
+                        <div style="text-align: right;"><img id="arrow4" src="<c:url value="/resources/img/arrow1.png"/>" style="width: 80px;"></div>
                     </div>
                     <a href="./assignment_list" style="text-decoration: none;">
                         <div id="view4" class="tea-text" style="background-color: white; padding: 20px; display: none;">
@@ -150,7 +150,22 @@
                             </div>
                         </div>
                     </a>
-                </div>
+                </div>   
+                
+                
+                
+                
+                
+                
+
+                
+                
+                
+                
+                
+                
+                
+                
             </form>
         </div>
 <!-- content field end -->
