@@ -126,11 +126,12 @@ label {
 }
 
 tr {
-    height: 70px;
+    height: 30px;
 }
 
 th, td {
     border: 1px solid gray;
+    vertical-align:middle;
 }
 
 .star {
