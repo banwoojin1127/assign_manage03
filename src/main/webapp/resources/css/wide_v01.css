@@ -6,6 +6,13 @@
     border-style: solid;
     border-width: 1px;
 }
+.val-gender:focus + .btn-gender
+{
+    color: black;
+    border: #a6a6a6;
+    border-style: solid;
+    border-width: 1px;
+}
 .val-gender:hover + .btn-gender
 {
     color: black;
@@ -16,9 +23,11 @@
 .val-gender:checked + .btn-gender
 {
     color: black;
+    background-color: #fafbfa;
     border: #198754;
     border-style: solid;
     border-width: 1px;
+    font-weight: bold;
 }
 
 /* findIDdo.html */
