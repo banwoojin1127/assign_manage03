@@ -31,9 +31,9 @@ public class Repository_Student
 	}	
 	
 	//과제물 정보를 읽는다.	
-	public VO_Report ReportRead(String no)
+	public VO_Report ReportRead(int no)
 	{
-		VO_Report vo = session.selectOne(namespace + ".report_view",no);
+		VO_Report vo = session.selectOne(namespace + ".report_view", no);
 		return vo;
 	}	
 	
@@ -52,7 +52,7 @@ public class Repository_Student
 	}	
 	
 	//첨부파일 정보를 읽는다.	
-	public VO_File FileRead(String no)
+	public VO_File FileRead(int no)
 	{
 		VO_File vo = session.selectOne(namespace + ".file_view", no);
 		return vo;
@@ -73,7 +73,7 @@ public class Repository_Student
 	}
 	
 	//피드백 정보를 읽는다.
-	public VO_Feedback FeedbackRead(String no)
+	public VO_Feedback FeedbackRead(int no)
 	{
 		VO_Feedback vo = session.selectOne(namespace + ".feedback_view", no);
 		return vo;
@@ -87,7 +87,7 @@ public class Repository_Student
 	}	
 	
 	//질문 정보를 읽는다.	
-	public VO_Question QuestionRead(String no)
+	public VO_Question QuestionRead(int no)
 	{
 		VO_Question vo = session.selectOne(namespace + ".question_view", no);
 		return vo;
@@ -101,14 +101,14 @@ public class Repository_Student
 	}
 	
 	//질문 정보를 삭제한다.	
-	public boolean QuestionDelete(String no)
+	public boolean QuestionDelete(int no)
 	{
 		session.delete(namespace + ".question_delete", no);
 		return true;
 	}
 	
 	//질문 정보를 읽는다.	
-	public VO_Answer AnswerRead(String no)
+	public VO_Answer AnswerRead(int no)
 	{
 		VO_Answer vo = session.selectOne(namespace + ".answer_view", no);
 		return vo;

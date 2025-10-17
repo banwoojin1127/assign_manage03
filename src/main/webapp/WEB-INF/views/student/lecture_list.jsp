@@ -12,17 +12,17 @@
                 <div class="me-auto p-2">    
                     <form class="row row-cols-lg-auto g-3 align-items-center" style="margin-left: -15px;">
                         <div class="col-12" style="width: 115px;">
-                            <select class="form-select" aria-label="Small select example">
-                                <option selected>전체</option>
-                                <option value="2">아이디</option>
-                                <option value="3">이름</option>                    
+                            <select class="form-select" aria-label="Small select example" name="type">
+                                <option value="전체" ${search.type == '전체' ? 'selected' : ''}>전체</option>
+                                <option value="강의명" ${search.type == '전체' ? 'selected' : ''}>강의명</option>
+                                <option value="교사명" ${search.type == '전체' ? 'selected' : ''}>교사명</option>                    
                             </select>
                         </div>
                         <div class="col-12" style="width: 220px;">
                             <label class="visually-hidden" for="inlineFormInputGroupUsername">Username</label>
                             <div class="input-group">
                                 <input type="text" class="form-control" id="inlineFormInputGroupUsername"
-                                    placeholder="Username">
+                                    placeholder="검색어" value="${search.keyword != null ? search.keyword : ''}">
                             </div>
                         </div>
                         <div class="col-12" style="width: 75px;">
@@ -33,24 +33,25 @@
                 <div class="p-2">
                     <form> 
                         <div class="col-12">
-                            <select class="form-select form-select-sm" aria-label="Small select example">
-                                <option selected>번호(오름차순)</option>
-                                <option>번호(내림차순)</option>
-                                <option>시작일(오름차순)</option>
-                                <option>시작일(내림차순)</option>
-                                <option>종료일(오름차순)</option>
-                                <option>종료일(내림차순)</option>
+                            <select class="form-select form-select-sm" name="sort" aria-label="Small select example"
+                            onchange="this.form.submit()">
+                                <option value="no_asc">번호(오름차순)</option>
+		                        <option value="no_desc">번호(내림차순)</option>
+		                        <option value="start_asc">시작일(오름차순)</option>
+		                        <option value="start_desc">시작일(내림차순)</option>
+		                        <option value="end_asc">종료일(오름차순)</option>
+		                        <option value="end_desc">종료일(내림차순)</option>
                             </select>
                         </div>
                     </form>
                 </div>    
                 <div class="p-2">
                     <div class="col-12">
-                        <select class="form-select form-select-sm" aria-label="Small select example">
-                            <option selected>10개씩</option>
-                            <option value="1">20개씩</option>
-                            <option value="2">30개씩</option>
-                        </select>
+                        <select class="form-select form-select-sm" name="limitno" aria-label="Small select example" onchange="this.form.submit()">
+	                        <option value="10" ${search.limitno == 10 ? 'selected' : ''}>10개씩</option>
+	                        <option value="20" ${search.limitno == 20 ? 'selected' : ''}>20개씩</option>
+	                        <option value="30" ${search.limitno == 30 ? 'selected' : ''}>30개씩</option>
+	                    </select>
                     </div>
                 </div>
             </div>
@@ -66,94 +67,38 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>자바의 정석</td>
-                        <td>홍길동</td>
-                        <td>2025.9.22</td>
-                        <td>2025.9.22</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>양식의탐구</td>
-                        <td>돌멩이</td>
-                        <td>2025.9.22</td>
-                        <td>2025.9.22</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>하늘에서 음식이 내린다면</td>
-                        <td>김밥</td>
-                        <td>2025.9.22</td>
-                        <td>2025.9.22</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">4</th>
-                        <td>floccinaucinihilipilificastically</td>
-                        <td>james</td>
-                        <td>2025.9.22</td>
-                        <td>2025.9.22</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">5</th>
-                        <td>주말이 짧은 과학적 이유</td>
-                        <td>박과학</td>
-                        <td>2025.9.22</td>
-                        <td>2025.9.22</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">6</th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">7</th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">8</th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>                                                           
-                    <tr>
-                        <th scope="row">9</th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>                    
-                    <tr>
-                        <th scope="row">10</th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>                    
+                    <c:forEach var="lec" items="${list}" varStatus="status">
+		                <tr>
+		                    <td>${status.count + ((search.pageno - 1) * search.limitno)}</td>
+		                    <td>${lec.lecture_name}</td>
+		                    <td>${lec.teacher_name}</td>
+		                    <td>${lec.start_date}</td>
+		                    <td>${lec.end_date}</td>
+		                </tr>
+		            </c:forEach>
+		            <c:if test="${empty list}">
+		                <tr>
+		                    <td colspan="5">조회된 강의가 없습니다.</td>
+		                </tr>
+		            </c:if>
                 </tbody>
             </table>
         </div>
         <nav aria-label="Page navigation example" style="margin-top: -40px; width: 1600px;">
-            <ul class="pagination justify-content-center ">
-                <li class="page-item disabled">
-                    <a class="page-link">&lt;</a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">4</a></li>
-                <li class="page-item"><a class="page-link" href="#">5</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#">&gt;</a>
-                </li>
-            </ul>
-        </nav>
+		    <ul class="pagination justify-content-center">
+		        <li class="page-item ${search.pageno == 0 ? 'disabled' : ''}">
+		            <a class="page-link" href="?page=${search.pageno - 1 >= 0 ? search.pageno - 1 : 0}&type=${search.type}&keyword=${search.keyword}&limitno=${search.limitno}">&lt;</a>
+		        </li>
+		        <c:forEach var="i" begin="${startbk}" end="${endbk}">
+		            <li class="page-item ${i == search.pageno ? 'active' : ''}">
+		                <a class="page-link" href="?page=${i}&type=${search.type}&keyword=${search.keyword}&limitno=${search.limitno}">${i + 1}</a>
+		            </li>
+		        </c:forEach>
+		        <li class="page-item ${search.pageno == maxpage - 1 ? 'disabled' : ''}">
+		            <a class="page-link" href="?page=${search.pageno + 1 < maxpage ? search.pageno + 1 : maxpage - 1}&type=${search.type}&keyword=${search.keyword}&limitno=${search.limitno}">&gt;</a>
+		        </li>
+		    </ul>
+		</nav>
         <br><br>
         <!-- content field end -->
 <%@ include file="../include/tail.jsp" %>

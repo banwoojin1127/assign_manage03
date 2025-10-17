@@ -1,15 +1,13 @@
 package com.assign_manage.control;
 
-import java.io.File;
-import java.io.IOException;
-import java.text.DateFormat;
+import java.io.*;
+import java.net.URLEncoder;
 import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.assign_manage.repository.Repository_Student;
+import com.assign_manage.vo.VO_File;
 import com.assign_manage.vo.VO_Lecture_list;
 import com.assign_manage.vo.VO_Report;
 import com.assign_manage.vo.VO_Search_student;
@@ -46,7 +45,9 @@ public class Controller_Student
 	public String Lecture(@RequestParam(defaultValue = "전체")String type,
 			@RequestParam(defaultValue = "1")int page, @RequestParam(defaultValue = "10")int limitno,
 			HttpSession session, Model model)
-	{		
+	{	
+		
+		/*
 		VO_User login = (VO_User)session.getAttribute("login");
 		
 		String id = login.getId();
@@ -90,6 +91,7 @@ public class Controller_Student
 		
 		model.addAttribute("search",vo);
 		model.addAttribute("list",list);
+		*/
 		
 		return "student/lecture_list";
 	}
@@ -119,8 +121,8 @@ public class Controller_Student
 	}
 	
 	@RequestMapping(value="/report/submit", method = RequestMethod.POST)
-	public String ReportSubmitOK(VO_Report vo, HttpServletRequest request)
-			throws IllegalStateException, IOException
+	public String ReportSubmitOK(VO_Report vo, @RequestParam("attach") List<MultipartFile> files,
+			HttpServletRequest request) throws IllegalStateException, IOException
 	{
 		//로그인 정보를 조회한다.
 		VO_User login = (VO_User)request.getSession().getAttribute("login");
@@ -132,6 +134,41 @@ public class Controller_Student
 		//게시글 작성자 아이디를 설정한다.
 		vo.setId(login.getId());
 		
+		List<VO_File> voFiles = new ArrayList<VO_File>();
+		
+		for(MultipartFile file : files)
+		{
+			if (file.isEmpty()) continue;
+
+			String originalFileName = file.getOriginalFilename();
+			
+			//파일 이름이 중복되지 않도록 파일 이름 변경 : 서버에 저장할 이름
+			//UUID 클래스 사용
+			UUID uuid = UUID.randomUUID();
+		    String ext = "";
+		    int dotIndex = originalFileName.lastIndexOf(".");
+		    if (dotIndex > -1)
+		    {
+		        ext = originalFileName.substring(dotIndex);  // .포함 확장자 (예: ".jpg")
+		    }
+		    String savedFileName = uuid.toString() + ext;
+			
+			//첨부파일 객체 생성
+			File newFile = new File(uploadPath + File.separator + savedFileName);
+			
+			//실제 저장 디렉토리로 전송		
+			file.transferTo(newFile);
+			
+			//VO_File 세팅
+			VO_File voFile = new VO_File();
+			voFile.setF_name(originalFileName);
+			voFile.setP_name(savedFileName);
+			voFile.setFile_size(file.getSize());
+			voFile.setExtension(ext);
+		     
+		    voFiles.add(voFile);
+		}
+		vo.setFiles(voFiles);
 		
 		student.ReportInsert(vo);
 		
@@ -139,8 +176,12 @@ public class Controller_Student
 	}
 	
 	@RequestMapping(value="/report/{report_no}", method = RequestMethod.GET)
-	public String ReportView(@PathVariable("report_no") int no)
+	public String ReportView(@PathVariable("report_no") int no, Model model)
 	{
+		VO_Report report = student.ReportRead(no);
+		
+		model.addAttribute("report", report);
+	    
 		return "student/report_view";
 	}
 	
@@ -154,6 +195,42 @@ public class Controller_Student
 	public String ReportModifyOK(@PathVariable("report_no") int no)
 	{
 		return "redirect:/student/report/1";
+	}
+	
+	@RequestMapping("/report/{report_no}/download")
+	public String Download(@PathVariable("report_no") int no)
+	{
+		return "redirect:/student/report/1";
+	}
+	
+	@RequestMapping("/report/{report_no}/download/{file_no}")
+	public void FileDown(@PathVariable("file_no") int no, HttpServletResponse response) throws IOException
+	{
+	    VO_File voFile = student.FileRead(no); // 파일 정보 가져오기(DB 조회)
+	    String filePath = uploadPath + File.separator + voFile.getP_name();
+	    File file = new File(filePath);
+
+	    if (!file.exists())
+	    {
+	        response.sendError(HttpServletResponse.SC_NOT_FOUND);
+	        return;
+	    }
+
+	    response.setContentType("application/octet-stream");
+	    String encodedFileName = URLEncoder.encode(voFile.getF_name(), "UTF-8").replaceAll("\\+", "%20");
+	    response.setHeader("Content-Disposition", "attachment; filename=\"" + encodedFileName + "\"");
+	    response.setContentLength((int)file.length());
+
+	    try (BufferedInputStream in = new BufferedInputStream(new FileInputStream(file));
+	         BufferedOutputStream out = new BufferedOutputStream(response.getOutputStream()))
+	    {
+	        byte[] buffer = new byte[8192];
+	        int len;
+	        while ((len = in.read(buffer)) != -1)
+	        {
+	            out.write(buffer, 0, len);
+	        }
+	    }
 	}
 	
 	@RequestMapping(value="/statistics", method = RequestMethod.GET)

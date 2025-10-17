@@ -13,7 +13,7 @@ public class VO_File {
 	public String f_name;        //논리파일명
 	public String create_date;   //생성일
 	public String delete_date;   //삭제일
-	public int file_size; 		 //파일크기
+	public long file_size; 		 //파일크기
 	public String extension;  	 //확장자
 	public String file_path;  	 //저장경로
 	
@@ -23,7 +23,7 @@ public class VO_File {
 	public String getF_name()      { return f_name;      }
 	public String getCreate_date() { return create_date; }
 	public String getDelete_date() { return delete_date; }
-	public int getFile_size()      { return file_size;   }
+	public long getFile_size()      { return file_size;   }
 	public String getExtension()   { return extension;   }
 	public String getFile_path()   { return file_path;   }
 	
@@ -33,7 +33,7 @@ public class VO_File {
 	public void setF_name(String f_name)           { this.f_name = f_name;           }
 	public void setCreate_date(String create_date) { this.create_date = create_date; }
 	public void setDelete_date(String delete_date) { this.delete_date = delete_date; }
-	public void setFile_size(int file_size)        { this.file_size = file_size;     }
+	public void setFile_size(long file_size)        { this.file_size = file_size;     }
 	public void setExtension(String extension)     { this.extension = extension;     }
 	public void setFile_path(String file_path)     { this.file_path = file_path;     }
 
