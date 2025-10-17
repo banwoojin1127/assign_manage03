@@ -10,8 +10,10 @@ import com.assign_manage.vo.VO_Answer;
 import com.assign_manage.vo.VO_Feedback;
 import com.assign_manage.vo.VO_File;
 import com.assign_manage.vo.VO_Lecture;
+import com.assign_manage.vo.VO_Lecture_list;
 import com.assign_manage.vo.VO_Question;
 import com.assign_manage.vo.VO_Report;
+import com.assign_manage.vo.VO_Search_student;
 
 @Repository
 public class Repository_Student
@@ -110,5 +112,20 @@ public class Repository_Student
 	{
 		VO_Answer vo = session.selectOne(namespace + ".answer_view", no);
 		return vo;
-	}	
+	}
+	
+	//전체 강의의 갯수를 얻는다.
+	//return : 전체 게시물 갯수
+	public int GetTotal(VO_Search_student vo)
+	{
+		int total = session.selectOne(namespace + ".lecture_total", vo);
+		return total;
+	}
+	
+	//수강목록을 읽는다.
+	public List<VO_Lecture_list> GetList(VO_Search_student vo)
+	{
+		List<VO_Lecture_list> list = session.selectList(namespace + ".lecture_list", vo);
+		return list;
+	}
 }
