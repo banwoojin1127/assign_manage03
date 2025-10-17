@@ -11,10 +11,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
+@RequestMapping(value = "/admin")
 public class Controller_Admin
 {
 	//✔ admin url 경로 접두
-	private static final String AF = "admin/"; 
+	private static final String AF = "/admin"; 
+	//✔ 관리자 > 사용자 관리 - 사용자 관리
+	@RequestMapping(value = "/", method = RequestMethod.GET) 
+	public String admin_main()
+	{
+		return  AF + "/user_management";
+	}
 	
 	//✔ 관리자 > 사용자 관리 - 사용자 관리
 	@RequestMapping(value = "/user_management", method = RequestMethod.GET) 
@@ -132,7 +139,7 @@ public class Controller_Admin
 	
 	
 	//✔ 관리자 > 통계 및 리포트
-	@RequestMapping(value = "/statistics", method = RequestMethod.POST) 
+	@RequestMapping(value = "/statistics", method = RequestMethod.GET) 
 	public String statistics()
 	{
 		return  AF + "/statistics";
