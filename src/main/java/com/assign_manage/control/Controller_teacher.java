@@ -19,6 +19,9 @@ public class Controller_teacher
 	// !!! 페이지명.do <- 사용 자제 할 것 !!!
 
 	
+
+	
+	
 	
 	//메인화면
 	@RequestMapping(value="", method = RequestMethod.GET)
@@ -69,7 +72,6 @@ public class Controller_teacher
 	}	
 	
 	
-	
 	//레포트 상세보기(번호)
 	@RequestMapping(value="/report_view/{report_no}", method = RequestMethod.GET)
 	public String report_view(@PathVariable("report_no") int no)
@@ -102,7 +104,26 @@ public class Controller_teacher
 	
 	
 
-	
-	
-	
+   
 }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
