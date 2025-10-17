@@ -22,25 +22,44 @@ public class Repository_Common
 	
 	// 회원 가입
 	// return true : 가입 성공, false : 가입 실패
-	public boolean Join(VO_User uVO)
-	{/*
-		// id 중복 있습니까?
-		if(CheckID(uVO.getId()) == true)
+	public boolean Join(VO_User voU)
+	{
+		// ID, Tel, Email 중복 있습니까?
+		if(CheckID(voU.getId()) == true || CheckTel(voU.getTel()) == true || CheckEmail(voU.getEmail()) == true)
 		{
 			return false;
 		}
-		*/
-		// id 중복 없습니다.
-		session.insert(namespace + ".join", uVO);
+		// ID, Tel, Email 중복 없습니다.
+		session.insert(namespace + ".join", voU);
 		
 		return true;
 	}
 	
-	// 아이디 중복 검사
+	// ID, Tel, Email 중복 검사
 	// return true : 중복 있음, false : 중복 없음
 	public boolean CheckID(String id)
 	{
 		int total = session.selectOne(namespace + ".checkID", id);
+		if(total > 0)
+		{
+			return true;
+		}
+		
+		return false;
+	}
+	public boolean CheckTel(String tel)
+	{
+		int total = session.selectOne(namespace + ".checkTel", tel);
+		if(total > 0)
+		{
+			return true;
+		}
+		
+		return false;
+	}
+	public boolean CheckEmail(String email)
+	{
+		int total = session.selectOne(namespace + ".checkEmail", email);
 		if(total > 0)
 		{
 			return true;

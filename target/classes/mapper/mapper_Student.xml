@@ -100,7 +100,7 @@
 		where quest_no = #{ quest_no }
 	</select>
 	
-	<select id="lecture_list_total" parameterType="com.assign_manage.vo.VO_Search_student"
+	<select id="lecture_total" parameterType="com.assign_manage.vo.VO_Search_student"
 		resultType="java.lang.Integer">
 		select count(*) as total
 		from lecture_list l_l 
@@ -118,7 +118,7 @@
 		</if>
 	</select>
 	
-	<select id="lecture_list_list" parameterType="com.assign_manage.vo.VO_Search_student"
+	<select id="lecture_list" parameterType="com.assign_manage.vo.VO_Search_student"
 		resultType="com.assign_manage.vo.VO_Lecture">
 		select no,title,date(wdate) as wdate,hit,
 		(select name from user where userid = board.userid) as name,
