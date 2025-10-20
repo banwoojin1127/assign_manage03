@@ -56,4 +56,19 @@
 		where id = #{id} and pw = md5( #{pw} )
 </select>
 
+<!-- ID 찾기 -->
+<select id="idFind" parameterType="com.assign_manage.vo.VO_User"
+	resultType="java.lang.String">		
+		select id 
+		from user
+		where user_name = #{user_name} and tel = #{tel}
+</select>
+
+<!-- PW 찾기 ( 하지만 보안문제로 초기화 ) -->
+<update id="pwFind" parameterType="com.assign_manage.vo.VO_User">
+	update user
+	set pw = md5( #{pw} )
+	where id = #{id}
+</update>
+
 </mapper>

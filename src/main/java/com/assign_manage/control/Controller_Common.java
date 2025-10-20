@@ -215,9 +215,27 @@ public class Controller_Common
 		return CF + "find_id";
 	}
 	@RequestMapping(value = CF + "find_id", method = RequestMethod.POST)
-	public String Find_ID(VO_User voIDQuestion)
+	@ResponseBody
+	public String Find_ID(
+			String user_name, String tel,
+			HttpServletRequest request
+			)
 	{
-		return CF + "find_id_ok";
+		HttpSession session = request.getSession();
+		
+		String id = repos_Com.idFind(user_name, tel);
+		
+		if(id == null || id.equals(""))
+		{
+			// ID 찾기 실패
+			session.setAttribute("id", null);
+			return "false";
+		}else
+		{
+			// ID 찾기 성공
+			session.setAttribute("id", id);
+			return CF + "find_id_ok";
+		}
 	}
 	
 	// 아이디 찾기 성공 페이지

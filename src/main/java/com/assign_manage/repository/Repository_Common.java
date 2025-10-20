@@ -68,7 +68,8 @@ public class Repository_Common
 		return false;
 	}
 	
-	//로그인
+	// 로그인 검사
+	// return VO_User : 로그인 성공, null : 로그인 실패
 	public VO_User Login(String id,String pw)
 	{
 		VO_User uVO = new VO_User();
@@ -77,5 +78,31 @@ public class Repository_Common
 		
 		uVO = session.selectOne(namespace + ".login",uVO);
 		return uVO;
+	}
+	
+	// ID 찾기
+	// return String id : 찾기 성공, null : 찾기 실패
+	public String idFind(String user_name, String tel)
+	{
+		VO_User uVO = new VO_User();
+		uVO.setUser_name(user_name);
+		uVO.setTel(tel);
+		
+		String id = session.selectOne(namespace + ".idFind",uVO);
+		
+		return id;
+	}
+	
+	// PW 찾기
+	// return true : 변경 성공, false : 변경 실패
+	public String pwFind(String user_name, String tel)
+	{
+		VO_User uVO = new VO_User();
+		uVO.setUser_name(user_name);
+		uVO.setTel(tel);
+		
+		String id = session.selectOne(namespace + ".idFind",uVO);
+		
+		return id;
 	}
 }

@@ -6,12 +6,12 @@ window.onload = function()
 {
     $("#user_name").focus();
     
-    $("#btnLogin").click(function(){
-        DoLogin();
+    $("#idFind").click(function(){
+        DoIDFind();
     });
 }
 
-function DoLogin()
+function DoIDFind()
 {
     if($("#user_name").val() == "")
     {
@@ -72,16 +72,16 @@ function DoLogin()
                         <div class="d-flex flex-wrap justify-content-center align-content-center w-75">
                             <form class="d-flex flex-wrap justify-content-center align-content-center w-100" method="post">
                                 <div class="form-floating">
-                                    <input id="user_name" name="user_name" class="form-control m-2" type="text">
+                                    <input id="user_name" name="user_name" class="form-control m-2" type="text" placeholder="이름">
                                     <label for="user_name" class="mx-2">이름을 입력해주세요.</label>
                                 </div>
                                 <div class="form-floating">
-                                    <input id="tel" name="tel" class="form-control m-2" type="text">
+                                    <input id="tel" name="tel" class="form-control m-2" type="text" placeholder="전화번호">
                                     <label for="tel" class="mx-2">전화번호를 '-'없이 입력해주세요.</label>
                                 </div>
                             </form>
                         </div>
-                        <button id="IDFind" class="btnWide btn align-content-center w-25 my-1" type="button">확인</a>
+                        <button id="idFind" class="btnWide btn align-content-center w-25 my-1" type="button">확인</a>
                     </div>
                     <div id="msgIDFind" class="helpWideRequest form-text w-75 h-auto">
                     </div>
