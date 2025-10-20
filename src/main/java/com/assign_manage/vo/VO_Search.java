@@ -12,10 +12,20 @@ public class VO_Search
 	private String kind; 	 //게시물 종류
 	private String keyword;	 //검색 키워드
 	
+	//VO추가 251020
+	private String option;   //검색 옵션
+
+	//----------------------------------------------------------------
+	
 	public int getPage_no()    { return page_no; }
 	public int getOffset()     { return offset;  }
 	public String getKind()    { return kind;    }
 	public String getKeyword() { return keyword; }
+	
+	//getter추가 251020
+	public String getOption() { return option; }
+	
+	//----------------------------------------------------------------
 	
 	public void setPageno(int pageno)      
 	{ 
@@ -24,4 +34,7 @@ public class VO_Search
 	}
 	public void setKind(String kind)       { this.kind    = kind;    }
 	public void setKeyword(String keyword) { this.keyword = keyword; }
+	
+	//setter추가 251020
+	public void setOption(String option) { this.option = option; }
 }
