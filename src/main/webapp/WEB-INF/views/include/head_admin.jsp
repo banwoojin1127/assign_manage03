@@ -16,11 +16,11 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <!-- chart set end -->
 <!-- jquery set start -->
-    <script src="<c:url value="/resources/js/jquery-3.7.1.min.js"/>"></script>
+    <script src="<c:url value='/resources/js/jquery-3.7.1.min.js'/>"></script>
 <!-- jquery set end -->
 <!-- stylesheet group start -->
-    <link rel="stylesheet" href="<c:url value="/resources/css/project_v01.css" />"/>
-    <link rel="stylesheet" href="<c:url value="/resources/css/admin_v01.css" />"/>
+    <link rel="stylesheet" href="<c:url value='/resources/css/project_v01.css' />"/>
+    <link rel="stylesheet" href="<c:url value='/resources/css/admin_v01.css' />"/>
     
 <!-- stylesheet group end -->
 <!-- tab title start -->
