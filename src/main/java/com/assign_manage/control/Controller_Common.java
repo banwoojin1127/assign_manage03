@@ -45,9 +45,11 @@ public class Controller_Common
 	
 	// 로그아웃 요청
 	@RequestMapping(value = CF + "logout")
-	public String Logout()
+	public String Logout(HttpServletRequest request)
 	{
-		return CF + "login";
+		HttpSession session = request.getSession();
+		session.setAttribute("login", null);
+		return "redirect:" + CF + "login";
 	}
 	
 	// 로그인 페이지 및 로그인 요청
@@ -57,6 +59,7 @@ public class Controller_Common
 		return CF + "login";
 	}
 	@RequestMapping(value = CF + "login", method = RequestMethod.POST)
+	@ResponseBody
 	public String Login(
 			String id,String pw,
 			HttpServletRequest request
@@ -73,17 +76,18 @@ public class Controller_Common
 		}else
 		{
 			session.setAttribute("login", vo);
-			if(vo.getClass().equals("0"))
+			String contextPath = request.getContextPath();
+			if(vo.getUser_class().equals("0"))
 			{
-				return "admin";
+				return contextPath + "/admin/";
 			}
-			if(vo.getClass().equals("1"))
+			if(vo.getUser_class().equals("1"))
 			{
-				return "teacher";
+				return contextPath + "/teacher/";
 			}
-			if(vo.getClass().equals("2"))
+			if(vo.getUser_class().equals("2"))
 			{
-				return "student";
+				return contextPath + "/student/";
 			}
 			return "ERROR";
 		}

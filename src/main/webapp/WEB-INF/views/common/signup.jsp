@@ -280,7 +280,7 @@ function CheckEmail()
 		}
 	});
 }
-//*메일 인증 함수
+//메일 인증 함수
 function SendEmail()
 {
 	if( persnal == "" || domain == "" )
