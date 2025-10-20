@@ -21,8 +21,6 @@ public class Controller_teacher
 	
 
 	
-	
-	
 	//메인화면
 	@RequestMapping(value="", method = RequestMethod.GET)
 	public String main()
