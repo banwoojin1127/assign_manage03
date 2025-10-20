@@ -7,7 +7,7 @@
         style="width: 100vw; height: min-content; z-index: 1046;">
         <div id="headerUser" class="d-flex justify-content-end align-content-center flex-wrap" style="height: 50px;">
             <span class="d-flex align-content-center flex-wrap" style="height: 50px;">
-                <span id="">반갑습니다. 홍길동 님</span>
+                <span id="">반갑습니다. ${login.user_name} 님</span>
             </span>
             &nbsp;&nbsp;&nbsp;
             <span class="d-flex align-content-center flex-wrap h-100">

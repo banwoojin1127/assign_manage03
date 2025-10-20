@@ -1,5 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ include file="/WEB-INF/views/include/head_common.jsp" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="co" %>
+<co:choose>
+    <co:when test="${login.user_class == '0'}">
+        <%@ include file="/WEB-INF/views/include/head_admin.jsp" %>
+    </co:when>
+    <co:when test="${login.user_class == '1'}">
+        <%@ include file="/WEB-INF/views/include/head_teacher.jsp" %>
+    </co:when>
+    <co:when test="${login.user_class == '2'}">
+        <%@ include file="/WEB-INF/views/include/head_student.jsp" %>
+    </co:when>
+    <co:otherwise>
+        <co:redirect url="/${pageContext.request.contextPath}/common/login"/>
+    </co:otherwise>
+</co:choose>
 <!-- content field start -->
         <div style="padding: 80px 130px; text-align: center; width: 1649px;">
             <h3 style="text-align: left; width: 500px;">

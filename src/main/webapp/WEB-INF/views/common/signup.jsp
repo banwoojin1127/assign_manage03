@@ -199,7 +199,7 @@ function CheckTel()
     tel = $("#tel").val();
     if( tel == "" || require.test(tel) == false)
     {
-        $("#msg_tel").html("<span style='color:#dc3545'>전화번호를 '-'없이 입력해주세요.</span>");
+        $("#msg_tel").html("<span style='color:#dc3545'>*전화번호를 '-'없이 입력해주세요.</span>");
         return;
     }else
     {
@@ -222,7 +222,7 @@ function CheckTel()
 				$("#msg_tel").html("<span style='color:#dc3545'>!!! 중복검사 오류가 발생했습니다. !!!</span>");
 				break;
 			case "DUPLICATED":					
-				$("#msg_tel").html("<span style='color:#dc3545'>이미 등록 된 전화번호입니다.</span>");
+				$("#msg_tel").html("<span style='color:#dc3545'>*이미 등록 된 전화번호입니다.</span>");
 				break;
 			case "NOT_DUPLICATED":
 				$("#msg_tel").html("<span style='color:#198754'>사용 가능한 전화번호입니다.</span>");
@@ -357,8 +357,14 @@ function DoJoin()
     }
     if($("#year").val() == "" || $("#month").val() == "" || $("#day").val() == "")
     {
-        $("#msg_birth").html("<span style='color:#dc3545'>*생년월일을 입력해주세요.</span>");
+        $("#msg_birth").html("<span style='color:#dc3545'>*전화번호를 '-'없이 입력해주세요.</span>");
         $("#year").focus();
+        return;
+    }
+    if($("#tel").val() == "")
+    {
+        $("#msg_tel").html("<span style='color:#dc3545'>*전화번호를 입력해주세요.</span>");
+        $("#tel").focus();
         return;
     }
     if($("#persnal").val() == "" || $("#domain").val() == "")
@@ -377,7 +383,7 @@ function DoJoin()
     //전화번호 중복문제 미해결 시 submit 중지
     if( dupCheckTel == "DUPLICATED" || dupCheckTel == "ERROR")
     {
-        alert("사용 가능한 전화번호가 아닙니다.");
+        alert("*사용 가능한 전화번호가 아닙니다.");
         return ;
     }
     //메일주소 중복문제 미해결 시 submit 중지
@@ -531,7 +537,7 @@ function DoJoin()
                         <div class="w-75 my-1">
                             <input id="tel" name="tel" class="form-control my-1" type="text" placeholder="전화번호">
                             <div id="msg_tel" class="form-text h-auto">
-                                <span style='color:#dc3545'>전화번호를 '-'없이 입력해주세요.</span>
+                                <span style='color:#dc3545'>*전화번호를 '-'없이 입력해주세요.</span>
                             </div>
                         </div>
                         <!-- email input group start -->

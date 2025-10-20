@@ -1,6 +1,62 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ include file="/WEB-INF/views/include/head_wide.jsp" %>
 <!-- content field start -->
+<script>
+window.onload = function()
+{
+    $("#user_name").focus();
+    
+    $("#btnLogin").click(function(){
+        DoLogin();
+    });
+}
+
+function DoLogin()
+{
+    if($("#user_name").val() == "")
+    {
+        $("#msgIDFind").html("<span>이름을 입력해주세요.</span>");
+        $("#user_name").focus();
+        return;
+    }	
+    
+    if($("#tel").val() == "")
+    {
+        $("#msgIDFind").html("<span>전화번호를 '-'없이 입력해주세요.</span>");
+        $("#tel").focus();
+        return;
+    }		
+    $.ajax({
+        url : "find_id",
+        type: "post",
+        data :
+        {
+            user_name : $("#user_name").val(),
+            tel : $("#tel").val()
+        },
+        dataType: "html",
+        success : function(res)
+        {
+            res = res.trim();
+            if(res == "ERROR")
+            {
+                // 조회 에러
+                alert("조회 중 오류가 발생하였습니다. 관리자에게 문의하세요.");
+            }
+            else if(res == "false")
+            {
+                // 조회 실패
+                $("#msgIDFind").html("<span>이름 또는 전화번호가 일치하지 않습니다.</span>");
+            }
+            else
+            {
+                // 조회 성공
+                document.location = res;
+            }
+        }
+    });
+}
+</script>
         <div id="panelContent" class="d-flex flex-wrap justify-content-center align-content-center p-5" style="width: 100%;">
             <div id="formFindID" class="d-flex flex-wrap justify-content-center align-content-center p-0 m-0" style="min-width: 500px; max-width: 500px;">
                 <div id="formFindIDTitle" class="d-flex flex-wrap align-content-start my-3" style="width: 100%;">
@@ -14,19 +70,20 @@
                 <div id="formFindIDRequest" class="col-12 d-flex flex-wrap justify-content-center align-content-center border border-dark border-1 rounded py-5">
                     <div class="d-flex flex-wrap justify-content-center align-content-center w-75">
                         <div class="d-flex flex-wrap justify-content-center align-content-center w-75">
-                            <form id="" class="d-flex flex-wrap justify-content-center align-content-center w-100" action="" method="post">
-                                <input id="" class="form-control m-2" name="" type="text" placeholder="이름을 입력하세요">
-                                <input id="" class="form-control m-2" name="" type="password" placeholder="전화 번호를 입력하세요">
+                            <form class="d-flex flex-wrap justify-content-center align-content-center w-100" method="post">
+                                <div class="form-floating">
+                                    <input id="user_name" name="user_name" class="form-control m-2" type="text">
+                                    <label for="user_name" class="mx-2">이름을 입력해주세요.</label>
+                                </div>
+                                <div class="form-floating">
+                                    <input id="tel" name="tel" class="form-control m-2" type="text">
+                                    <label for="tel" class="mx-2">전화번호를 '-'없이 입력해주세요.</label>
+                                </div>
                             </form>
                         </div>
-                        <a href="find_id_ok" id="btnWideRequest" class="btn align-content-center w-25 my-1" type="button">확인</a>
+                        <button id="IDFind" class="btnWide btn align-content-center w-25 my-1" type="button">확인</a>
                     </div>
-                    <div id="" class="helpWideRequest form-text w-75 h-auto">
-                        이름을 입력하세요.
-                        <br>
-                        전화 번호를 입력하세요.
-                        <br>
-                        이름 또는 전화 번호가 일치하지 않습니다.
+                    <div id="msgIDFind" class="helpWideRequest form-text w-75 h-auto">
                     </div>
                     <!-- service center info field start -->
                     <div class="d-flex flex-wrap align-content-start w-75 mt-4">
