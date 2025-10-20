@@ -1,3 +1,6 @@
 .classpath
-/target
-src/main/webapp/WEB-INF/spring
+.project
+.springBeans
+.settings/
+target/
+src/main/webapp/WEB-INF/spring/
