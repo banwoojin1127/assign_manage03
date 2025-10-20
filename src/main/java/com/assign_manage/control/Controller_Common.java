@@ -73,7 +73,19 @@ public class Controller_Common
 		}else
 		{
 			session.setAttribute("login", vo);
-			return "true";
+			if(vo.getClass().equals("0"))
+			{
+				return "admin";
+			}
+			if(vo.getClass().equals("1"))
+			{
+				return "teacher";
+			}
+			if(vo.getClass().equals("2"))
+			{
+				return "student";
+			}
+			return "ERROR";
 		}
 	}
 	

@@ -1,6 +1,68 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ include file="/WEB-INF/views/include/head_wide.jsp" %>
 <!-- content field start -->
+ <script>
+	window.onload = function()
+	{
+		$("#id").val("ezen");
+		$("#pw").val("ezen");	
+		
+		$("#id").focus();
+		
+		$("#btnLogin").click(function(){
+			DoLogin();
+		});
+	}
+	
+	function DoLogin()
+	{
+		if($("#id").val() == "")
+		{
+			alert("아이디를 입력하세요");
+			$("#id").focus();
+			return;
+		}	
+		
+		if($("#pw").val() == "")
+		{
+			alert("비밀번호를 입력하세요");
+			$("#pw").focus();
+			return;
+		}		
+		$.ajax({
+			url : "login",
+			type: "post",
+			data :
+			{
+				id : $("#id").val(),
+				pw : $("#pw").val()
+			},
+			dataType: "html",
+			success : function(res)
+			{
+				res = res.trim();
+				if(res == "ERROR")
+				{
+                    // 로그인 에러 발생
+                }
+                else if(res == "false")
+                {
+                    // 로그인 실패
+                    alert("아이디 또는 비밀번호가 일치하지 않습니다.");
+                }
+                else
+				{
+                    //로그인 성공
+                    alert("로그인 성공하였습니다.");
+                    if(res == "admin")
+                    {
+                        document.location = "";
+                    }
+				}
+			}
+		});		
+	}
+</script>
         <div id="panelContent" class="d-flex flex-wrap justify-content-center align-content-center p-5" style="width: 100%;">
             <div id="formLogin" class="d-flex flex-wrap justify-content-center align-content-center p-0 m-0" style="min-width: 500px; max-width: 500px;">
                 <div id="formLoginTitle" class="d-flex flex-wrap align-content-start my-3" style="width: 100%;">
@@ -12,8 +74,8 @@
                 </div>
                 <div id="formLoginRequest" class="col-12 d-flex flex-wrap justify-content-center align-content-center border border-dark border-1 rounded py-5">
                     <form id="" class="d-flex flex-wrap justify-content-center align-content-center w-100" action="" method="post">
-                        <input id="" class="form-control w-75 my-1" name="" type="text" placeholder="아이디"><br>
-                        <input id="" class="form-control w-75 my-1" name="" type="password" placeholder="비밀번호"><br>
+                        <input id="id" class="form-control w-75 my-1" name="" type="text" placeholder="아이디"><br>
+                        <input id="pw" class="form-control w-75 my-1" name="" type="password" placeholder="비밀번호"><br>
                     </form>
                     <div id="" class="helpWideRequest form-text w-75 h-auto">
                         아이디를 입력하세요.
@@ -22,7 +84,7 @@
                         <br>
                         아이디 또는 비밀번호가 일치하지 않습니다.
                     </div>
-                    <a href="mypage" id="" class="btnWide align-content-center w-75 my-1" style="height: 50px;" type="button">로그인</a>
+                    <button id="btnLogin" class="btnWide btn align-content-center w-75 my-1" style="height: 50px;" type="button">로그인</button>
                     <div id="" class="darkText w-75 h-auto my-1 p-2">
                         <a href="signup" style="color: white; text-decoration : none;">회원 가입</a>
                         &nbsp;&nbsp;|&nbsp;&nbsp;

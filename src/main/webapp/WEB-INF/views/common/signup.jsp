@@ -318,7 +318,7 @@ function MovePostion()
     });
 }
 
-//*회원가입 요청 검사 함수
+//회원가입 요청 검사 함수
 function DoJoin()
 {
     // 필수 입력값이 없으면 submit 중지
