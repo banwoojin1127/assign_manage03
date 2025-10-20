@@ -23,7 +23,6 @@
 /* 컨텐츠 중앙 여백 */
 /* admin_new.css의 form과 admin_set_v01.0.css의 .content_margin이 유사한 역할 */
 form {
-    margin: 0 400px;
     font-size: 20px;
 }
 
