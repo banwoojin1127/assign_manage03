@@ -3,9 +3,6 @@
 <%@ include file="../include/head_admin.jsp"%>
 <!-- content field start -->
 
-
-
-
 <div style="padding: 80px 100px; text-align: center;">
 	<h3 style="text-align: left; width: 500px;">
 		<div id="formLoginTitle"
@@ -16,29 +13,25 @@
 	</h3>
 
 	<div style="text-align: center; margin: 5%;">
-		<form class="search-box" action="" method="get";>
+		<form class="search-box d-flex align-items-center" action="" method="get">
 			<input type="text" id="class" class="form-control"
 				style="width: 250px; float: left;" placeholder="강의명">
-			<button type="submit" class="btn btn-primary"
+			<button type="submit" class="btn btn-primary ms-2"
 				style="float: left; background-color: #3a8efd;">검색</button>
-				
 		</form>
-		<br><br><br>
+		
+		<br><br>
+		
 		<div stlye="height:30px;"></div>
 		<form class="showBtn" style="display: none;">
 			<button type="submit" class="btn btn-outline-primary"
 				style="float: right; padding-block: 5px; color: #000000;">
-				<b>저장</b>
+				<b>취소</b>
 			</button>
 
 			<button type="button" class="btn btn-outline-secondary"
 				style="color: #000000; float: right; padding-block: 5px; margin-right: 5px;">
-				<b>추가</b>
-			</button>
-
-			<button type="submit" class="btn btn-outline-secondary"
-				style="color: #000000; float: right; padding-block: 5px; margin-right: 5px;">
-				<b>제거</b>
+				<b>저장</b>
 			</button>
 		</form>
 		<div style="height: 40px;"></div>
@@ -58,7 +51,7 @@
 
 			<button type="button" class="btn btn-outline-secondary"
 				style="color: #000000; float: right; padding-block: 5px; margin-right: 5px;">
-				<b>편집</b>
+				<b>저장</b>
 			</button>
 
 			<button type="button" class="btn btn-outline-secondary"
@@ -78,7 +71,7 @@
 				</th>
 				<th class="tea-th thwidth1">번호
 				</th>
-				<th class="tea-th">강의명
+				<th class="tea-th thwidth2">강의명
 				</th>
 				<th class="tea-th thwidth2">교사명
 				</th>
@@ -100,9 +93,11 @@
 					<button type="button" class="btn btn-primary"
 						data-bs-toggle="modal" data-bs-target="#addStudentModal">추가</button>
 				</td>
-				<td class="tea-td">2025.09.29</td>
-				<td class="tea-td">2025.09.29</td>
+				<td class="editable">2025.09.29</td>
+				<td class="editable">2025.09.29</td>
 			</tr>
+			<button onclick="edit(this)">✏️</button>
+			
 			<tr>
 				<td class="tea-td"><input type="checkbox" name="check"></td>
 				<td class="tea-td">2</td>
@@ -158,6 +153,29 @@
 				<td class="tea-td"></td>
 			</tr>
 		</table>
+		
+		<br><br>
+		
+		<nav aria-label="Page navigation example" id="page">
+            <ul class="pagination justify-content-center ">
+                <li class="page-item disabled">
+                    <a class="page-link">&lt;</a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">4</a></li>
+                <li class="page-item"><a class="page-link" href="#">5</a></li>
+                <li class="page-item"><a class="page-link" href="#">6</a></li>
+                <li class="page-item"><a class="page-link" href="#">7</a></li>
+                <li class="page-item"><a class="page-link" href="#">8</a></li>
+                <li class="page-item"><a class="page-link" href="#">9</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#">&gt;</a>
+                </li>
+            </ul>
+        </nav>
+		
 	</div>
 	<!-- content field end -->
 </div>
@@ -191,7 +209,7 @@ function addRow() {
         cell3.className = "tea-td"; // 클래스 추가
         
         const cell4 = row1.insertCell(4);
-        cell4.innerText = "정원";
+        cell4.innerText = "최대정원";
         cell4.className = "thwidth2 tea-td"; // 클래스 추가
 
         const cell5 = row1.insertCell(5);
@@ -223,7 +241,7 @@ function addRow() {
         r2_c2.className = "tea-td"; // 클래스 추가
         
         const r2_c3 = row2.insertCell(3);
-        r2_c3.innerHTML = "<button type='button' class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#addStudentModal'>추가</button>";
+        r2_c3.innerHTML = "<button type='button' class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#addTeacherModal'>추가</button>";
         r2_c3.className = "tea-td"; // 클래스 추가
         
         const r2_c4 = row2.insertCell(4);
@@ -326,7 +344,13 @@ function addRow() {
     	};
    */
     
-    
+   function edit(){
+	   const row = button.closest("tr");
+	   const editableCells = row.querySelectorAll(".editable")
+   } 
+   
+   
+   
     </script>
 <!-- add student Modal start-->
 <div class="modal fade" id="addStudentModal" data-bs-backdrop="static"
@@ -406,16 +430,10 @@ function addRow() {
 								여</div>
 						</label>
 					</div>
-					<!-- search results table end -->
-					<!-- add student form end -->
-				</div>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary"
-					data-bs-dismiss="modal">취소</button>
-				<a href="" class="btn btn-primary" data-bs-dismiss="modal">추가</a>
-			</div>
-			<nav aria-label="Page navigation example" id="page">
+					
+					<br><br>
+					
+					<nav aria-label="Page navigation example" id="page">
             <ul class="pagination justify-content-center ">
                 <li class="page-item disabled">
                     <a class="page-link">&lt;</a>
@@ -425,11 +443,205 @@ function addRow() {
                 <li class="page-item"><a class="page-link" href="#">3</a></li>
                 <li class="page-item"><a class="page-link" href="#">4</a></li>
                 <li class="page-item"><a class="page-link" href="#">5</a></li>
+                <li class="page-item"><a class="page-link" href="#">6</a></li>
+                <li class="page-item"><a class="page-link" href="#">7</a></li>
+                <li class="page-item"><a class="page-link" href="#">8</a></li>
+                <li class="page-item"><a class="page-link" href="#">9</a></li>
                 <li class="page-item">
                     <a class="page-link" href="#">&gt;</a>
                 </li>
             </ul>
         </nav>
+					
+					<!-- search results table end -->
+					<!-- add student form end -->
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary"
+					data-bs-dismiss="modal">취소</button>
+				<a href="" class="btn btn-primary" data-bs-dismiss="modal">추가</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="addTeacherModal" data-bs-backdrop="static"
+	tabindex="-1" aria-labelledby="addTeacherModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+		style="min-width: 777px; max-width: 777px;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<!-- content main title start -->
+				<div id=""
+					class="d-flex flex-wrap justify-content-start align-content-start"
+					style="width: 100%;">
+					<div id="" class="decoWideTitle" style="width: 12px; height: 40px;"></div>
+					&nbsp;&nbsp;
+					<div id=""
+						class="textWideTitle d-flex flex-wrap align-content-center px-1">
+						<p class="flex-grow-1 m-0" style="font-size: 1.5em;">교사 추가</p>
+					</div>
+				</div>
+				<!-- content main title end -->
+				<button type="button" class="btn-close" data-bs-dismiss="modal"
+					aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<div class="container-fluid">
+					<!-- info massge start -->
+					<div>
+						<span>교사 이름을 검색 하실 수 있습니다.</span>
+					</div>
+					<!-- info massge end -->
+					<!-- add student form start -->
+					<!-- student search by name start -->
+					<div class="input-group mb-3">
+						<input type="text" class="form-control" placeholder="학생 명"
+							aria-describedby="searchButton"> <a
+							class="btn btn-outline-primary" type="button" id="searchButton">검색</a>
+					</div>
+					<!-- student search by name end -->
+					<!-- search results table start -->
+					<div class="sSearchReTab rounded"
+						style="border: #a9a9a9; border-style: solid; border-width: 1px;">
+						<div class="sSearchReTabRowName d-flex justify-content-between"
+							style="background-color: lightgrey; font-weight: bold;">
+							<div class="sSearchReTabCol d-flex justify-content-center p-2"
+								style="width: 50%; border: #a9a9a9; border-style: solid; border-width: 1px;">
+								아이디</div>
+							<div class="sSearchReTabCol d-flex justify-content-center p-2"
+								style="width: 25%; border: #a9a9a9; border-style: solid; border-width: 1px;">
+								이름</div>
+							<div class="sSearchReTabCol d-flex justify-content-center p-2"
+								style="width: 25%; border: #a9a9a9; border-style: solid; border-width: 1px;">
+								성별</div>
+						</div>
+						<input type="radio" class="btn-check" name="studentResult"
+							id="student00" autocomplete="off"> <label for="student00"
+							class="sSearchReTabRowVal btn d-flex justify-content-between m-0 p-0">
+							<div class="sSearchReTabCol d-flex justify-content-center p-2"
+								style="width: 50%; border: #a9a9a9; border-style: solid; border-width: 1px;">
+								hong123</div>
+							<div class="sSearchReTabCol d-flex justify-content-center p-2"
+								style="width: 25%; border: #a9a9a9; border-style: solid; border-width: 1px;">
+								홍길동</div>
+							<div class="sSearchReTabCol d-flex justify-content-center p-2"
+								style="width: 25%; border: #a9a9a9; border-style: solid; border-width: 1px;">
+								남</div>
+						</label> <input type="radio" class="btn-check" name="studentResult"
+							id="student01" autocomplete="off"> <label for="student01"
+							class="sSearchReTabRowVal btn d-flex justify-content-between m-0 p-0">
+							<div class="sSearchReTabCol d-flex justify-content-center p-2"
+								style="width: 50%; border: #a9a9a9; border-style: solid; border-width: 1px;">
+								chun789</div>
+							<div class="sSearchReTabCol d-flex justify-content-center p-2"
+								style="width: 25%; border: #a9a9a9; border-style: solid; border-width: 1px;">
+								성춘향</div>
+							<div class="sSearchReTabCol d-flex justify-content-center p-2"
+								style="width: 25%; border: #a9a9a9; border-style: solid; border-width: 1px;">
+								여</div>
+						</label><label for="student00"
+							class="sSearchReTabRowVal btn d-flex justify-content-between m-0 p-0">
+							<div class="sSearchReTabCol d-flex justify-content-center p-2"
+								style="width: 50%; border: #a9a9a9; border-style: solid; border-width: 1px;">
+								hong123</div>
+							<div class="sSearchReTabCol d-flex justify-content-center p-2"
+								style="width: 25%; border: #a9a9a9; border-style: solid; border-width: 1px;">
+								홍길동</div>
+							<div class="sSearchReTabCol d-flex justify-content-center p-2"
+								style="width: 25%; border: #a9a9a9; border-style: solid; border-width: 1px;">
+								남</div>
+						</label> <input type="radio" class="btn-check" name="studentResult"
+							id="student01" autocomplete="off"> <label for="student01"
+							class="sSearchReTabRowVal btn d-flex justify-content-between m-0 p-0">
+							<div class="sSearchReTabCol d-flex justify-content-center p-2"
+								style="width: 50%; border: #a9a9a9; border-style: solid; border-width: 1px;">
+								chun789</div>
+							<div class="sSearchReTabCol d-flex justify-content-center p-2"
+								style="width: 25%; border: #a9a9a9; border-style: solid; border-width: 1px;">
+								성춘향</div>
+							<div class="sSearchReTabCol d-flex justify-content-center p-2"
+								style="width: 25%; border: #a9a9a9; border-style: solid; border-width: 1px;">
+								여</div>
+						</label><label for="student00"
+							class="sSearchReTabRowVal btn d-flex justify-content-between m-0 p-0">
+							<div class="sSearchReTabCol d-flex justify-content-center p-2"
+								style="width: 50%; border: #a9a9a9; border-style: solid; border-width: 1px;">
+								hong123</div>
+							<div class="sSearchReTabCol d-flex justify-content-center p-2"
+								style="width: 25%; border: #a9a9a9; border-style: solid; border-width: 1px;">
+								홍길동</div>
+							<div class="sSearchReTabCol d-flex justify-content-center p-2"
+								style="width: 25%; border: #a9a9a9; border-style: solid; border-width: 1px;">
+								남</div>
+						</label> <input type="radio" class="btn-check" name="studentResult"
+							id="student01" autocomplete="off"> <label for="student01"
+							class="sSearchReTabRowVal btn d-flex justify-content-between m-0 p-0">
+							<div class="sSearchReTabCol d-flex justify-content-center p-2"
+								style="width: 50%; border: #a9a9a9; border-style: solid; border-width: 1px;">
+								chun789</div>
+							<div class="sSearchReTabCol d-flex justify-content-center p-2"
+								style="width: 25%; border: #a9a9a9; border-style: solid; border-width: 1px;">
+								성춘향</div>
+							<div class="sSearchReTabCol d-flex justify-content-center p-2"
+								style="width: 25%; border: #a9a9a9; border-style: solid; border-width: 1px;">
+								여</div>
+						</label><label for="student00"
+							class="sSearchReTabRowVal btn d-flex justify-content-between m-0 p-0">
+							<div class="sSearchReTabCol d-flex justify-content-center p-2"
+								style="width: 50%; border: #a9a9a9; border-style: solid; border-width: 1px;">
+								hong123</div>
+							<div class="sSearchReTabCol d-flex justify-content-center p-2"
+								style="width: 25%; border: #a9a9a9; border-style: solid; border-width: 1px;">
+								홍길동</div>
+							<div class="sSearchReTabCol d-flex justify-content-center p-2"
+								style="width: 25%; border: #a9a9a9; border-style: solid; border-width: 1px;">
+								남</div>
+						</label> <input type="radio" class="btn-check" name="studentResult"
+							id="student01" autocomplete="off"> <label for="student01"
+							class="sSearchReTabRowVal btn d-flex justify-content-between m-0 p-0">
+							<div class="sSearchReTabCol d-flex justify-content-center p-2"
+								style="width: 50%; border: #a9a9a9; border-style: solid; border-width: 1px;">
+								chun789</div>
+							<div class="sSearchReTabCol d-flex justify-content-center p-2"
+								style="width: 25%; border: #a9a9a9; border-style: solid; border-width: 1px;">
+								성춘향</div>
+							<div class="sSearchReTabCol d-flex justify-content-center p-2"
+								style="width: 25%; border: #a9a9a9; border-style: solid; border-width: 1px;">
+								여</div>
+						</label>
+					</div>
+					<br><br>
+					<nav aria-label="Page navigation example" id="page">
+            <ul class="pagination justify-content-center ">
+                <li class="page-item disabled">
+                    <a class="page-link">&lt;</a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">4</a></li>
+                <li class="page-item"><a class="page-link" href="#">5</a></li>
+                <li class="page-item"><a class="page-link" href="#">6</a></li>
+                <li class="page-item"><a class="page-link" href="#">7</a></li>
+                <li class="page-item"><a class="page-link" href="#">8</a></li>
+                <li class="page-item"><a class="page-link" href="#">9</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#">&gt;</a>
+                </li>
+            </ul>
+        </nav>
+					
+					<!-- search results table end -->
+					<!-- add student form end -->
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary"
+					data-bs-dismiss="modal">취소</button>
+				<a href="" class="btn btn-primary" data-bs-dismiss="modal">추가</a>
+			</div>
 		</div>
 	</div>
 </div>
