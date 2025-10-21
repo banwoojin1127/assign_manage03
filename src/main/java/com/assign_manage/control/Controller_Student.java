@@ -4,6 +4,8 @@ import java.io.*;
 import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,10 +23,12 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.assign_manage.repository.Repository_Student;
+import com.assign_manage.vo.VO_Answer;
 import com.assign_manage.vo.VO_Assignment;
 import com.assign_manage.vo.VO_File;
 import com.assign_manage.vo.VO_Lecture;
 import com.assign_manage.vo.VO_Lecture_list;
+import com.assign_manage.vo.VO_Question;
 import com.assign_manage.vo.VO_Report;
 import com.assign_manage.vo.VO_Search_student;
 import com.assign_manage.vo.VO_User;
@@ -193,8 +197,29 @@ public class Controller_Student
 	}
 	
 	@RequestMapping(value="/assign/{assign_no}", method = RequestMethod.GET)
-	public String AssignView(@PathVariable("assign_no") String no)
+	public String AssignView(@PathVariable("assign_no") String no, Model model)
 	{
+		VO_Assignment assign = student.AssignRead(no);
+		VO_Question quest = student.QuestionRead(no);
+		VO_Answer answer = student.AnswerRead(no);
+		
+		//end_date 포맷 변경
+	    if(assign.getEnd_date() != null && !assign.getEnd_date().isEmpty())
+	    {
+	        try
+	        {
+	            DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+	            DateTimeFormatter outputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+	            LocalDateTime dt = LocalDateTime.parse(assign.getEnd_date(), inputFormat);
+	            assign.setEnd_date(dt.format(outputFormat));
+	        }catch(Exception e){}
+	    }
+		
+		model.addAttribute("assign",assign);
+		model.addAttribute("quest",quest);
+		model.addAttribute("answer",answer);
+		
 		return "student/assignment_view";
 	}
 	

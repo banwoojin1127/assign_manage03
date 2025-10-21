@@ -8,12 +8,12 @@
 	<select id="assign_view" parameterType="java.lang.String" 
 			resultType="com.assign_manage.vo.VO_Assignment">
 		select 
-			a.assign_no, a.lecture_no, a.assign_name, a.assign_note, a.assign_method, a.create_date,
-			a.end_date, a.delete_date, l.lecture_name as lecture_name, u.user_name as teacher_name
+			a.assign_no, a.lecture_no, a.assign_name, a.assign_note, 
+			a.assign_method, a.end_date, l.lecture_name as lecture_name 
 		from assignment a
 		left join lecture l on a.lecture_no = l.lecture_no
 		left join user u on l.id = u.id
-		where assignment_no = #{ assignment_no }
+		where assign_no = #{ assign_no }
 	</select>
 
 	<select id="assign_list" parameterType="map" 
@@ -122,9 +122,9 @@
 	<select id="answer_view" parameterType="java.lang.String" 
 		resultType="com.assign_manage.vo.VO_Answer">
 		select 
-			a.quest_no, a.id, a.answer_note, a.quest_note, a.create_date, a.delete_date, u.user_name
+			a.quest_no, a.id, a.answer_note, a.create_date, a.delete_date, u.user_name
 		from answer a
-		left join user u on q.id = u.id
+		left join user u on a.id = u.id
 		where quest_no = #{ quest_no }
 	</select>
 	

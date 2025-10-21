@@ -10,7 +10,7 @@
                     <p class="flex-grow-1 m-0" style="font-size: 1.5em;">과제 상세보기</p>
                 </div>
                 <div class="ms-auto">
-                    <a href="../assign" class="darkBtn btn rounded px-3" style="height: 40px;"><b>이전</b></a>
+                    <a href="../assign/list/${assign.lecture_no}" class="darkBtn btn rounded px-3" style="height: 40px;"><b>이전</b></a>
                 </div>
             </div>
             <!-- content main title end -->
@@ -19,7 +19,9 @@
                 <!-- assignment title start -->
                 <div class="darkText d-flex flex-wrap align-content-center flex-grow-1 rounded p-2">
                     <div id="" class="darkText d-flex flex-wrap align-content-center rounded px-1">
-                        <p class="m-0 px-3" style="text-align: left; font-size: 1.25em;">강의명 : HTML</p>
+                        <p class="m-0 px-3" style="text-align: left; font-size: 1.25em;">
+                        	강의명 : ${assign.lecture_name}
+                        </p>
                     </div>
                 </div>
                 <!-- assignment title end -->
@@ -32,7 +34,7 @@
                         과제명
                     </div>
                     <div class="tableCellValue d-flex flex-grow-1">
-                        디자인을 확인하고 HTML 만들어서 제출
+                        ${assign.lecture_name}
                     </div>
                 </div>
                 <div class="d-flex justify-content-start align-content-center w-100">
@@ -40,7 +42,7 @@
                         제출방식
                     </div>
                     <div class="tableCellValue d-flex flex-grow-1">
-                        HTML
+                        ${assign.lecture_method}
                     </div>
                 </div>
                 <div class="d-flex justify-content-start align-content-center w-100">
@@ -51,10 +53,10 @@
                         1주차
                     </div>
                     <div class="tableCellName d-flex" style="min-width: 85px;">
-                        종료일
+                        제출 기한
                     </div>
                     <div class="tableCellValue d-flex flex-grow-1">
-                        2025.10.01
+                        ${assign.end_date}
                     </div>
                 </div>
                 <div class="d-flex justify-content-start align-content-center w-100">
@@ -62,7 +64,7 @@
                         내용
                     </div>
                     <div class="tableCellValue d-flex flex-grow-1">
-                        디자인을 보고 시스템의 흐름을 이해하며, html로 구현하는 능력을 함양하는 것
+                        ${assign.assign_note}
                     </div>
                 </div>
             </div>
