@@ -61,7 +61,7 @@ public class Controller_Common
 	@RequestMapping(value = CF + "login", method = RequestMethod.POST)
 	@ResponseBody
 	public String Login(
-			String id,String pw,
+			@RequestParam("id") String id, @RequestParam("pw") String pw,
 			HttpServletRequest request
 			)
 	{
