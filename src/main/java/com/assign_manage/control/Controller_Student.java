@@ -2,6 +2,8 @@ package com.assign_manage.control;
 
 import java.io.*;
 import java.net.URLEncoder;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,10 +17,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.assign_manage.repository.Repository_Student;
+import com.assign_manage.vo.VO_Assignment;
 import com.assign_manage.vo.VO_File;
+import com.assign_manage.vo.VO_Lecture;
 import com.assign_manage.vo.VO_Lecture_list;
 import com.assign_manage.vo.VO_Report;
 import com.assign_manage.vo.VO_Search_student;
@@ -47,7 +52,6 @@ public class Controller_Student
 			HttpSession session, Model model)
 	{	
 		
-		/*
 		VO_User login = (VO_User)session.getAttribute("login");
 		
 		String id = login.getId();
@@ -62,7 +66,7 @@ public class Controller_Student
 		vo.setId(id);
 		
 		//전체 갯수
-		int total = student.GetTotal(vo);
+		int total = student.LectureTotal(vo);
 		
 		//최대 페이지 갯수
 		int maxpage = total / limitno;
@@ -81,7 +85,7 @@ public class Controller_Student
 		}			
 		
 		//목록 조회 
-		List<VO_Lecture_list> list = student.GetList(vo);	
+		List<VO_Lecture_list> list = student.LectureList(vo);	
 		
 		model.addAttribute("total",total);
 		model.addAttribute("maxpage",maxpage);
@@ -91,19 +95,105 @@ public class Controller_Student
 		
 		model.addAttribute("search",vo);
 		model.addAttribute("list",list);
-		*/
 		
 		return "student/lecture_list";
 	}
 	
-	@RequestMapping(value="/assign", method = RequestMethod.GET)
-	public String AssignList()
+	@RequestMapping(value="/assign/list", method = RequestMethod.GET)
+	public String AssignListAll(HttpSession session, Model model) throws ParseException
 	{
+		//VO_User login = (VO_User) session.getAttribute("login");
+		//String id = login.getId();
+		String id = "s2ezen";
+		
+		Map<String, Object> params = new HashMap<>();
+        params.put("id", id);
+
+        //전체 과제 목록
+        List<VO_Assignment> assignList = student.AssignList(params);
+
+        //end_date를 문자열로 변환
+        SimpleDateFormat dbFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //DB 저장 형식
+        SimpleDateFormat displayFormat = new SimpleDateFormat("MM-dd HH:mm");
+        
+        for (VO_Assignment assign : assignList)
+        {
+        	if(assign.getEnd_date() != null && !assign.getEnd_date().isEmpty())
+        	{
+                Date date = dbFormat.parse(assign.getEnd_date());
+                assign.setEnd_date(displayFormat.format(date));
+            }else
+            {
+                assign.setEnd_date("미정");
+            }
+        }
+        
+        //과제에서 강의 목록 추출
+        Map<String, String> lectureMap = new LinkedHashMap<>();
+        for (VO_Assignment assign : assignList) {
+            lectureMap.put(String.valueOf(assign.getLecture_no()), assign.getLecture_name());
+        }
+
+        model.addAttribute("assignList", assignList);      
+        model.addAttribute("lectureMap", lectureMap);
+        model.addAttribute("lecture_no", null);
+        
 		return "student/assignment_list";
 	}
 	
+	@RequestMapping(value="/assign/list/{lecture_no}", method = RequestMethod.GET)
+	public String AssignList(@PathVariable("lecture_no") String no, HttpSession session, Model model) throws ParseException
+	{
+		//VO_User login = (VO_User) session.getAttribute("login");
+		//String id = login.getId();
+		String id = "s2ezen";
+		
+		Map<String, Object> params = new HashMap<>();
+	    params.put("id", id);
+	    
+	    //전체 과제 목록 조회 (강의 버튼용)
+	    List<VO_Assignment> allAssignList = student.AssignList(params);
+	    Map<String, String> lectureMap = new LinkedHashMap<>();
+	    for(VO_Assignment assign : allAssignList)
+	    {
+	        lectureMap.put(String.valueOf(assign.getLecture_no()), assign.getLecture_name());
+	    }
+	    
+	    //선택 강의 과제만 조회
+	    params.put("lecture_no", no);
+	    List<VO_Assignment> assignList = student.AssignList(params);
+	    
+	    //end_date를 문자열로 변환
+        SimpleDateFormat dbFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //DB 저장 형식
+        SimpleDateFormat displayFormat = new SimpleDateFormat("MM-dd HH:mm");
+        
+        for(VO_Assignment assign : assignList)
+        {
+        	if(assign.getEnd_date() != null && !assign.getEnd_date().isEmpty())
+        	{
+                Date date = dbFormat.parse(assign.getEnd_date());
+                assign.setEnd_date(displayFormat.format(date));
+            }else
+            {
+                assign.setEnd_date("미정");
+            }
+        }
+
+	    model.addAttribute("assignList", assignList);
+	    model.addAttribute("lectureMap", lectureMap);
+	    model.addAttribute("lecture_no", no);
+
+		return "student/assignment_list";
+	}
+	
+	@RequestMapping(value="/assign", method = RequestMethod.GET)
+	public String Assign()
+	{
+		return "redirect:/student";
+	}
+	
 	@RequestMapping(value="/assign/{assign_no}", method = RequestMethod.GET)
-	public String AssignView(@PathVariable("assign_no") int no)
+	public String AssignView(@PathVariable("assign_no") String no)
 	{
 		return "student/assignment_view";
 	}
@@ -131,7 +221,7 @@ public class Controller_Student
 			return "redirect:/common/login";
 		}
 		
-		//게시글 작성자 아이디를 설정한다.
+		//과제물 제출자 아이디를 설정한다.
 		vo.setId(login.getId());
 		
 		List<VO_File> voFiles = new ArrayList<VO_File>();
@@ -178,9 +268,11 @@ public class Controller_Student
 	@RequestMapping(value="/report/{report_no}", method = RequestMethod.GET)
 	public String ReportView(@PathVariable("report_no") int no, Model model)
 	{
+		/*
 		VO_Report report = student.ReportRead(no);
 		
 		model.addAttribute("report", report);
+		*/
 	    
 		return "student/report_view";
 	}
@@ -204,7 +296,7 @@ public class Controller_Student
 	}
 	
 	@RequestMapping("/report/{report_no}/download/{file_no}")
-	public void FileDown(@PathVariable("file_no") int no, HttpServletResponse response) throws IOException
+	public void FileDown(@PathVariable("file_no") String no, HttpServletResponse response) throws IOException
 	{
 	    VO_File voFile = student.FileRead(no); // 파일 정보 가져오기(DB 조회)
 	    String filePath = uploadPath + File.separator + voFile.getP_name();

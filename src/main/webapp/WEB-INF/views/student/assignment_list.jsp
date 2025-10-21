@@ -8,40 +8,33 @@
                 <b>과제 조회</b>
             </h3>
             <br>
-            <form class="lectureBtn listMargin">
-                <button type="submit" class="btn lectureText btn-outline-secondary">
-                    암석 탐구</button>
-                <button type="submit" class="btn lectureText btn-outline-secondary">
-                    하늘에서 음식이 내린다면</button>
-                <button type="submit" class="btn lectureText btn-outline-secondary">
-                    floccinaucinihilipilificastically</button>
-                <button type="submit" class="btn lectureText btn-outline-secondary">
-                    호박고구마 vs 밤고구마</button>
-                <button type="submit" class="btn lectureText btn-outline-secondary">
-                    감자는 왜 맛있을까</button>
-                <button type="submit" class="btn lectureText btn-outline-secondary">
-                    주말이 짧은 과학적 이유</button>
             
-                <button type="submit" class="btn lectureText btn-outline-secondary">. . .</button>
-            </form>
-
+            <!-- 강의 버튼 -->
+            <div class="lecture-button-container" style="display: flex; flex-wrap: wrap; gap: 10px;">
+	             <c:forEach var="entry" items="${lectureMap}">
+			    		<button type="submit" class="btn lectureText btn-outline-secondary
+				    		<c:if test='${lecture_no == entry.key}'> active</c:if>'"
+				    		onclick="location.href='<c:url value="/student/assign/list/${entry.key}"/>'">
+			            	${entry.value}
+		            	</button>
+				</c:forEach>
+			</div>
+		    
             <br><br>
             
-            <div class="listMargin" id="teacherInfo1">
-                <img src="<c:url value="/resources/img/profile.png"/>" style="margin-left: 100px; width:250px; height:250px;">
-                <div id="teacherInfo2">
-                    <b id="lectureName" style="display: block; margin-top: 20px;">
-                    floccinaucinihil
-                    <br>
-                    ipilificastically
-                    </b>
-                    <div id="teacherName" style="margin-top: 10px;">
-                    담당 교사 : 홍길동
-                    </div>
-                </div>
-            </div>
-            <br><br>
+            <!-- 강의 정보 -->
+            <c:if test="${not empty assignList}">
+	            <div class="listMargin" id="teacherInfo1" th:if="${assignList != null and !assignList.isEmpty()}">
+	                <img src="<c:url value="/resources/img/profile.png"/>" style="margin-left: 100px; width:250px; height:250px;">
+	                <div id="teacherInfo2">
+	                    <b id="lectureName" style="display: block; margin-top: 20px;">${assignList[0].lecture_name}</b>
+	                    <div id="teacherName" style="margin-top: 10px;">담당 교사 : ${assignList[0].teacher_name}</div>
+	                </div>
+	            </div>
+	            <br><br>
+            </c:if>
 
+			<!-- 과제 테이블 -->
             <table id="assignment-list" class="listMargin" style="width: 1260px; font-size: 20px;">
                 <tr style="background-color: #c2dcff;">
                     <th style="width: 80px;">번호</td>
@@ -49,24 +42,27 @@
                     <th style="width: 1000px">과제명</td>
                     <th style="width: 400px;">제출 기한</td>
                 </tr>
-                <tr>
-                    <th>1</th>
-                    <td>1주차</td>
-                    <td><a href="assign/1">과제 A</a></td>
-                    <td class="endDate">09-29-00:00</td>
-                </tr>
-                <tr>
-                    <th>2</th>
-                    <td>2주차</td>
-                    <td><a href="assign/1">과제 B</a></td>
-                    <td class="endDate">09-30-00:00</td>
-                </tr>
-                <tr>
-                    <th>3</th>
-                    <td>3주차</td>
-                    <td><a href="assign/1">과제 C</a></td>
-                    <td>10-04-00:00</td>
-                </tr>
+                
+                <!-- 과제가 없을 경우 -->
+                <c:if test="${empty assignList}">
+		            <tr>
+		                <td colspan="4">등록된 과제가 없습니다.</td>
+		            </tr>
+		        </c:if>
+	
+	            <!-- 과제 목록 반복 -->
+	            <c:forEach var="assign" items="${assignList}" varStatus="stat">
+		            <tr>
+		                <td>${stat.index + 1}</td>
+		                <td>${stat.index + 1}주차</td>
+		                <td>
+		                    <a href="<c:url value="/student/assign/${assign.assign_no}"/>">
+		                        ${assign.assign_name}
+		                    </a>
+		                </td>
+		                <td>${assign.end_date}</td>
+		            </tr>
+		        </c:forEach>
             </table>
             <br><br>
         </div>

@@ -38,7 +38,7 @@
                 </div>
                 <div class="align-content-center">
                     <label for="submissionWriteFiles" class="mx-1 px-1">
-                        <img src="../../resources/img/file-earmark-plus-fill.png" class="microIcon">
+                        <img src="<c:url value="/resources/img/file-earmark-plus-fill.png"/>" class="microIcon">
                     </label>
                 </div>
             </div>

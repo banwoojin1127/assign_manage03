@@ -5,6 +5,34 @@
 <!-- Namespace를 통해 JAVA 클래스와 Annotation클래스와 동기 -->
 <mapper namespace="student">
 
+	<select id="assign_view" parameterType="java.lang.String" 
+			resultType="com.assign_manage.vo.VO_Assignment">
+		select 
+			a.assign_no, a.lecture_no, a.assign_name, a.assign_note, a.assign_method, a.create_date,
+			a.end_date, a.delete_date, l.lecture_name as lecture_name, u.user_name as teacher_name
+		from assignment a
+		left join lecture l on a.lecture_no = l.lecture_no
+		left join user u on l.id = u.id
+		where assignment_no = #{ assignment_no }
+	</select>
+
+	<select id="assign_list" parameterType="map" 
+			resultType="com.assign_manage.vo.VO_Assignment">
+		select 
+			a.assign_no, a.lecture_no, a.assign_name, a.end_date, 
+			l.lecture_name as lecture_name, u.user_name as teacher_name 
+		from assignment a
+		inner join lecture_list l_l on a.lecture_no = l_l.lecture_no
+		inner join lecture l on a.lecture_no = l.lecture_no
+		inner join user u on l.id = u.id
+		where l_l.id = 's2ezen' 
+		  <if test="lecture_no != null and lecture_no != ''">
+		      and a.lecture_no = #{ lecture_no } 
+		  </if>
+		  and a.delete_date is null
+		order by a.create_date asc
+	</select>
+
 	<insert id="report_insert" parameterType="com.assign_manage.vo.VO_Report"
 		useGeneratedKeys="true" keyProperty="report_no">
 		insert into report (id, report_note, create_date, delete_date)
@@ -20,10 +48,10 @@
 	<select id="report_view" parameterType="java.lang.String" 
 			resultType="com.assign_manage.vo.VO_Report">
 		select 
-			report_no, assignment_no, id, report_note, create_date,
-			a.assign_name, l.lecture_name, u1.name as student_name, u2.name as teacher_name
+			r.report_no, r.assign_no, r.id, r.report_note, r.create_date, r.delete_date, 
+			a.assign_name, l.lecture_name, u1.user_name as student_name, u2.user_name as teacher_name
 		from report r
-		left join assignment a on r.assignment_no = a.assignment_no
+		left join assignment a on r.assign_no = a.assign_no
 		left join lecture l on a.lecture_no = l.lecture_no
 		left join user u1 on r.id = u1.id
 		left join user u2 on l.id = u2.id
@@ -80,7 +108,7 @@
 	<select id="question_view" parameterType="java.lang.String" 
 		resultType="com.assign_manage.vo.VO_Question">
 		select 
-			quest_no, assign_no, id, quest_note, create_date, delete_date, u.name as name
+			q.quest_no, q.assign_no, q.id, q.quest_note, q.create_date, q.delete_date, u.user_name as name
 		from question q
 		left join user u on q.id = u.id
 		where quest_no = #{ quest_no }
@@ -94,8 +122,8 @@
 	<select id="answer_view" parameterType="java.lang.String" 
 		resultType="com.assign_manage.vo.VO_Answer">
 		select 
-			quest_no, id, answer_note, quest_note, create_date, delete_date, u.name
-		from question q
+			a.quest_no, a.id, a.answer_note, a.quest_note, a.create_date, a.delete_date, u.user_name
+		from answer a
 		left join user u on q.id = u.id
 		where quest_no = #{ quest_no }
 	</select>
@@ -108,27 +136,34 @@
 		left join user u on l.id = u.id
 		where id = #{ id } 
 		<if test='type.equals("전체") and keyword != null and !keyword.equals("")'>
-			and (lecture_name like '%${ keyword }%' or user.name like '%${ keyword }%')
+			and (lecture_name like '%${ keyword }%' or user.user_name like '%${ keyword }%')
 		</if>
 		<if test='type.equals("강의명") and keyword != null and !keyword.equals("")'>
 			and lecture_name like '%${ keyword }%'
 		</if>
 		<if test='type.equals("교사명") and keyword != null and !keyword.equals("")'>
-			and u.name like '%${ keyword }%'
+			and u.user_name like '%${ keyword }%'
 		</if>
 	</select>
 	
 	<select id="lecture_list" parameterType="com.assign_manage.vo.VO_Search_student"
-		resultType="com.assign_manage.vo.VO_Lecture">
-		select no,title,date(wdate) as wdate,hit,
-		(select name from user where userid = board.userid) as name,
-		(select count(*) from reply where no = board.no) as rcount
-		from board
-		where kind = #{ kind } 
-		<if test='keyword != null and !keyword.equals("")'>
-			and title like '%${ keyword }%'
+		resultType="com.assign_manage.vo.VO_Lecture_list">
+		select l_l.id, l_l.lecture_no, l_l.lecture_name, l_l.create_date,
+		l_l.delete_date, l.start_date, l.end_date, u.name
+		from lecture_list l_l
+		left join lecture l in l_l.lecture_no = l.lecture_no
+		left join user u on l.id = u.id
+		where id = #{ id } 
+		<if test='type.equals("전체") and keyword != null and !keyword.equals("")'>
+			and (lecture_name like '%${ keyword }%' or user.user_name like '%${ keyword }%')
+		</if>
+		<if test='type.equals("강의명") and keyword != null and !keyword.equals("")'>
+			and lecture_name like '%${ keyword }%'
+		</if>
+		<if test='type.equals("교사명") and keyword != null and !keyword.equals("")'>
+			and u.user_name like '%${ keyword }%'
 		</if>
 		order by no desc
-		limit #{offset},10		
+		limit # {offset },10		
 	</select>
 </mapper>
