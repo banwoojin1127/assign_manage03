@@ -1,10 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
- "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<!-- Namespace를 통해 JAVA 클래스와 Annotation클래스와 동기 -->
 <mapper namespace="teacher">
 
+    <!-- 전체 강의 조회 -->
+    <select id="selectAllLectures" resultType="com.assign_manage.vo.VO_Lecture">
+        SELECT * FROM lecture
+        WHERE delete_date IS NULL
+        ORDER BY lecture_no
+    </select>
 
+    <!-- 특정 강의 과제 목록 -->
+<select id="selectAssignmentsByLecture" parameterType="int" resultType="com.assign_manage.vo.VO_Assignment">
+    SELECT * FROM assignment
+    WHERE lecture_no = #{lecture_no}
+      AND delete_date IS NULL
+    ORDER BY assign_no DESC
+</select>
+
+    <!-- 특정 과제 조회 -->
+    <select id="selectAssignmentByNo" parameterType="int" resultType="com.assign_manage.vo.VO_Assignment">
+        SELECT * FROM assignment
+        WHERE assign_no = #{assign_no}
+          AND delete_date IS NULL
+    </select>
+
+    <!-- 과제 추가 -->
+    <insert id="insertAssignment" parameterType="com.assign_manage.vo.VO_Assignment">
+        INSERT INTO assignment
+        (lecture_no, assign_name, assign_note, assign_method, create_date, end_date)
+        VALUES
+        (#{lecture_no}, #{assign_name}, #{assign_note}, #{assign_method}, #{create_date}, #{end_date})
+    </insert>
 
 </mapper>
