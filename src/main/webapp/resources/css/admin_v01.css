@@ -174,12 +174,12 @@ th, td {
 /* ===== lecture-management.html 스타일 ===== */
 #class_content, #table_add {
     border-collapse: collapse;
-    width: 100%;
+    width: 1050px;
     padding-right: 500px;
     border-color: gray;
 }
 
-.chwidth1, .thwidth1, .thwidth2, .thwidth3 {
+.chwidth1, .thwidth1, .thwidth2, .thwidth3, .edit_th {
     background-color: #c2dcff;
 }
 
@@ -214,4 +214,18 @@ th, td {
 
 .assigment:hover {
     font-weight: bold;
+}
+
+.edit {
+	background-color : transparent;
+	border: none;
+}
+	
+#edit_td {
+	width: 30px;
+}
+
+.edit_th {
+	width: 30px;
+	
 }
