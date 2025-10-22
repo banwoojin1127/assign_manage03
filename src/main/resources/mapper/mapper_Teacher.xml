@@ -5,6 +5,11 @@
 
 <mapper namespace="teacher">
 
+	<!-- modal 전체 교사 조회 -->
+	<select id="All_Teacher_List" resultType="com.assign_manage.vo.VO_User">
+		select id, user_name, gender from user where user_class = 1
+	</select>
+	
     <!-- 전체 강의 조회 -->
     <select id="selectAllLectures" resultType="com.assign_manage.vo.VO_Lecture">
         SELECT * FROM lecture

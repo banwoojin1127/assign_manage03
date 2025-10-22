@@ -5,8 +5,37 @@
 <script>
 
 
-let rowsAdded = 0;
+var selectedObj    = null;    //교사 선택이 눌린 경우 눌린 행 기억
+var selecteTeacher = null;
+//강의추가시 교사 선택 버튼 클릭
+function RememberOne(obj)
+{
+	selectedObj    = obj;
+	selecteTeacher = null;
+}
 
+//교사 목록에서 교사명 클릭시
+function SaveSelected(obj)
+{
+	selecteTeacher = obj;
+}
+
+//교사 목록에서 선택 버튼 눌림
+function SelectTeacher()
+{
+	if(selecteTeacher == null)
+	{
+		alert("교사를 선택하세요.");
+		return;
+	}
+	var user_id = $(selecteTeacher).find("#user_id").html().trim();
+	var user_name = $(selecteTeacher).find("#user_name").html().trim();
+	$(selectedObj).parent().find("#user_id").val(user_id);	
+	$(selectedObj).html(user_name);
+	
+}
+
+let rowsAdded = 0;
 function addRow() {
     const tableBody = document.getElementById("table_add").getElementsByTagName("tbody")[0];
     
@@ -43,10 +72,7 @@ function addRow() {
         const cell5 = row1.insertCell(5);
         cell5.innerText = "종료일";
         cell5.className = "thwidth3 tea-td"; // 클래스 추가
-        
-        
-        
-        
+                
         
         // ------------------------------------
 
@@ -68,7 +94,8 @@ function addRow() {
         r2_c1.querySelector('input').id = "lecture_name_" + rowsAdded; 
         
         const r2_c2 = row2.insertCell(2);
-        r2_c2.innerHTML = "<button type='button' class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#addTeacherModal'>추가</button>";
+        r2_c2.innerHTML  = "<input type='hidden' id='user_id' name='user_id'>";
+        r2_c2.innerHTML += "<button type='button' class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#addTeacherModal' onclick='RememberOne(this);'>선택</button>";
         r2_c2.className = "tea-td"; // 클래스 추가
         r2_c2.querySelector('button').id = "teacher_name" + rowsAdded; 
         
@@ -88,7 +115,6 @@ function addRow() {
         r2_c5.innerHTML = "<input type='date' style='border:none; box-sizing: content-box; width: 90%;'>";
         r2_c5.className = "tea-td"; // 클래스 추가
         r2_c5.querySelector('input').id = "end_date" + rowsAdded; 
-
         
         rowsAdded++;
         
@@ -111,7 +137,8 @@ function addRow() {
         new_c1.querySelector('input').id = "lecture_name_" + rowsAdded; 
         
         const new_c2 = newRow.insertCell(2);
-        new_c2.innerHTML = "<button type='button' class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#addTeacherModal'>추가</button>";
+        new_c2.innerHTML  = "<input type='hidden' id='user_id' name='user_id'>";        
+        new_c2.innerHTML += "<button type='button' class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#addTeacherModal' onclick='RememberOne(this);'>선택</button>";
         new_c2.className = "tea-td"; // 클래스 추가
         new_c2.querySelector('button').id = "teacher_name" + rowsAdded; 
         
@@ -583,6 +610,8 @@ function addRow() {
 	</div>
 </div>
 
+<!--  [[ =================================  교사를 선택하시 위한 다이얼로그 선택창 표시 시작  -->
+
 <div class="modal fade" id="addTeacherModal" data-bs-backdrop="static"
 	tabindex="-1" aria-labelledby="addTeacherModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
@@ -597,7 +626,7 @@ function addRow() {
 					&nbsp;&nbsp;
 					<div id=""
 						class="textWideTitle d-flex flex-wrap align-content-center px-1">
-						<p class="flex-grow-1 m-0" style="font-size: 1.5em;">교사 추가</p>
+						<p class="flex-grow-1 m-0" style="font-size: 1.5em;">교사 선택</p>
 					</div>
 				</div>
 				<!-- content main title end -->
@@ -607,17 +636,19 @@ function addRow() {
 			<div class="modal-body">
 				<div class="container-fluid">
 					<!-- info massge start -->
-					<div>
-						<span>교사 이름을 검색 하실 수 있습니다.</span>
-					</div>
+					
 					<!-- info massge end -->
 					<!-- add student form start -->
 					<!-- student search by name start -->
+					
+					<!-- 
 					<div class="input-group mb-3">
-						<input type="text" class="form-control" placeholder="학생 명"
+						<input type="text" class="form-control" placeholder="교사 명"
 							aria-describedby="searchButton"> <a
-							class="btn btn-outline-primary" type="button" id="searchButton">검색</a>
+							class="btn btn-outline-primary" type="button" id="teachersearchButton">검색</a>
 					</div>
+					 -->
+					 
 					<!-- student search by name end -->
 					<!-- search results table start -->
 					<div class="sSearchReTab rounded"
@@ -634,56 +665,25 @@ function addRow() {
 								style="width: 25%; border: #a9a9a9; border-style: solid; border-width: 1px;">
 								성별</div>
 						</div>
-						<input type="radio" class="btn-check" name="teacherResult"
-							id="teacher00" autocomplete="off"> <label for="teacher00"
-							class="sSearchReTabRowVal btn d-flex justify-content-between m-0 p-0">
-							<div class="sSearchReTabCol d-flex justify-content-center p-2"
-								style="width: 50%; border: #a9a9a9; border-style: solid; border-width: 1px;">
-								hong123</div>
-							<div class="sSearchReTabCol d-flex justify-content-center p-2"
-								style="width: 25%; border: #a9a9a9; border-style: solid; border-width: 1px;">
-								홍길동</div>
-							<div class="sSearchReTabCol d-flex justify-content-center p-2"
-								style="width: 25%; border: #a9a9a9; border-style: solid; border-width: 1px;">
-								남</div>
-						</label> <input type="radio" class="btn-check" name="teacherResult"
-							id="teacher01" autocomplete="off"> <label for="teacher01"
-							class="sSearchReTabRowVal btn d-flex justify-content-between m-0 p-0">
-							<div class="sSearchReTabCol d-flex justify-content-center p-2"
-								style="width: 50%; border: #a9a9a9; border-style: solid; border-width: 1px;">
-								chun789</div>
-							<div class="sSearchReTabCol d-flex justify-content-center p-2"
-								style="width: 25%; border: #a9a9a9; border-style: solid; border-width: 1px;">
-								성춘향</div>
-							<div class="sSearchReTabCol d-flex justify-content-center p-2"
-								style="width: 25%; border: #a9a9a9; border-style: solid; border-width: 1px;">
-								여</div>
-						</label>
-						
-						
-						</label>
+												
+						<c:forEach var="item" items="${ teacher_list }">
+							<input type="radio" class="btn-check teacher_radio" name="teacherResult"
+								id="${item.id}" autocomplete="off"> <label for="${item.id}" onclick="SaveSelected(this);"
+								class="sSearchReTabRowVal btn d-flex justify-content-between m-0 p-0">
+								<div id="user_id" class="sSearchReTabCol d-flex justify-content-center p-2"
+									style="width: 50%; border: #a9a9a9; border-style: solid; border-width: 1px;">
+									${item.id}</div>
+								<div id="user_name"  class="sSearchReTabCol d-flex justify-content-center p-2"
+									style="width: 25%; border: #a9a9a9; border-style: solid; border-width: 1px;">
+									${item.user_name}</div>
+								<div class="sSearchReTabCol d-flex justify-content-center p-2"
+									style="width: 25%; border: #a9a9a9; border-style: solid; border-width: 1px;">
+									${item.gender}</div>
+							</label>
+						</c:forEach> 
+
 					</div>
-					<br><br>
-					<nav aria-label="Page navigation example" id="page">
-			            <ul class="pagination justify-content-center ">
-			                <li class="page-item disabled">
-			                    <a class="page-link">&lt;</a>
-			                </li>
-			                <li class="page-item"><a class="page-link" href="#">1</a></li>
-			                <li class="page-item"><a class="page-link" href="#">2</a></li>
-			                <li class="page-item"><a class="page-link" href="#">3</a></li>
-			                <li class="page-item"><a class="page-link" href="#">4</a></li>
-			                <li class="page-item"><a class="page-link" href="#">5</a></li>
-			                <li class="page-item"><a class="page-link" href="#">6</a></li>
-			                <li class="page-item"><a class="page-link" href="#">7</a></li>
-			                <li class="page-item"><a class="page-link" href="#">8</a></li>
-			                <li class="page-item"><a class="page-link" href="#">9</a></li>
-			                <li class="page-item">
-			                    <a class="page-link" href="#">&gt;</a>
-			                </li>
-			            </ul>
-			        </nav>
-					
+
 					<!-- search results table end -->
 					<!-- add student form end -->
 				</div>
@@ -691,10 +691,11 @@ function addRow() {
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary"
 					data-bs-dismiss="modal">취소</button>
-				<a href="" class="btn btn-primary" data-bs-dismiss="modal">추가</a>
+				<a href="javascript:;" onclick="SelectTeacher();" class="btn btn-primary" data-bs-dismiss="modal">선택</a>
 			</div>
 		</div>
 	</div>
 </div>
+<!--  ]] =================================  교사를 선택하시 위한 다이얼로그 선택창 표시 시작  -->
 <!-- add student Modal end-->
 <%@ include file="../include/tail.jsp"%>
