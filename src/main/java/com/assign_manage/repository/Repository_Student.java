@@ -1,5 +1,6 @@
 package com.assign_manage.repository;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,6 +29,17 @@ public class Repository_Student
 	public List<VO_Assignment> AssignList(Map<String, Object> params)
 	{
 		List<VO_Assignment> list = session.selectList(namespace + ".assign_list", params);
+		return list;
+	}
+	
+	//과제에 대한 학생 리스트를 읽는다.
+	public List<VO_Assignment_student> StudentList(String lecture_no, String assign_no)
+	{
+		Map<String, Object> params = new HashMap<>();
+	    params.put("lecture_no", lecture_no);
+	    params.put("assign_no", assign_no);
+		
+		List<VO_Assignment_student> list = session.selectList(namespace + ".student_list", params);
 		return list;
 	}
 	
@@ -64,14 +76,14 @@ public class Repository_Student
 	{
 		VO_File vo = session.selectOne(namespace + ".file_view", no);
 		return vo;
-	}	
-	
-	//첨부파일 정보를 변경한다.
-	public boolean FileUpdate(VO_File vo)
-	{
-		session.update(namespace + ".file_update", vo);
-		return true;
 	}
+	
+	//첨부파일 목록을 읽는다.	
+	public List<VO_File> FileList(String no)
+	{
+		List<VO_File> list = session.selectList(namespace + ".file_list", no);
+		return list;
+	}	
 	
 	//첨부파일 정보를 삭제한다.	
 	public boolean FileDelete(String no)

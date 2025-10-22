@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,6 +26,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.assign_manage.repository.Repository_Student;
 import com.assign_manage.vo.VO_Answer;
 import com.assign_manage.vo.VO_Assignment;
+import com.assign_manage.vo.VO_Assignment_student;
+import com.assign_manage.vo.VO_Feedback;
 import com.assign_manage.vo.VO_File;
 import com.assign_manage.vo.VO_Lecture;
 import com.assign_manage.vo.VO_Lecture_list;
@@ -134,7 +137,8 @@ public class Controller_Student
         
         //과제에서 강의 목록 추출
         Map<String, String> lectureMap = new LinkedHashMap<>();
-        for (VO_Assignment assign : assignList) {
+        for (VO_Assignment assign : assignList)
+        {
             lectureMap.put(String.valueOf(assign.getLecture_no()), assign.getLecture_name());
         }
 
@@ -146,7 +150,7 @@ public class Controller_Student
 	}
 	
 	@RequestMapping(value="/assign/list/{lecture_no}", method = RequestMethod.GET)
-	public String AssignList(@PathVariable("lecture_no") String no, HttpSession session, Model model) throws ParseException
+	public String AssignList(@PathVariable("lecture_no")String no, HttpSession session, Model model) throws ParseException
 	{
 		//VO_User login = (VO_User) session.getAttribute("login");
 		//String id = login.getId();
@@ -197,11 +201,18 @@ public class Controller_Student
 	}
 	
 	@RequestMapping(value="/assign/{assign_no}", method = RequestMethod.GET)
-	public String AssignView(@PathVariable("assign_no") String no, Model model)
+	public String AssignView(@PathVariable("assign_no")String assign_no, HttpSession session, Model model)
 	{
-		VO_Assignment assign = student.AssignRead(no);
-		VO_Question quest = student.QuestionRead(no);
-		VO_Answer answer = student.AnswerRead(no);
+		//VO_User login = (VO_User) session.getAttribute("login");
+		//String id = login.getId();
+		String id = "s2ezen";
+		
+		VO_Assignment assign = student.AssignRead(assign_no);
+		VO_Question quest = student.QuestionRead(assign_no);
+		VO_Answer answer = student.AnswerRead(assign_no);
+		
+		String lecture_no = String.valueOf(assign.getLecture_no());
+		List<VO_Assignment_student> student_list = student.StudentList(lecture_no, assign_no);
 		
 		//end_date 포맷 변경
 	    if(assign.getEnd_date() != null && !assign.getEnd_date().isEmpty())
@@ -216,45 +227,68 @@ public class Controller_Student
 	        }catch(Exception e){}
 	    }
 		
-		model.addAttribute("assign",assign);
-		model.addAttribute("quest",quest);
-		model.addAttribute("answer",answer);
+		model.addAttribute("assign", assign);
+		model.addAttribute("quest", quest);
+		model.addAttribute("answer", answer);
+		model.addAttribute("student_list", student_list);
+		model.addAttribute("id", id);
 		
 		return "student/assignment_view";
 	}
 	
-	@RequestMapping(value="/report", method = RequestMethod.GET)
+	@RequestMapping(value="/assign/{assign_no}/report", method = RequestMethod.GET)
 	public String Report()
 	{
 		return "redirect:/student";
 	}
 	
-	@RequestMapping(value="/report/submit", method = RequestMethod.GET)
-	public String ReportSubmit()
+	@RequestMapping(value="/assign/{assign_no}/report/submit", method = RequestMethod.GET)
+	public String ReportSubmit(@PathVariable("assign_no")String assign_no, HttpSession session, Model model)
 	{
+		//VO_User login = (VO_User) session.getAttribute("login");
+		//String user_name = login.getUser_name();
+		String user_name = "이젠계정";
+				
+		VO_Assignment assign = student.AssignRead(assign_no);
+		
+		model.addAttribute("assign", assign);
+		model.addAttribute("user_name", user_name);
+		
 		return "student/report_submit";
 	}
 	
-	@RequestMapping(value="/report/submit", method = RequestMethod.POST)
-	public String ReportSubmitOK(VO_Report vo, @RequestParam("attach") List<MultipartFile> files,
-			HttpServletRequest request) throws IllegalStateException, IOException
+	@RequestMapping(value="/assign/{assign_no}/report/submit", method = RequestMethod.POST)
+	public String ReportSubmitOK(@PathVariable("assign_no") int assign_no, VO_Report vo,
+			@RequestParam("attach") List<MultipartFile> files, HttpServletRequest request) throws IllegalStateException, IOException
 	{
-		//로그인 정보를 조회한다.
+		/*
+		//로그인 조회
 		VO_User login = (VO_User)request.getSession().getAttribute("login");
 		if(login == null)
 		{
 			return "redirect:/common/login";
 		}
 		
-		//과제물 제출자 아이디를 설정한다.
+		//제출자 ID, 이름 설정
 		vo.setId(login.getId());
+		vo.setStudent_name(login.getUser_name());
+		*/
+		vo.setId("s2ezen");
+		vo.setStudent_name("이젠계정");
 		
+		vo.setAssign_no(assign_no);
+		
+		//VO_Report 먼저 DB에 insert
+	    student.ReportInsert(vo);
+	    int reportNo = vo.getReport_no();
+		
+	    //첨부파일 처리
 		List<VO_File> voFiles = new ArrayList<VO_File>();
 		
 		for(MultipartFile file : files)
 		{
 			if (file.isEmpty()) continue;
-
+			
 			String originalFileName = file.getOriginalFilename();
 			
 			//파일 이름이 중복되지 않도록 파일 이름 변경 : 서버에 저장할 이름
@@ -276,51 +310,134 @@ public class Controller_Student
 			
 			//VO_File 세팅
 			VO_File voFile = new VO_File();
+			voFile.setReport_no(reportNo);
 			voFile.setF_name(originalFileName);
 			voFile.setP_name(savedFileName);
 			voFile.setFile_size(file.getSize());
 			voFile.setExtension(ext);
+			voFile.setFile_path(uploadPath + File.separator + savedFileName);
 		     
 		    voFiles.add(voFile);
+		    
+		    //DB에 파일 insert
+	        student.FileInsert(voFile);
 		}
+		
 		vo.setFiles(voFiles);
 		
-		student.ReportInsert(vo);
-		
-		return "redirect:/student/report/" + vo.getReport_no();
+		return "redirect:/student/assign/" + assign_no + "/report/" + reportNo;
 	}
 	
-	@RequestMapping(value="/report/{report_no}", method = RequestMethod.GET)
-	public String ReportView(@PathVariable("report_no") int no, Model model)
+	@RequestMapping(value="/assign/{assign_no}/report/{report_no}", method = RequestMethod.GET)
+	public String ReportView(@PathVariable("assign_no") String assign_no,
+				@PathVariable("report_no") String report_no, Model model)
 	{
-		/*
-		VO_Report report = student.ReportRead(no);
+		VO_Assignment assign = student.AssignRead(assign_no);
+		VO_Report report = student.ReportRead(report_no);
+		VO_Feedback feedback = student.FeedbackRead(report_no);
+		List<VO_File> fileList = student.FileList(report_no);
 		
+		model.addAttribute("assign", assign);
 		model.addAttribute("report", report);
-		*/
+		model.addAttribute("feedback", feedback);
+		model.addAttribute("fileList", fileList);
 	    
 		return "student/report_view";
 	}
 	
-	@RequestMapping(value="/report/{report_no}/modify", method = RequestMethod.GET)
-	public String ReportModify(@PathVariable("report_no") int no)
+	@RequestMapping(value="/assign/{assign_no}/report/{report_no}/modify", method = RequestMethod.GET)
+	public String ReportModify(@PathVariable("assign_no") String assign_no,
+			@PathVariable("report_no") String report_no, Model model)
 	{
+		VO_Assignment assign = student.AssignRead(assign_no);
+		VO_Report report = student.ReportRead(report_no);
+		VO_Feedback feedback = student.FeedbackRead(report_no);
+		List<VO_File> fileList = student.FileList(report_no);
+		
+		model.addAttribute("assign", assign);
+		model.addAttribute("report", report);
+		model.addAttribute("feedback", feedback);
+		model.addAttribute("fileList", fileList);
+		
 		return "student/report_modify";
 	}
 	
-	@RequestMapping(value="/report/{report_no}/modify", method = RequestMethod.POST)
-	public String ReportModifyOK(@PathVariable("report_no") int no)
+	@RequestMapping(value="/assign/{assign_no}/report/{report_no}/modify", method = RequestMethod.POST)
+	public String ReportModifyOK(@PathVariable("assign_no") int assign_no,
+	        @PathVariable("report_no") int report_no,  @ModelAttribute VO_Report vo,
+	        @RequestParam(value="attach", required=false) List<MultipartFile> newFiles,
+	        @RequestParam(value="existingFiles", required=false) List<Integer> existingFileIds,
+	        HttpServletRequest request) throws IllegalStateException, IOException 
 	{
-		return "redirect:/student/report/1";
+		/*
+		//로그인 조회
+		VO_User login = (VO_User)request.getSession().getAttribute("login");
+		if(login == null)
+		{
+			return "redirect:/common/login";
+		}
+		
+		//제출자 ID 설정
+		vo.setId(login.getId());
+		*/
+		vo.setId("s2ezen");
+	    
+	    vo.setReport_no(report_no);
+	    vo.setAssign_no(assign_no);
+
+	    //기존 파일 중 삭제된 것 처리
+	    List<VO_File> currentFiles = student.FileList(String.valueOf(report_no)); // DB에서 기존 파일 조회
+	    for(VO_File file : currentFiles)
+	    {
+	        boolean keep = existingFileIds != null && existingFileIds.contains(file.getFile_no());
+	        if(!keep) {
+	            //서버 파일 삭제
+	            File f = new File(uploadPath, file.getP_name());
+	            if(f.exists() && !f.isDirectory()) f.delete();
+	            //DB 삭제
+	            student.FileDelete(String.valueOf(file.getFile_no()));
+	        }
+	    }
+
+	    //새 파일 처리
+	    if(newFiles != null)
+	    {
+	        for(MultipartFile file : newFiles)
+	        {
+	            String originalFileName = file.getOriginalFilename();
+	            UUID uuid = UUID.randomUUID();
+	            String ext = "";
+	            int dotIndex = originalFileName.lastIndexOf(".");
+	            if(dotIndex > -1) ext = originalFileName.substring(dotIndex);
+	            String savedFileName = uuid.toString() + ext;
+
+	            File newFile = new File(uploadPath + File.separator + savedFileName);
+	            file.transferTo(newFile);
+
+	            VO_File voFile = new VO_File();
+	            voFile.setReport_no(report_no);
+	            voFile.setF_name(originalFileName);
+	            voFile.setP_name(savedFileName);
+	            voFile.setFile_size(file.getSize());
+	            voFile.setExtension(ext);
+
+	            student.FileInsert(voFile);
+	        }
+	    }
+
+	    //report 내용 수정
+	    student.ReportUpdate(vo);
+		
+		return "redirect:/student/assign/" + assign_no + "/report/" + report_no;
 	}
 	
-	@RequestMapping("/report/{report_no}/download")
-	public String Download(@PathVariable("report_no") int no)
+	@RequestMapping("/assign/{assign_no}/report/{report_no}/download")
+	public String Download(@PathVariable("assign_no") String assign_no, @PathVariable("report_no") String report_no)
 	{
-		return "redirect:/student/report/1";
+		return "redirect:/student/assign/" + assign_no + "/report/" + report_no;
 	}
 	
-	@RequestMapping("/report/{report_no}/download/{file_no}")
+	@RequestMapping("/assign/{assign_no}/report/{report_no}/download/{file_no}")
 	public void FileDown(@PathVariable("file_no") String no, HttpServletResponse response) throws IOException
 	{
 	    VO_File voFile = student.FileRead(no); // 파일 정보 가져오기(DB 조회)

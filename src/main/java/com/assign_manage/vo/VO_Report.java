@@ -16,6 +16,9 @@ public class VO_Report
 	private String create_date; //생성일
 	private String delete_date; //삭제일
 	
+	// 추가
+    private String student_name;   // 학생 이름
+	
 	private List<VO_File> files;  // VO_File 타입 필드 추가
 	
 	//VO_File getter, setter
@@ -24,20 +27,22 @@ public class VO_Report
     public void setFiles(List<VO_File> files) { this.files = files; }
 
 	//getter
-	public int getReport_no()      { return report_no;   }
-	public int getAssign_no()	   { return assign_no;   }
-	public String getId()          { return id;          }
-	public String getReport_note() { return report_note; }
-	public String getCreate_date() { return create_date; }
-	public String getDelete_date() { return delete_date; }
+	public int getReport_no()       { return report_no;    }
+	public int getAssign_no()	    { return assign_no;    }
+	public String getId()           { return id;           }
+	public String getReport_note()  { return report_note;  }
+	public String getCreate_date()  { return create_date;  }
+	public String getDelete_date()  { return delete_date;  }
+	public String getStudent_name() { return student_name; }
 	
 	
 	//setter
-	public void setReport_no(int report_no)    	   { this.report_no   = report_no;   }
-	public void setAssign_no(int assign_no)	       { this.assign_no   = assign_no;   }
-	public void setId(String id)                   { this.id          = id;          }
-	public void setReport_note(String report_note) { this.report_note = report_note; }
-	public void setCreate_date(String create_date) { this.create_date = create_date; }
-	public void setDelete_date(String delete_date) { this.delete_date = delete_date; }
+	public void setReport_no(int report_no)    	     { this.report_no   = report_no;     }
+	public void setAssign_no(int assign_no)	         { this.assign_no   = assign_no;     }
+	public void setId(String id)                     { this.id          = id;            }
+	public void setReport_note(String report_note)   { this.report_note = report_note;   }
+	public void setCreate_date(String create_date)   { this.create_date = create_date;   }
+	public void setDelete_date(String delete_date)   { this.delete_date = delete_date;   }
+	public void setStudent_name(String student_name) { this.student_name = student_name; }
 
 }	

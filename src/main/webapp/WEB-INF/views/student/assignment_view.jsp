@@ -34,7 +34,7 @@
                         과제명
                     </div>
                     <div class="tableCellValue d-flex flex-grow-1">
-                        ${assign.lecture_name}
+                        ${assign.assign_name}
                     </div>
                 </div>
                 <div class="d-flex justify-content-start align-content-center w-100">
@@ -42,7 +42,7 @@
                         제출방식
                     </div>
                     <div class="tableCellValue d-flex flex-grow-1">
-                        ${assign.lecture_method}
+                        ${assign.assign_method}
                     </div>
                 </div>
                 <div class="d-flex justify-content-start align-content-center w-100">
@@ -82,48 +82,83 @@
                     <div id="bodySubmissionStatus" class="accordion-collapse collapse show w-100">
                         <div class="d-flex justify-content-start align-content-start accordion-body p-0">
                             <div id="tableSubmissionStatus" class="tableCased d-flex flex-wrap justify-content-start align-content-start my-1 w-100">
+                                
+                                <!-- 헤더 -->
                                 <div class="d-flex flex flex-wrap justify-content-start align-content-start w-100">
-                                    <div class="tableCellName d-flex justify-content-center" style="min-width: 75px;">이름</div>
+                                    <div class="tableCellName d-flex justify-content-center" style="width: 120px;">이름</div>
                                     <div class="tableCellName d-flex justify-content-center flex-grow-1">제출 상태</div>
                                     <div class="tableCellName d-flex justify-content-center" style="min-width: 100px;">과제</div>
                                     <div class="tableCellName d-flex justify-content-center" style="min-width: 175px;">평가</div>
                                 </div>
-                                <div class="d-flex flex flex-wrap justify-content-start align-content-start w-100">
-                                    <div class="tableCellValue d-flex justify-content-center" style="min-width: 75px;">
-                                        <div class="align-content-center">전우치</div>
-                                    </div>
-                                    <div class="tableCellValue d-flex justify-content-between flex-grow-1">
-                                        <div style="width: 48px;"></div>
-                                        <div class="align-content-center">제출 완료</div>
-                                        <div><a href="<c:url value="/student/report/1/modify"/>" class="darkBtn btn">수정</a></div>
-                                    </div>
-                                    <div class="tableCellValue d-flex justify-content-center" style="min-width: 100px;">
-                                        <a href="<c:url value="/student/report/1"/>" class="darkBtn btn">확인</a>
-                                    </div>
-                                    <div class="tableCellValue d-flex justify-content-between" style="min-width: 175px;">
-                                        <div style="width: 48px;"></div>
-                                        <div class="align-content-center">15</div>
-                                        <div style="width: 48px;"></div>
-                                    </div>
-                                </div>
-                                <div class="d-flex flex flex-wrap justify-content-start align-content-start w-100">
-                                    <div class="tableCellValue d-flex justify-content-center" style="min-width: 75px;">
-                                        <div class="align-content-center">홍길동</div>
-                                    </div>
-                                    <div class="tableCellValue d-flex justify-content-between flex-grow-1">
-                                        <div style="width: 48px;"></div>
-                                        <div class="align-content-center">제출 미완료</div>
-                                        <div><a href="<c:url value="/student/report/submit"/>" class="darkBtn btn">제출</a></div>
-                                    </div>
-                                    <div class="tableCellValue d-flex justify-content-center" style="min-width: 100px;">
-                                        <a href="<c:url value="/student/report/1"/>" class="darkBtn btn">확인</a>
-                                    </div>
-                                    <div class="tableCellValue d-flex justify-content-between" style="min-width: 175px;">
-                                        <div style="width: 48px;"></div>
-                                        <div class="align-content-center">--</div>
-                                        <div style="width: 48px;"></div>
-                                    </div>
-                                </div>
+                                
+                                <!-- 학생 리스트 반복 -->
+                                <c:forEach var="student" items="${student_list}">
+	                                <div class="d-flex flex flex-wrap justify-content-start align-content-start w-100">
+	                                
+	                                	<!-- 이름 -->
+	                                    <div class="tableCellValue d-flex justify-content-center" style="width: 120px;">          
+	                                        <div class="align-content-center">${student.user_name}</div>
+	                                    </div>
+	                                    
+	                                    <!-- 제출 상태 -->
+	                                    <div class="tableCellValue d-flex justify-content-between flex-grow-1">
+	                                        <div style="width: 48px;"></div>
+	                                        <div class="align-content-center">
+	                                        	<c:choose>
+								                    <c:when test="${student.report_no ne null}">
+								                        제출 완료
+								                    </c:when>
+								                    <c:otherwise>
+								                        제출 미완료
+								                    </c:otherwise>
+												</c:choose>
+	                                        </div>
+	                                        
+	                                        <!-- 제출/수정 버튼 -->
+	                                        <div style="width: 70px;">
+		                                        <c:if test="${student.id == id}">
+									                <c:choose>
+									                    <c:when test="${student.report_no ne null}">
+									                        <a href="<c:url value='/student/assign/${assign.assign_no}/report/${student.report_no}/modify'/>" class="darkBtn btn">수정</a>
+									                    </c:when>
+									                    <c:otherwise>
+									                        <a href="<c:url value='/student/assign/${assign.assign_no}/report/submit'/>" class="darkBtn btn">제출</a>
+									                    </c:otherwise>
+									                </c:choose>
+									     	    </c:if>
+								            </div>
+	                                    </div>
+	                                    
+	                                    <!-- 과제 확인 -->
+	                                    <div class="tableCellValue d-flex justify-content-center" style="min-width: 100px;">
+										    <a href="javascript:void(0);" class="darkBtn btn"
+										       onclick="     
+										           if ('${id}' !== '${student.id}') {
+										               alert('본인의 과제만 확인 가능합니다.');
+										           } else {
+										               // 로그인 상태일 때 제출 여부 확인
+										               if ('${student.report_no}' === '' || '${student.report_no}' === 'null') {
+										                   alert('제출한 과제물이 없습니다.');
+										               } else {
+										                   // 제출한 과제물이 있으면 페이지 이동
+										                   window.location.href = '<c:url value='/student/assign/${assign.assign_no}/report/${student.report_no}'/>';
+										               }
+										           }
+										       ">
+										       확인
+										    </a>
+										</div>
+	                                    
+	                                    <!-- 평가 -->
+	                                    <div class="tableCellValue d-flex justify-content-between" style="min-width: 175px;">
+	                                        <div style="width: 48px;"></div>
+	                                        <div class="align-content-center">
+												<c:out value="${student.score != null ? student.score : '--'}"/>
+											</div>
+	                                        <div style="width: 48px;"></div>
+	                                    </div>
+	                                </div>
+                                </c:forEach>
                             </div>
                         </div>
                     </div>

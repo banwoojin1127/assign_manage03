@@ -8,11 +8,11 @@
 	<select id="assign_view" parameterType="java.lang.String" 
 			resultType="com.assign_manage.vo.VO_Assignment">
 		select 
-			a.assign_no, a.lecture_no, a.assign_name, a.assign_note, 
-			a.assign_method, a.end_date, l.lecture_name as lecture_name 
+			a.assign_no, a.lecture_no, a.assign_name, a.assign_note, a.assign_method,
+			a.end_date, l.lecture_name as lecture_name, u.user_name as teacher_name 
 		from assignment a
-		left join lecture l on a.lecture_no = l.lecture_no
-		left join user u on l.id = u.id
+		join lecture l on a.lecture_no = l.lecture_no
+		join user u on l.id = u.id
 		where assign_no = #{ assign_no }
 	</select>
 
@@ -32,16 +32,29 @@
 		  and a.delete_date is null
 		order by a.create_date asc
 	</select>
+	
+	<select id="student_list" parameterType="map" 
+			resultType="com.assign_manage.vo.VO_Assignment_student">
+		select 
+			distinct u.id, u.user_name, r.report_no, f.score
+		from lecture_list l_l
+		join user u on l_l.id = u.id
+		left join assignment a on l_l.lecture_no = a.lecture_no
+		left join report r on r.assign_no = #{ assign_no } and u.id = r.id
+    	left join feedback f on r.report_no = f.report_no
+		where l_l.lecture_no = #{ lecture_no } 
+		order by u.user_name asc
+	</select>
 
 	<insert id="report_insert" parameterType="com.assign_manage.vo.VO_Report"
 		useGeneratedKeys="true" keyProperty="report_no">
-		insert into report (id, report_note, create_date, delete_date)
-		values (#{ id }, #{ report_note }, #{ create_date }, #{ delete_date })
+		insert into report (assign_no, id, report_note)
+		values (#{ assign_no }, #{ id }, #{ report_note })
 	</insert>
 	
-	<update id="report_modify" parameterType="com.assign_manage.vo.VO_Report">
+	<update id="report_update" parameterType="com.assign_manage.vo.VO_Report">
 		update report set
-		report_note = #{ report_note }
+		report_note = #{ report_note } 
 		where report_no = #{ report_no }
 	</update>
 	
@@ -60,17 +73,9 @@
 	
 	<insert id="file_insert" parameterType="com.assign_manage.vo.VO_File"
 		useGeneratedKeys="true" keyProperty="file_no">
-		insert into file (p_name, f_name, create_date, delete_date, file_size, extension, file_path)
-		values (#{ p_name }, #{ f_name }, #{ create_date }, #{ delete_date },
-		#{ file_size }, #{ extension }, #{ file_path })
+		insert into file (report_no, p_name, f_name, file_size, extension, file_path)
+		values (#{ report_no }, #{ p_name }, #{ f_name }, #{ file_size }, #{ extension }, #{ file_path })
 	</insert>
-
-	<update id="file_modify" parameterType="com.assign_manage.vo.VO_File">
-		update file set
-		p_name = #{ p_name }, f_name = #{ f_name }, file_size = #{ file_size },
-		extension = #{ extension }, file_path = #{ file_path }
-		where file_no = #{ file_no }
-	</update>
 	
 	<select id="file_view" parameterType="java.lang.String" 
 		resultType="com.assign_manage.vo.VO_File">
@@ -78,6 +83,14 @@
 			file_no, report_no, p_name, f_name, create_date, delete_date, file_size, extension, file_path
 		from file
 		where file_no = #{ file_no }
+	</select>
+	
+	<select id="file_list" parameterType="java.lang.String" 
+		resultType="com.assign_manage.vo.VO_File">
+		select *
+		from file
+		where report_no = #{ report_no }
+		order by file_no asc
 	</select>
 	
 	<delete id="file_delete" parameterType="java.lang.String">
@@ -99,7 +112,7 @@
 		values (#{ id }, #{ quest_note }, #{ create_date }, #{ delete_date })
 	</insert>
 
-	<update id="question_modify" parameterType="com.assign_manage.vo.VO_Question">
+	<update id="question_update" parameterType="com.assign_manage.vo.VO_Question">
 		update question set
 		quest_note = #{ quest_note }
 		where quest_no = #{ quest_no }
