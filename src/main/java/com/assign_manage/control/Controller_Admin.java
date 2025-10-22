@@ -24,9 +24,6 @@ public class Controller_Admin
 	//✔ admin url 경로 접두
 	private static final String AF = "/admin"; 
 	
-	@Autowired
-	Repository_Teacher repos_teacher; 
-	
 	//✔ 관리자 > 사용자 관리 - 사용자 관리
 	@RequestMapping(value = "/", method = RequestMethod.GET) 
 	public String admin_main()
@@ -34,12 +31,20 @@ public class Controller_Admin
 		return  AF + "/user_management";
 	}
 	
-	//✔ 관리자 > 사용자 관리 - 사용자 관리
-	@RequestMapping(value = "/user_management", method = RequestMethod.GET) 
-	public String user_management()
-	{
-		return  AF + "/user_management";
+	@Autowired
+	private Repository_Admin repositoryAdmin;
+	
+	// 사용자 관리 - 모든 사용자 조회
+	@RequestMapping(value = "/user_management", method = RequestMethod.GET)
+	public String userManagement(Model model) {
+	// Repository → Service → Controller
+		List<VO_User> userList = repositoryAdmin.findAllUsers(); // Repository에서 전체 조회
+		model.addAttribute("userList", userList); // JSP에서 ${userList}로 접근 가능
+	
+		return  AF + "/user_management"; 
 	}
+
+	
 	
 	
 	// 사용자 상세보기
@@ -80,7 +85,8 @@ public class Controller_Admin
 	}
 	
 	
-	
+	@Autowired
+	Repository_Teacher repos_teacher; 
 	//✔ 관리자 > 강의 관리 - 강의 조회
 	@RequestMapping(value = "/lecture_management", method = RequestMethod.GET) 
 	public String lecture_management(Model model)

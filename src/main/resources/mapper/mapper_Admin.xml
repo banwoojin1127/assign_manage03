@@ -9,12 +9,13 @@
 	<!-- 사용자 전체 조회 -->
 	<select id="All_User_List" resultType="com.assign_manage.vo.VO_User">
 	<!-- alias를 이용해 등급 명칭을 수정 -->
-		select case user_class
-		when 0 then '관리자'
-		when 1 then '교사'
-		when 2 then '학생'
-		else '기타'
-		end as user_class_name,
+		select 
+			case user_class
+				when 0 then '관리자'
+				when 1 then '교사'
+				when 2 then '학생'
+				else '기타'
+			end as user_class,
 		id,
 		user_name,
 		gender,
@@ -22,6 +23,8 @@
 		tel,
 		email
 		from user
+		
+		<!-- user테이블의 id컬럼의 값을 VO_User의 setId()에 저장 -->
 	</select>
 
 
@@ -91,24 +94,25 @@
 		end_date
 	)
 	select
-		'#{lecture_name}',
-		'#{user.id}',
-		'#{cap}',
-		'#{start_date}',
-		'#{end_date}'
+		#{lecture_name},
+		#{user.id},
+		#{cap},
+		#{start_date},
+		#{end_date}
 	from
 		user
 	where
-		user.user_name = '#{keyword}'
+		user.user_name = #{keyword}
 	</insert>
 	
 	<!-- 강의 삭제( 체크 > 삭제 ) -->
 	<delete id="Lecture_Delete">
-	delete from 
-		lecture 
-	where
-		lecture_no in (#{lectureNoList}) 
-	</delete>
+	delete from lecture 
+	where lecture_no in
+	<foreach item="item" index="index" collection="lectureNoList" open="(" separator="," close=")">
+	    #{item}
+	</foreach>
+</delete>
 	
 	<!-- modal 이름으로 특정 교사 조회 -->
 	<select id="Name_Teacher_View" resultType="com.assign_manage.vo.VO_User">
@@ -151,8 +155,5 @@
 	order by
 		max(lecture_list.create_date) desc
 	limit 10
-		
 	</select>
-	
-
 </mapper>

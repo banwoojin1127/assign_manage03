@@ -22,6 +22,11 @@ public class Repository_Admin
 	
 	private static final String namespace = "Admin";
 	
+	// ✔ 관리자 > 사용자 관리
+	public List<VO_User> findAllUsers(){
+		return session.selectList(namespace + ".All_User_List");
+	}
+	
 	// ✔ 관리자 > 강의 관리
 	// 전체 교사 조회
 	public List<VO_User> findAllTeachers() {
@@ -50,7 +55,6 @@ public class Repository_Admin
         
         return session.selectList(namespace + ".Name_Student_View", paramMap);
     }
-    
     // *필요하다면 강의 생성/삭제 등 다른 CRUD 메서드를 여기에 추가합니다.*
 }
 	

@@ -229,5 +229,19 @@ th, td {
 
 .edit_th {
 	width: 30px;
-	
+}
+
+.right-align1 {
+	margin-left: 745px;
+	width: 150px;
+	vertical-align: middle;
+	margin-bottom: -30px;
+
+}
+
+.right-align2 {
+	margin-left: 2px;
+	width: 100px;
+	vertical-align: middle;
+	margin-bottom: -30px;
 }
