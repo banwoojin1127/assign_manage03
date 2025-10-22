@@ -35,7 +35,7 @@ function ToModify()
                     <div class="decoWideTitle" style="width: 12px;"></div>
                     &nbsp;&nbsp;
                     <div class="textWideTitle d-flex flex-wrap justify-content-between align-content-center px-1" style="width: 95%;">
-                        <p class="m-0" style="font-size: 1.5em;">개인 정보</p>
+                        <p class="m-0" style="font-size: 1.5em;">회원정보</p>
                     </div>
                 </div>
                 <div id="formJoinRequest" class="col-12 d-flex flex-wrap justify-content-center align-content-center border border-dark border-1 rounded pt-3 pb-5">

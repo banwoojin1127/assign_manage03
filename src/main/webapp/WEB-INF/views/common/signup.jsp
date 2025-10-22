@@ -1,15 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ include file="/WEB-INF/views/include/head_wide.jsp" %>
-<script src="<c:url value='/resources/js/userInfo.js'/>">
-    console.log("<c:out value='${login}'/>");
-    console.log("<c:out value='${login.tel}'/>");
-    console.log("<c:out value='${login.email}'/>");
+<script src="<c:url value='/resources/js/userInfo.js'/>"></script>
+<script>
+    const CONTEXT_PATH = "${pageContext.request.contextPath}"; 
+    const userInfoUrl = CONTEXT_PATH + "/common/"; 
     sessionLogin = "<c:out value='${login}'/>";
     sessionTel = "<c:out value='${login.tel}'/>";
-    sessionEMail = "<c:out value='${login.email}'/>";
-    console.log("sessionLogin: " + sessionLogin);
-    console.log("sessionTel: " + sessionTel);
-    console.log("sessionEMail: " + sessionEMail);
+    sessionEmail = "<c:out value='${login.email}'/>";
 </script>
 <!-- content field start -->
         <div id="panelContent" class="d-flex flex-wrap justify-content-center align-content-center p-5" style="width: 100%;">
