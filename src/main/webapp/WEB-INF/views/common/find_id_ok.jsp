@@ -1,6 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ include file="/WEB-INF/views/include/head_wide.jsp" %>
 <!-- content field start -->
+ <script>
+    window.addEventListener ('beforeunload', function(){
+        exitPage();
+    });
+
+    // 페이지 종료 시 세션 스토리지 초기화를 위한 함수
+    function exitPage()
+    {
+        sessionStorage.setItem('id', null);
+        sessionStorage.setItem('user_name', null);
+    }
+ </script>
         <div id="panelContent" class="d-flex flex-wrap justify-content-center align-content-center p-5" style="width: 100%;">
             <div id="formFindID" class="d-flex flex-wrap justify-content-center align-content-center p-0 m-0" style="min-width: 500px; max-width: 500px;">
                 <div id="formFindIDTitle" class="d-flex flex-wrap align-content-start my-3" style="width: 100%;">
@@ -15,8 +27,8 @@
                     <div id="doneFindID" class="d-flex flex-wrap justify-content-center align-content-center w-75">
                         <div id="imgCheck" class="p-2"><img src="<c:url value='/resources/img/check2.svg'/>" style="width: 100%; height: 100%;"></div>
                         <div id="textInfo" class="d-flex flex-wrap justify-content-center align-content-center">
-                            <div class="my-1"><span class="vipText fontSize-L">[ name ]</span> 님의 <span class="vipText fontSize-L">아이디</span>는</div>
-                            <div class="my-1"><span class="vipText fontSize-L">[ ezen ]</span> 입니다.</div>
+                            <div class="my-1"><span class="vipText fontSize-L">[ ${user_name} ]</span> 님의 <span class="vipText fontSize-L">아이디</span>는</div>
+                            <div class="my-1"><span class="vipText fontSize-L">[ ${id} ]</span> 입니다.</div>
                         </div>
                     </div>
                     <!-- service center info field start -->

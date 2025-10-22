@@ -11,6 +11,7 @@ window.onload = function()
     });
 }
 
+// 아이디 찾기 함수
 function DoIDFind()
 {
     if($("#user_name").val() == "")

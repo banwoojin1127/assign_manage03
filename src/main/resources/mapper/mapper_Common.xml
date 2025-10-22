@@ -65,7 +65,13 @@
 </select>
 
 <!-- PW 찾기 ( 하지만 보안문제로 초기화 ) -->
-<update id="pwFind" parameterType="com.assign_manage.vo.VO_User">
+<select id="pwFind" parameterType="com.assign_manage.vo.VO_User"
+	resultType="java.lang.String">		
+		select email 
+		from user
+		where id = #{id} and tel = #{tel}
+</select>
+<update id="pwReset" parameterType="com.assign_manage.vo.VO_User">
 	update user
 	set pw = md5( #{pw} )
 	where id = #{id}
