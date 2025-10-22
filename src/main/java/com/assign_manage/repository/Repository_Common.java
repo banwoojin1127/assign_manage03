@@ -94,15 +94,35 @@ public class Repository_Common
 	}
 	
 	// PW 찾기
-	// return true : 변경 성공, false : 변경 실패
-	public String pwFind(String user_name, String tel)
+	// return String email : 찾기 성공, null : 찾기 실패
+	public String pwFind(VO_User uVO)
 	{
-		VO_User uVO = new VO_User();
-		uVO.setUser_name(user_name);
-		uVO.setTel(tel);
-		
-		String id = session.selectOne(namespace + ".idFind",uVO);
-		
-		return id;
+		String email = session.selectOne(namespace + ".pwFind",uVO);
+		System.out.println(email);
+		return email;
+	}
+	// 임시 비밀번호 초기화
+	// return String exPW : 변경 성공, null : 변경 실패
+	public String pwReset(VO_User uVO)
+	{
+		if(uVO.getId() == null || uVO.getId().equals(""))
+		{
+			return null;
+		}
+		else
+		{
+			// 임시 비밀번호 생성
+			String exPW = "";
+			String code = "1234567890ABCDEFGabcdefg";
+			int    maxlength = 8;
+			for(int i = 0; i < maxlength; i++)
+			{
+				int rand = (int)(Math.random() * 1000) % code.length();
+				exPW += code.charAt(rand);
+			}
+			uVO.setPw(exPW);
+			session.update(namespace + ".pwReset", uVO);
+			return exPW;
+		}
 	}
 }

@@ -29,7 +29,7 @@
 </head>
 <body>
 <!-- top main header start -->
-<%@ include file="/WEB-INF/views/include/head_top_user.jsp" %>
+<%@ include file="/WEB-INF/views/include/head_info_user.jsp" %>
 <!-- top main header end -->
 <!-- side nav menu accordion start -->
     <div id="panelNav" class="offcanvas offcanvas-bottom show" 
@@ -52,7 +52,7 @@
                             <span>강의 조회</span>
                         </a>
                         <div class="blank d-flex col flex-wrap m-0 p-0" style="width: 3%;"></div>
-                        <a href="<c:url value='/student/assign'/>" id="" class="btn d-flex col flex-wrap justify-content-center align-content-center h-50" style="width: 97%;">
+                        <a href="<c:url value='/student/assign/list'/>" id="" class="btn d-flex col flex-wrap justify-content-center align-content-center h-50" style="width: 97%;">
                             <span>과제 조회</span>
                         </a>
                         <div class="blank d-flex col flex-wrap m-0 p-0" style="width: 3%;"></div>

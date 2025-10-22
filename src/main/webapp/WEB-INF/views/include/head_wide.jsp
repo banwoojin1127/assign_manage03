@@ -29,7 +29,7 @@
 </head>
 <body>
 <!-- top main header start -->
-<%@ include file="/WEB-INF/views/include/head_top_none.jsp" %>
+<%@ include file="/WEB-INF/views/include/head_info_none.jsp" %>
 <!-- top main header end -->
 <!-- side nav menu accordion end -->
     <div id="" class="d-flex flex-wrap" style="padding-top: 200px;">
