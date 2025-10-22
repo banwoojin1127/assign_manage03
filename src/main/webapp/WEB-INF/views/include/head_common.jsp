@@ -29,7 +29,7 @@
 </head>
 <body>
 <!-- top main header start -->
-<%@ include file="/WEB-INF/views/include/head_top_user.jsp" %>
+<%@ include file="/WEB-INF/views/include/head_info_user.jsp" %>
 <!-- top main header end -->
 <!-- side nav menu accordion start -->
     <div id="panelNav" class="offcanvas offcanvas-bottom show" 

@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="co" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <co:choose>
     <co:when test="${login.user_class == '0'}">
         <%@ include file="/WEB-INF/views/include/head_admin.jsp" %>
@@ -11,18 +13,67 @@
         <%@ include file="/WEB-INF/views/include/head_student.jsp" %>
     </co:when>
     <co:otherwise>
-        <co:redirect url="/${pageContext.request.contextPath}/common/login"/>
+        <co:redirect url="/common/login"/>
     </co:otherwise>
 </co:choose>
 <!-- content field start -->
-        <div style="padding: 80px 130px; text-align: center; width: 1649px;">
-            <h3 style="text-align: left; width: 500px;">
+<script>
+window.onload = function()
+{
+    $("#pw").val("s2ezen123!");	
+
+    $("#pw").focus();
+    
+    $("#btnAuth").click(function(){
+        DoAuth();
+    });
+}
+function DoAuth()
+{
+    if($("#pw").val() == "")
+    {
+        $("#msg_auth").html("<span>비밀번호를 입력해주세요.</span>");
+        $("#pw").focus();
+        return;
+    }		
+    $.ajax({
+        url : "mypage_auth",
+        type: "post",
+        data :
+        {
+            pw : $("#pw").val()
+        },
+        dataType: "html",
+        success : function(res)
+        {
+            res = res.trim();
+            if(res == "ERROR")
+            {
+                // 인증 에러
+                alert("인증 중 오류가 발생하였습니다. 관리자에게 문의하세요.");
+            }
+            else if(res == "false")
+            {
+                // 인증 실패
+                $("#msg_auth").html("<span>비밀번호가 일치하지 않습니다.</span>");
+            }
+            else
+            {
+                //인증 성공
+                document.location = "mypage_edit";
+            }
+        }
+    });
+}   
+</script>
+        <div style="padding: 20px 32px; text-align: center; width: 512px;">
+            <h3 style="text-align: left; width: 512px;">
                 <div id="formLoginTitle" class="d-flex flex-wrap align-content-start my-3" style="width: 100%;">
                     <div id="" class="decoWideTitle" style="width: 12px;"></div>&nbsp;&nbsp;
                 <b>개인 정보 수정</b>
             </h3>
-            <div id="panelContent" class="d-flex flex-wrap justify-content-center align-content-center p-5" style="width: 100%;">
-                <div id="formFindPW" class="d-flex flex-wrap justify-content-center align-content-center p-0 m-0" style="width: 700px;">
+            <div id="panelContent" class="d-flex flex-wrap justify-content-center align-content-center p-5" style="width: 512px;">
+                <div id="formFindPW" class="d-flex flex-wrap justify-content-center align-content-center p-0 m-0" style="width: 512px;">
                     <div id="formFindPWTitle" class="d-flex flex-wrap align-content-start my-3" style="width: 100%;">
                         <div id="" class="textWideTitle d-flex flex-wrap align-content-center px-1" style="width: 95%;">
                             <p class="m-0" style="font-size: 1.5em;">&nbsp;&nbsp;회원 정보 확인</p>
@@ -41,7 +92,7 @@
                         <div class="d-flex flex-wrap justify-content-center align-content-center w-75">
                             <div class="d-flex flex-wrap justify-content-center w-100">
                                 <form id="" class="d-flex flex-wrap justify-content-center align-content-center w-100" action="" method="post">
-                                    <input id="" class="form-control m-2 my-3" name="" type="password" style="height: 50px;" placeholder="비밀번호 입력">
+                                    <input id="pw" class="form-control m-2 my-3" name="" type="password" style="height: 50px;" placeholder="비밀번호 입력">
                                 </form>
                             </div>
                             <div id="" class="helpWideRequest form-text w-75 h-auto" style="margin-left: -110px;">

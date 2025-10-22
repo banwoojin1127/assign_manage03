@@ -61,8 +61,9 @@ public class Controller_Common
 	@RequestMapping(value = CF + "login", method = RequestMethod.POST)
 	@ResponseBody
 	public String Login(
-			@RequestParam("id") String id, @RequestParam("pw") String pw,
-			HttpServletRequest request
+			@RequestParam("id") String id
+		,	@RequestParam("pw") String pw
+		,	HttpServletRequest request
 			)
 	{
 		HttpSession session = request.getSession();
@@ -179,7 +180,7 @@ public class Controller_Common
 		
 		// 메일 내용
 		String subject = "인증번호 발송";
-		String content = "회원가입 인증번호는 [" + authCode + "]입니다.";
+		String content = "회원가입 인증번호는 [ " + authCode + " ]입니다.";
 
 		// 보내는 사람
 		String from = mailSender.getUsername()+"@naver.com";
@@ -217,8 +218,9 @@ public class Controller_Common
 	@RequestMapping(value = CF + "find_id", method = RequestMethod.POST)
 	@ResponseBody
 	public String Find_ID(
-			String user_name, String tel,
-			HttpServletRequest request
+			@RequestParam("user_name") String user_name
+		,	@RequestParam("tel") String tel
+		,	HttpServletRequest request
 			)
 	{
 		HttpSession session = request.getSession();
@@ -233,8 +235,10 @@ public class Controller_Common
 		}else
 		{
 			// ID 찾기 성공
+			String contextPath = request.getContextPath();
 			session.setAttribute("id", id);
-			return CF + "find_id_ok";
+			session.setAttribute("user_name", user_name);
+			return contextPath + CF + "find_id_ok";
 		}
 	}
 	
@@ -252,12 +256,80 @@ public class Controller_Common
 		return CF + "find_pw";
 	}
 	@RequestMapping(value = CF + "find_pw", method = RequestMethod.POST)
-	public String Find_PW(VO_User voPWQuestion)
+	@ResponseBody
+	public String Find_PW(
+			@RequestParam("id") String id
+		,	@RequestParam("tel") String tel
+		,	HttpServletRequest request
+			)
 	{
-		return CF + "find_pw_ok";
+		HttpSession session = request.getSession();
+
+		VO_User uVO = new VO_User();
+		uVO.setId(id);
+		uVO.setTel(tel);
+		
+		String email = repos_Com.pwFind(uVO);
+		
+		if(email == null || email.equals(""))
+		{
+			// PW 찾기 실패
+			return null;
+		}else
+		{
+			// PW 찾기 성공
+			return email;
+		}
 	}
-	
-	// 비밀번호 찾기 성공 페이지 (보안문제로 비밀번호 초기화 실행)
+	@RequestMapping(value = CF + "reset_pw", method = RequestMethod.POST)
+	public String Reset_PW(
+			@RequestParam("id") String id
+		,	@RequestParam("tel") String tel
+		,	@RequestParam("email") String email
+		,	HttpServletRequest request
+			)
+	{
+		HttpSession session = request.getSession();
+		String contextPath = request.getContextPath();
+		
+		VO_User uVO = new VO_User();
+		uVO.setId(id);
+		uVO.setTel(tel);
+		
+		String exPW = repos_Com.pwReset(uVO);
+		
+		// 메일 내용
+		String subject = "임시 비밀번호 발송";
+		String content = id + "님의 임시 비밀번호는 [ " + exPW + " ]입니다.";
+
+		// 보내는 사람
+		String from = mailSender.getUsername()+"@naver.com";
+
+		// 받는 사람
+		String to = email;
+
+		try 
+		{
+			// 메일 내용 넣을 객체와, 이를 도와주는 Helper 객체 생성
+			MimeMessage message = mailSender.createMimeMessage();
+			MimeMessageHelper mailHelper = new MimeMessageHelper(message, "UTF-8");
+
+			// 메일 내용을 채워줌
+			mailHelper.setFrom(from);	// 보내는 사람 셋팅
+			mailHelper.setTo(to);		// 받는 사람 셋팅
+			mailHelper.setSubject(subject);	// 제목 셋팅
+			mailHelper.setText(content);	// 내용 셋팅
+
+			// 메일 전송
+			mailSender.send(message);
+			// PW 임시 초기화 성공
+			return "redirect:" + CF + "find_pw_ok";
+		} catch(Exception e) {
+			e.printStackTrace();
+			return "redirect:" + CF + "login";
+		}
+	}
+	// 비밀번호 찾기 성공 페이지 (보안문제로 비밀번호 초기화 실행됨)
 	@RequestMapping(value = CF + "find_pw_ok")
 	public String Find_PW_Ok()
 	{
