@@ -16,16 +16,13 @@
         <co:redirect url="/common/login"/>
     </co:otherwise>
 </co:choose>
-<script src="<c:url value='/resources/js/userInfo.js'/>">
-    console.log("<c:out value='${login}'/>");
-    console.log("<c:out value='${login.tel}'/>");
-    console.log("<c:out value='${login.email}'/>");
+<script src="<c:url value='/resources/js/userInfo.js'/>"></script>
+<script>
+    const CONTEXT_PATH = "${pageContext.request.contextPath}"; 
+    const userInfoUrl = CONTEXT_PATH + "/common/"; 
     sessionLogin = "<c:out value='${login}'/>";
     sessionTel = "<c:out value='${login.tel}'/>";
-    sessionEMail = "<c:out value='${login.email}'/>";
-    console.log("sessionLogin: " + sessionLogin);
-    console.log("sessionTel: " + sessionTel);
-    console.log("sessionEMail: " + sessionEMail);
+    sessionEmail = "<c:out value='${login.email}'/>";
 </script>
 <!-- content field start -->
         <div id="panelContent" class="d-flex flex-wrap justify-content-center align-content-center p-5" style="width: 100%;">
@@ -34,12 +31,12 @@
                     <div class="decoWideTitle" style="width: 12px;"></div>
                     &nbsp;&nbsp;
                     <div class="textWideTitle d-flex flex-wrap justify-content-between align-content-center px-1" style="width: 95%;">
-                        <p class="m-0" style="font-size: 1.5em;">개인 정보</p>
+                        <p class="m-0" style="font-size: 1.5em;">회원정보</p>
                     </div>
                 </div>
                 <div id="formModifyRequest" class="col-12 d-flex flex-wrap justify-content-center align-content-center border border-dark border-1 rounded pt-3 pb-5">
                     <!-- userInfoView form start -->
-                    <form id="InfoModify" name="InfoModify" action="mypage_edit" method="post" class="d-flex flex-wrap justify-content-center align-content-center w-100">
+                    <form id="infoModify" name="infoModify" action="mypage_edit" method="post" class="d-flex flex-wrap justify-content-center align-content-center w-100">
                         <input id="user_class" name="user_class" type="hidden" value="${login.user_class}">
                         <input id="user_icon" name="user_icon" type="hidden" value="0"> <!-- !!! 삭제 안건 !!! -->
                         <div class="form-floating w-75 my-1">
@@ -236,7 +233,7 @@
                             </div>
                         </div>
                         <!-- email input group end -->
-                        <button id="btn_infoUpdate" class="btnWide align-content-center w-75 my-1" style="height: 50px;" type="button">
+                        <button id="btn_infoModify" class="btnWide align-content-center w-75 my-1" style="height: 50px;" type="button">
                             저장하기
                         </button>
                     </form>

@@ -1,11 +1,11 @@
 package com.assign_manage.repository;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import com.assign_manage.vo.VO_Assignment;
-import com.assign_manage.vo.VO_Lecture;
+import com.assign_manage.vo.*;
 
 @Repository
 public class Repository_Teacher {
@@ -30,5 +30,11 @@ public class Repository_Teacher {
     // 추가: 특정 과제 조회
     public VO_Assignment selectAssignmentByNo(int assign_no) {
         return session.selectOne(namespace + ".selectAssignmentByNo", assign_no);
+    }
+    
+    //교사 전체 목록 조회
+    public List<VO_User> selectAllTeachers()
+    {
+    	return session.selectList(namespace + ".All_Teacher_List");
     }
 }

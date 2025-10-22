@@ -50,4 +50,19 @@ public class VO_User
 	public void setModify_date(String modify_date) { this.modify_date = modify_date; }
 	public void setLeave_date(String leave_date)   { this.leave_date = leave_date; }
 	public void setIp(String ip)                   { this.ip = ip; }
+	
+	public void showInnerData()
+	{
+		System.out.println(this.id);
+		System.out.println(this.pw);
+		System.out.println(this.user_name);
+		System.out.println(this.user_class);
+		System.out.println(this.gender);
+		System.out.println(this.user_icon);
+		System.out.println(this.birth);
+		System.out.println(this.tel);
+		System.out.println(this.email);
+		System.out.println(this.join_date);
+		System.out.println(this.modify_date);
+	}
 }

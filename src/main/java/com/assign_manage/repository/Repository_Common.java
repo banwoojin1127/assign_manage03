@@ -35,6 +35,36 @@ public class Repository_Common
 		return true;
 	}
 	
+	// 회원정보 수정
+	// return true : 수정 성공
+	// ERROR : 수정 실패
+	public boolean InfoModify(VO_User voU)
+	{
+		session.update(namespace + ".infoModify", voU);
+		
+		return true;
+	}
+	// 비밀번호로 사용자 인증 검사
+	// return true : 인증 성공, false : 인증 실패
+	public boolean AuthPW(String id, String pw)
+	{
+		VO_User uVO = new VO_User();
+		uVO.setId(id);
+		uVO.setPw(pw);
+		int total = session.selectOne(namespace + ".authPW", uVO);
+		if(total > 0)
+		{
+			return true;
+		}
+		return false;
+	}
+	//
+	public VO_User Refresh(String id)
+	{
+		VO_User voU = session.selectOne(namespace + ".refresh", id);
+		return voU;
+	}
+	
 	// ID, Tel, Email 중복 검사
 	// return true : 중복 있음, false : 중복 없음
 	public boolean CheckID(String id)

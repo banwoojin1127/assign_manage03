@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- 
-맵퍼 기능 : 회원가입, 중복아이디 검색, 로그인
-작성자 : 반우진
-작성일 : 2025-10-17
+맵퍼 기능 : 회원가입, 중복아이디 검색, 로그인, 회원정보
+작성자 : 	반우진
+작성일 : 	2025-10-17
  -->
 <!-- Namespace를 통해 JAVA 클래스와 Annotation클래스와 동기 -->
 <mapper namespace="common">
@@ -28,24 +28,64 @@
 		)
 </insert>
 
+<!-- 회원정보 수정 -->
+<update id="infoModify" parameterType="com.assign_manage.vo.VO_User">
+    UPDATE user
+    <set>
+        <if test="pw != null and pw != ''">
+            pw = MD5( #{pw} ),
+        </if>
+        <if test="user_name != null and user_name != ''">
+            user_name = #{user_name},
+        </if>
+        <if test="user_class != null and user_class != ''">
+            user_class = #{user_class},
+        </if>
+        <if test="gender != null and gender != ''">
+            gender = #{gender},
+        </if>
+        <if test="user_icon != null and user_icon != ''">
+            user_icon = #{user_icon},
+        </if>
+        <if test="birth != null and birth != ''">
+            birth = #{birth},
+        </if>
+        <if test="tel != null and tel != ''">
+            tel = #{tel},
+        </if>
+        <if test="email != null and email != ''">
+            email = #{email},
+        </if>
+        modify_date = CURRENT_TIMESTAMP,
+    </set>
+    WHERE id = #{id};
+</update>
+<!-- 비밀번호로 사용자 인증 검사 -->
+<select id="authPW" parameterType="com.assign_manage.vo.VO_User"
+	resultType="java.lang.Integer">
+		select count(*) as total
+		from user
+		where id = #{id} and pw = md5( #{pw} )
+</select>
+
 <!-- ID, Tel, Email 중복 조회 -->
 <select id="checkID" parameterType="java.lang.String"
 	resultType="java.lang.Integer">
-	select count(*) as total
-	from user
-	where id = #{id}
+		select count(*) as total
+		from user
+		where id = #{id}
 </select>
 <select id="checkTel" parameterType="java.lang.String"
 	resultType="java.lang.Integer">
-	select count(*) as total
-	from user
-	where tel = #{tel}
+		select count(*) as total
+		from user
+		where tel = #{tel}
 </select>
 <select id="checkEmail" parameterType="java.lang.String"
 	resultType="java.lang.Integer">
-	select count(*) as total
-	from user
-	where email = #{email}
+		select count(*) as total
+		from user
+		where email = #{email}
 </select>
 
 <!-- 로그인 조회 -->
@@ -54,6 +94,14 @@
 		select * 
 		from user
 		where id = #{id} and pw = md5( #{pw} )
+</select>
+
+<!-- 사용자 info 가져오기 -->
+<select id="refresh" parameterType="com.assign_manage.vo.VO_User"
+	resultType="com.assign_manage.vo.VO_User">		
+		select * 
+		from user
+		where id = #{id}
 </select>
 
 <!-- ID 찾기 -->

@@ -1,16 +1,41 @@
 //userInfo.js
-//중복되었는지 검사용
+
+//  ex_url | ipLocation:portNumber/myapp/home/index
+// 서버에서 직접 컨텍스트 루트를 주입
+// ${pageContext.request.contextPath}는 JSP에서 컨텍스트 루트를 가져오는 표준 방식
+//const CONTEXT_PATH = "${pageContext.request.contextPath}"; 
+// 결과: "/myapp" 또는 ""
+
+// 이 변수를 사용하여 URL 구성
+//const userInfoUrl = CONTEXT_PATH + "/common/"; 
+// 결과: /myapp/user/list.do
+
+// 중복되었는지 검사용
 let dupCheckID = "";
 let dupCheckTel = "";
 let dupCheckEmail = "";
-let sessionLogin = "";
+// let sessionLogin = "";
+// let sessionTel = "";
+// let sessionEmail = "";
+
+// 인증받는 메일인지 확인용
+let fixedEmail = true;
 
 // 메일을 수정하는지 확인용
+let changePW = false;
 let changeEmail = false;
 
 window.onload = function()
 {
 	$("#id").focus();
+
+    if( sessionLogin != "" && sessionLogin != null )
+    {
+        //로그인 상태이면 중복검사 결과를 미리 설정
+        dupCheckID = "NOT_DUPLICATED";
+        dupCheckTel = "NOT_DUPLICATED";
+        dupCheckEmail = "NOT_DUPLICATED";
+    }
 	
 	//id 키보드 입력 이벤트 처리
 	$("#id").keyup(function(){
@@ -19,9 +44,11 @@ window.onload = function()
     //pw 키보드 입력 이벤트 처리
 	$("#pw").keyup(function(){
 		CheckPW();
+        CheckPWConfirm();
 	});
     //pw_confirm 키보드 입력 이벤트 처리
     $("#pwConfirm").keyup(function(){  
+		CheckPW();
         CheckPWConfirm();
     });
     //user_name 키보드 입력 이벤트 처리
@@ -57,13 +84,18 @@ window.onload = function()
 	$("#btn_join").click(function(){
 		CheckBeforeDoing();
 	});
+
+    //수정하기 이벤트처리
+    $("#btn_infoModify").click(function(){
+        CheckBeforeDoing();
+    });
 }
 
 //아이디 검사 함수
 function CheckID()
 {
-    require = /^(?=.*[a-z])[a-z0-9]{5,20}$/;
-	id = $("#id").val();
+    let require = /^(?=.*[a-z])[a-z0-9]{5,20}$/;
+    let id = $("#id").val();
 	if(id == "")
 	{
 		$("#msg_id").html("<span style='color:#dc3545'>*아이디를 입력해주세요.</span>");
@@ -79,7 +111,7 @@ function CheckID()
         return;
     }
 	$.ajax({
-		url : "dupliid?id=" + id,
+		url : userInfoUrl + "dupliid?id=" + id,
 		type: "get",
 		dataType: "html",
 		success : function(res)
@@ -108,8 +140,9 @@ function CheckID()
 //비밀번호 검사 함수
 function CheckPW()
 {
-    require = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[~!@%*])[a-zA-Z0-9~!@%*]{8,16}$/;
-    pw = $("#pw").val();
+    changePW = true; // 비밀번호가 수정될 때마다 변경됨
+    let require = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[~!@%*])[a-zA-Z0-9~!@%*]{8,16}$/;
+    let pw = $("#pw").val();
     if(pw == "")
     {
         if(sessionLogin == "" || sessionLogin == null)
@@ -119,6 +152,7 @@ function CheckPW()
         }else
         {
             $("#msg_pw").html("<span style='color:#198754'>*변경을 원하시는 경우에만 입력해주세요.</span>");
+            changePW = false; // 변경하지 않음
             return;
         }
     }
@@ -136,9 +170,12 @@ function CheckPW()
 //비밀번호 일치 검사 함수
 function CheckPWConfirm()
 {
-    if( $("#pwConfirm").val() == "")
+    let pwConfirmVal = $("#pwConfirm").val();
+    let pwVal = $("#pw").val();
+
+    if( pwConfirmVal == "" || pwConfirmVal == null )
     {
-        if(sessionLogin == "")
+        if( sessionLogin == "" || sessionLogin == null || changePW )
         {
             $("#msg_pwConfirm").html("<span style='color:#dc3545'>*동일한 비밀번호를 입력해주세요.</span>");
             return;
@@ -148,7 +185,7 @@ function CheckPWConfirm()
             return;
         }
     }
-    else if( $("#pw").val() != $("#pwConfirm").val() )
+    else if( pwVal != pwConfirmVal )
     {
         $("#msg_pwConfirm").html("<span style='color:#dc3545'>*비밀번호가 일치하지 않습니다.</span>");
         return;
@@ -162,7 +199,7 @@ function CheckPWConfirm()
 //이름 검사 함수
 function CheckUser_Name()
 {
-    name = $("#user_name").val();
+    let name = $("#user_name").val();
     if( name == "")
     {
         $("#msg_name").html("<span style='color:#dc3545'>*이름을 입력해주세요.</span>");
@@ -177,7 +214,7 @@ function CheckUser_Name()
 //성별 검사 함수
 function CheckGender()
 {
-    gender = $("input[name='gender']:checked").val();
+    let gender = $("input[name='gender']:checked").val();
     if( gender == null)
     {
         $("#msg_gender").html("<span style='color:#dc3545'>*성별을 선택해주세요.</span>");
@@ -192,12 +229,12 @@ function CheckGender()
 //생년월일 검사 함수
 function CheckBirth()
 {
-    year = $("#year").val();
-    month = $("#month").val();
-    day = $("#day").val();
+    let year = $("#year").val();
+    let month = $("#month").val();
+    let day = $("#day").val();
     $("#birth").val( year + "-" + month + "-" + day );
-    birth = $("#birth").val();
-    if( year == "" || month == "" || day == "")
+    let birth = $("#birth").val();
+    if( year == "" || month == "" || day =="")
     {
         $("#msg_birth").html("<span style='color:#dc3545'>*생년월일을 입력해주세요.</span>");
         return;
@@ -211,24 +248,23 @@ function CheckBirth()
 //전화번호 검사 함수
 function CheckTel()
 {
-    require = /^[0-9]{9,11}$/;
-    tel = $("#tel").val();
-    $("#msg_tel").html(""); // 이전 메시지를 초기화
+    // 한국 휴대전화(하이픈 없이) 예: 01012345678 또는 0111234567
+    let require = /^01\d{7,9}$/;
+    let tel = $("#tel").val();
 
-    if (sessionLogin == "" || sessionLogin == null) {
-        // 1. **로그인하지 않은 경우 (필수 입력)**
+    if (sessionLogin == "" || sessionLogin == null) 
+    {
         if (tel == "") {
             $("#msg_tel").html("<span style='color:#dc3545'>*전화번호를 입력해주세요.</span>");
-            return; // 필수 입력이므로 함수 종료
+            return;
         } else if (!require.test(tel)) {
             $("#msg_tel").html("<span style='color:#dc3545'>*전화번호를 '-'없이 9~11자리로 입력해주세요.</span>");
-            return; // 유효성 검사 실패 시 함수 종료
+            return;
         }
-        // 유효성 검사 통과: 다음 로직으로 진행 (예: 중복 확인 또는 폼 제출)
+        // 유효성 검사 통과 메시지
         $("#msg_tel").html("<span style='color:#198754'>사용 가능한 전화번호 형식입니다.</span>");
-
-    } else { // sessionLogin != ""
-        // 2. **로그인한 경우 (선택적 입력 - 변경 시에만 입력)**
+    } else 
+    { // sessionLogin != ""
         if (tel == "") {
             // 전화번호를 입력하지 않았음 = 변경하지 않음.
             // 폼 제출은 막지 않고 안내 메시지만 표시하며, AJAX 호출을 건너뛰기 위해 return 합니다.
@@ -239,14 +275,13 @@ function CheckTel()
         } else if (!require.test(tel)) {
             // 전화번호를 입력했지만 유효성 검사 실패
             $("#msg_tel").html("<span style='color:#dc3545'>*전화번호를 '-'없이 9~11자리로 입력해주세요.</span>");
-            return; // 유효성 검사 실패 시 함수 종료
-        } else {
-            // 전화번호를 입력했고, 유효성 검사 통과 (변경 예정)
-            $("#msg_tel").html("<span style='color:#198754'>사용 가능한 전화번호 형식입니다.</span>");
+            return;
         }
+        // 전화번호를 입력했고, 유효성 검사 통과 (변경 예정)
+        $("#msg_tel").html("<span style='color:#198754'>사용 가능한 전화번호 형식입니다.</span>");
     }
     $.ajax({
-		url : "duplitel?tel=" + tel,
+		url : userInfoUrl + "duplitel?tel=" + tel,
 		type: "get",
 		dataType: "html",
 		success : function(res)
@@ -261,7 +296,7 @@ function CheckTel()
 			case "ERROR":
 				$("#msg_tel").html("<span style='color:#dc3545'>!!! 중복검사 오류가 발생했습니다. !!!</span>");
 				break;
-			case "DUPLICATED":					
+			case "DUPLICATED":
                 if(sessionLogin != "" && tel == sessionTel) {
                     // 로그인한 상태에서 기존 전화번호와 동일한 경우 (변경하지 않음)
                     dupCheckTel = "NOT_DUPLICATED"; // 중복 아님으로 처리
@@ -282,30 +317,30 @@ function CheckTel()
 //메일 검사 함수
 function CheckEmail()
 {
-    require = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/;
-    persnal = $("#persnal").val();
-    domain = $("#domain").val();
+    fixedEmail = false; // 이메일이 수정될 때마다 초기화
+    let require = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
+    let persnal = $("#persnal").val();
+    let domain = $("#domain").val();
     $("#email").val( persnal + "@" + domain );
-    email = $("#email").val();
-    $("#msg_email").html(""); // 이전 메시지를 초기화
+    let email = $("#email").val();
 
-    if (sessionLogin == "" || sessionLogin == null) {
-        // 1. **로그인하지 않은 경우 (필수 입력)**
+    if (sessionLogin == "" || sessionLogin == null) 
+    {
         if (persnal == "" || domain == "") {
             $("#msg_email").html("<span style='color:#dc3545'>*메일주소를 입력해주세요.</span>");
-            return; // 필수 입력이므로 함수 종료
+            return;
         } else if (!require.test(email)) {
             $("#msg_email").html("<span style='color:#dc3545'>*불가능한 메일주소 형식입니다.</span>");
-            return; // 유효성 검사 실패 시 함수 종료
+            return;
         }
         // 유효성 검사 통과 메시지
         $("#msg_email").html("<span style='color:#198754'>사용 가능한 메일주소 형식입니다.</span>");
 
     } else { // sessionLogin != ""
-        // 2. **로그인한 경우 (선택적 입력 - 변경 시에만 입력)**
         if (persnal == "" || domain == "") {
-            // 이메일을 입력하지 않았음 = 변경하지 않음.
+            // 이메일을 입력하지 않았음 = 변경하지 않음
             changeEmail = false;
+            fixedEmail = true;
             // 폼 제출은 막지 않고 안내 메시지만 표시하며, AJAX 호출을 건너뛰기 위해 return 합니다.
             $("#msg_email").html("<span style='color:#198754'>*변경을 원하시는 경우에만 입력해주세요.</span>");
             // 변경하지 않는 경우 중복 검사를 할 필요가 없으므로 여기서 함수를 종료합니다.
@@ -323,7 +358,7 @@ function CheckEmail()
     
     // 유효성 검사를 통과하고, 로그인 상태일 때 입력이 비어있지 않은 경우에만 AJAX 호출
     $.ajax({
-        url : "dupliemail?email=" + email,
+        url : userInfoUrl + "dupliemail?email=" + email,
         type: "get",
         dataType: "html",
         success : function(res)
@@ -339,7 +374,7 @@ function CheckEmail()
                 $("#msg_email").html("<span style='color:#dc3545'>!!! 중복검사 오류가 발생했습니다. !!!</span>");
                 break;
             case "DUPLICATED":                
-                if(sessionLogin != "" && email == sessionEMail) {
+                if(sessionLogin != "" && email == sessionEmail) {
                     // 로그인한 상태에서 기존 이메일과 동일한 경우 (변경하지 않음)
                     changeEmail = false;
                     dupCheckEmail = "NOT_DUPLICATED"; // 중복 아님으로 처리
@@ -360,20 +395,23 @@ function CheckEmail()
 function SendEmail()
 {
     $("#msg_afterSand").html("");
-    persnal = $("#persnal").val();
-    domain = $("#domain").val();
+    let persnal = $("#persnal").val();
+    let domain = $("#domain").val();
 	if( persnal == "" || domain == "" )
 	{
+        if(sessionLogin != "")
+        {
+            $("#msg_email").html("<span style='color:#dc3545'>*메일 변경을 원하시면 입력해주세요.</span>");
+            changeEmail = false;
+		    $("#email").focus();
+		    return;
+        }
 		$("#msg_email").html("<span style='color:#dc3545'>*메일주소를 입력해주세요.</span>");
 		$("#email").focus();
 		return;
     }
-    if( sessionLogin != "" )
-    {
-        changeEmail = true;
-    }
 	$.ajax({
-		url : "sendEmail?email=" + $("#email").val(),
+		url : userInfoUrl + "sendEmail?email=" + $("#email").val(),
 		type: "get",
 		dataType: "html",
 		success : function(res)
@@ -384,6 +422,11 @@ function SendEmail()
                 $("#msg_code").html("<span style='color:#dc3545'>*인증메일 발송 오류가 발생하였습니다.</span>");
 			}else
 			{
+                fixedEmail = true;
+                if( sessionLogin != "" )
+                {
+                    changeEmail = true;
+                }
                 $("#msg_code").html("<span style='color:#dc3545; font-weight: bold;'>*인증코드를 메일로 발송하였습니다.</span>");
                 $("#msg_afterSand").html("<span style='color:#198754;'>인증코드는 메일로 발송됩니다.<br>메일이 도착하지 않을 경우 스팸 메일함을 확인해주세요.</span>");
 				$("#sendcode").val(code);
@@ -415,7 +458,7 @@ function CheckBeforeDoing()
     }
     if($("#pw").val() == "")
     {
-        if(sessionLogin == "")
+        if(sessionLogin == "" || sessionLogin == null)
         {
             $("#msg_pw").html("<span style='color:#dc3545'>*비밀번호를 입력해주세요.</span>");
             $("#pw").focus();
@@ -426,18 +469,12 @@ function CheckBeforeDoing()
             $("#msg_pw").html("<span style='color:#dc3545'></span>");
         }
     }
-    if($("#pw").val() != $("#pwConfirm").val())
+    if($("#pw").val() != $("#pwConfirm").val() && changePW)
     {
-        if(sessionLogin == "")
-        {
-            $("#msg_pwConfirm").html("<span style='color:#dc3545'>*동일한 비밀번호를 입력해주세요.</span>");
-            $("#pwConfirm").focus();
-            MovePostion();
-            return;
-        }else
-        {
-            $("#msg_pwConfirm").html("<span style='color:#dc3545'></span>");
-        }
+        $("#msg_pwConfirm").html("<span style='color:#dc3545'>*동일한 비밀번호를 입력해주세요.</span>");
+        $("#pwConfirm").focus();
+        MovePostion();
+        return;
     }
     if($("#user_name").val() == "")
     {
@@ -453,7 +490,7 @@ function CheckBeforeDoing()
     }
     if($("#year").val() == "" || $("#month").val() == "" || $("#day").val() == "")
     {
-        if(sessionLogin == "")
+        if(sessionLogin == "" || sessionLogin == null)
         {
             $("#msg_birth").html("<span style='color:#dc3545'>*생년월일을 선택해주세요.</span>");
             $("#year").focus();
@@ -465,7 +502,7 @@ function CheckBeforeDoing()
     }
     if($("#tel").val() == "")
     {
-        if(sessionLogin == "")
+        if(sessionLogin == "" || sessionLogin == null)
         {
             $("#msg_tel").html("<span style='color:#dc3545'>*전화번호를 입력해주세요.</span>");
             $("#tel").focus();
@@ -477,7 +514,7 @@ function CheckBeforeDoing()
     }
     if($("#persnal").val() == "" || $("#domain").val() == "")
     {
-        if(sessionLogin == "")
+        if(sessionLogin == "" || sessionLogin == null || changeEmail )
         {
             $("#msg_email").html("<span style='color:#dc3545'>*메일주소를 입력해주세요.</span>");
             $("#persnal").focus();
@@ -487,36 +524,35 @@ function CheckBeforeDoing()
             $("#msg_email").html("<span style='color:#dc3545'></span>");
         }
     }
-    
     //아이디 중복문제 미해결 시 submit 중지
-    if( dupCheckID != "NOT_DUPLICATED")
+    if( dupCheckID == "DUPLICATED" || dupCheckID == "ERROR" )
     {
         alert("*사용 가능한 아이디가 아닙니다.");
         return ;
     }
     //전화번호 중복문제 미해결 시 submit 중지
-    if( dupCheckTel != "NOT_DUPLICATED")
+    if( dupCheckTel == "DUPLICATED" || dupCheckTel == "ERROR" )
     {
         alert("*사용 가능한 전화번호가 아닙니다.");
         return ;
     }
     //메일주소 중복문제 미해결 시 submit 중지
-    if( dupCheckEmail != "NOT_DUPLICATED")
+    if( dupCheckEmail == "DUPLICATED" || dupCheckEmail == "ERROR" )
     {
         alert("*사용 가능한 메일주소가 아닙니다.");
         return ;
     }
     
     //메일 인증문제 미해결 시 submit 중지
-    if( sessionLogin == "" || changeEmail )
+    if( sessionLogin == "" || sessionLogin == null || changeEmail)
     {
-        if( $("#code").val() == "")
+        if( $("#code").val() == "" )
         {
             $("#msg_code").html("<span style='color:#dc3545'>*인증 코드를 입력해주세요.</span>");
             $("#code").focus();
             return;
         }
-        if( $("#code").val() != $("#sendcode").val())
+        if( $("#code").val() != $("#sendcode").val() || !fixedEmail)
         {
             $("#msg_code").html("<span style='color:#dc3545'>*인증 코드가 일치하지 않습니다.</span>");
             $("#code").focus();
@@ -524,10 +560,15 @@ function CheckBeforeDoing()
         }
     }
 
-    if( sessionLogin == "" )
+    if( sessionLogin == "" || sessionLogin == null )
     {
         //가입 의사 재확인
-        if(confirm("회원가입을 진행하시겠습니까?") == false)
+        let question = "회원가입을 진행하시겠습니까?";
+        if( $('#user_class').val() == 1)
+        {
+            question = "교사 등록을 진행하시겠습니까?";
+        }
+        if(confirm(question) == false)
         {
             return;
         }
@@ -544,7 +585,7 @@ function CheckBeforeDoing()
         }
         else
         {
-            $("#InfoModify").submit();
+            $("#infoModify").submit();
         }
     }else
     {

@@ -7,6 +7,7 @@
 package com.assign_manage.control;
 
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -68,25 +69,25 @@ public class Controller_Common
 	{
 		HttpSession session = request.getSession();
 		
-		VO_User vo = repos_Com.Login(id, pw);
-		if(vo == null)
+		VO_User voU = repos_Com.Login(id, pw);
+		if(voU == null)
 		{
 			//로그인 안됨.	
 			session.setAttribute("login", null);
 			return "false";
 		}else
 		{
-			session.setAttribute("login", vo);
+			session.setAttribute("login", voU);
 			String contextPath = request.getContextPath();
-			if(vo.getUser_class().equals("0"))
+			if(voU.getUser_class().equals("0"))
 			{
 				return contextPath + "/admin/";
 			}
-			if(vo.getUser_class().equals("1"))
+			if(voU.getUser_class().equals("1"))
 			{
 				return contextPath + "/teacher/";
 			}
-			if(vo.getUser_class().equals("2"))
+			if(voU.getUser_class().equals("2"))
 			{
 				return contextPath + "/student/";
 			}
@@ -101,13 +102,64 @@ public class Controller_Common
 		return CF + "signup";
 	}
 	@RequestMapping(value = CF + "signup", method = RequestMethod.POST)
-	public String Singup(VO_User voU)
+	public String Singup(VO_User voU
+		,	HttpServletRequest request
+			)
 	{
+		String fullUrl = request.getHeader("Referer");
+		String searchString = "control/";	// 컨텍스트 루트. 동적으로 가져올 수 있으면 그렇게 하는게 좋습니다.
+		String vipLayer = "";
+
+		// Referer가 null일 수 있으므로 null 체크를 먼저 하는 것이 안전합니다.
+		if (fullUrl == null) {
+		    System.out.println("Referer 정보가 없습니다 (null).");
+		    return null; // 메서드 종료
+		}
+
+		int startIndex = fullUrl.indexOf(searchString);
+		if (startIndex != -1) {
+		    // "control/" 바로 다음부터 시작하는 인덱스입니다.
+		    int substringStartIndex = startIndex + searchString.length();
+		    
+		    // substringStartIndex 위치부터 문자열의 끝까지의 '나머지 문자열'에서 
+		    //    첫 번째 "/"의 위치를 찾습니다.
+		    //    이 indexOf는 substringStartIndex 이후에서만 검색합니다.
+		    int nextSlashIndex = fullUrl.indexOf("/", substringStartIndex);
+
+		    if (nextSlashIndex != -1) {
+		        // 시작 인덱스 (substringStartIndex)부터
+		        //    첫 번째 "/"의 위치 (nextSlashIndex)까지 문자열을 잘라냅니다.
+		    	vipLayer = fullUrl.substring(substringStartIndex, nextSlashIndex);
+
+		        // 예시: fullUrl이 "http://localhost:8080/control/admin/teacher_signup" 일 때
+		        // startIndex = 28
+		        // substringStartIndex = 36 (a)
+		        // nextSlashIndex = 41 (n/t) -> '/'의 위치
+		        // result: "admin"
+		        System.out.println("추출된 문자열: " + vipLayer);
+		    }else
+		    {
+		        // "control/" 뒤에 "/"가 더 이상 없는 경우 (예: /control/admin)
+		    	vipLayer = fullUrl.substring(substringStartIndex);
+		        System.out.println("다음 슬래시가 없어 끝까지 추출: " + vipLayer);
+		    }
+		}else
+		{
+		    System.out.println("찾는 문자열(" + searchString + ")이 존재하지 않습니다.");
+		}
+
 		if(repos_Com.Join(voU) == false)
 		{
-			return CF + "signup";
+			if( vipLayer.equals("admin") )
+			{
+				return "redirect:" + "/" + vipLayer + "/teacher_signup";
+			}
+			return "redirect:" + CF + "signup";
 		};
-		
+		if( vipLayer.equals("admin") )
+		{
+			return "redirect:" + "/" + vipLayer + "/user_management";
+		}
 		return "redirect:" + CF + "login";
 	}
 	
@@ -350,9 +402,19 @@ public class Controller_Common
 		return CF + "mypage_auth";
 	}
 	@RequestMapping(value = CF + "mypage_auth", method = RequestMethod.POST)
-	public String MyPage_Auth(String PW)
+	@ResponseBody
+	public String MyPage_Auth(String pw
+			,	HttpServletRequest request
+			)
 	{
-		return CF + "mypage_auth";
+		HttpSession session = request.getSession();
+		VO_User voLogin = (VO_User)session.getAttribute("login");
+		
+		if( repos_Com.AuthPW(voLogin.getId(),pw) == true )
+		{
+			return "true";
+		}
+		return "false";
 	}
 	
 	// 개인정보 수정 페이지 및 수정 요청
@@ -362,8 +424,26 @@ public class Controller_Common
 		return CF + "mypage_edit";
 	}
 	@RequestMapping(value = CF + "mypage_edit", method = RequestMethod.POST)
-	public String MyPage_Edit(VO_User userInfo)
+	public String MyPage_Edit(VO_User voU
+			,	HttpServletRequest request
+			)
 	{
-		return CF + "mypage_edit";
+		HttpSession session = request.getSession();
+		VO_User voLogin = (VO_User)session.getAttribute("login");
+
+		voU.setId(voLogin.getId());
+		repos_Com.InfoModify(voU);
+		voU = repos_Com.Refresh(voU.getId());
+
+		if(voU == null)
+		{
+			//로그인 안됨.	
+			session.setAttribute("login", null);
+			return "redirect:" + CF + "login";
+		}else
+		{
+			session.setAttribute("login", voU);
+			return CF + "mypage";
+		}
 	}
 }

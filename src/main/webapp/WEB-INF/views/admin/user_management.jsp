@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ include file="../include/head_admin.jsp" %>
 <!-- content field start -->
@@ -10,25 +11,25 @@
             <div class="d-flex mb-3" style="width: 1410px; text-align: right;">
                 
                 <button type="button" class="btn btn-primary ms-auto" style="width:95x; margin-right: 10px ;"
-                    onclick="location.href='teacher-signup.jsp'">
+                    onclick="location.href='teacher_signup'">
                     교사 등록
                 </button>
             </div>
             
             <div class="d-flex mb-3"> 
-		       <form class="d-flex align-items-center gap-2" style="margin-left: -15px;">
+		       <form class="d-flex align-items-center gap-2">
 		           <div style="width: 115px;">
 		               <select class="form-select" aria-label="Small select example">
-		                   <option selected>전체</option>
-		                   <option value="1">등급</option>
-		                   <option value="2">아이디</option>
-		                   <option value="3">이름</option>
-		                   <option value="3">성별</option>                      
+		                   <option value="all" selected>전체</option>
+		                   <option value="class" value="class">등급</option>
+		                   <option value="id" value="id">아이디</option>
+		                   <option value="user_name" value="user_name">이름</option>
+		                   <option value="gender" value="gender">성별</option>                      
 		               </select>
 		           </div>
 		           
 		           <div style="width: 220px;">
-		               <label class="visually-hidden" for="inlineFormInputGroupUsername">검색</label>
+		               <label class="visually-hidden" for="inlineFormInputGroupUsername" onclick="">검색</label>
 		               <div class="input-group">
 		                   <input type="text" class="form-control" id="inlineFormInputGroupUsername"
 		                       placeholder="검색어를 입력해주세요.">
@@ -39,13 +40,11 @@
 		               <button type="submit" class="btn btn-primary">검색</button>
 		           </div>
 		      </form>
-			</div>
-			
-			<div class="d-flex mb-3 d-flex align-items-center gap-2">
+		      		<div class="d-flex mb-3 d-flex align-items-center gap-2">
 		        <div>
-		            <form> 
+		            <form class="right-align1"> 
 			            <select class="form-select form-select-sm" aria-label="Small select example">
-			                 <option selected>번호(오름차순)</option>
+			                 <option value="asc" selected>번호(오름차순)</option>
 			                 <option>번호(내림차순)</option>
 			                 <option>등급순(높은순)</option>
 			                 <option>등급순(낮은순)</option>
@@ -60,13 +59,18 @@
 		        </div>    
 	       
 		        <div>
-		         <select class="form-select form-select-sm" aria-label="Small select example">
-		             <option selected>10개씩</option>
-		             <option value="1">20개씩</option>
-		             <option value="2">50개씩</option>
+		         <select class="right-align2 form-select form-select-sm" aria-label="Small select example">
+		             <option value="10" selected>10개씩</option>
+		             <option value="20">20개씩</option>
+		             <option value="50">50개씩</option>
 		         </select>
 		        </div>
 	  	 	</div>
+		      
+		      
+			</div>
+			
+			
 
 			<div style="vertical-align:middle;">
 	            <table id="user-list" class="table table-bordered table-hover" style="width: 1405px;">
@@ -84,106 +88,19 @@
 	                </thead>
 	                
 	                <tbody>
-	                    <tr>
-	                        <th scope="row">1</th>
-	                        <td>관리자</td>
-	                        <td>Master</td>
-	                        <td><a href="../admin/user-view.jsp" class="view">김우유</a></td>
-	                        <td>여</td>
-	                        <td>1997.4.24</td>
-	                        <td>010-5555-4544</td>
-	                        <td>kin@naver.com</td>
-	                    </tr>
-	                    <tr>
-	                        <th scope="row">2</th>
-	                        <td>교사</td>
-	                        <td>jok444</td>
-	                        <td><a href="../admin/user-view.jsp" class="view">김족발</a></td>
-	                        <td>남</td>
-	                        <td>1996.7.24</td>
-	                        <td>010-2468-2185</td>
-	                        <td>kin@naver.com</td>
-	                    </tr>
-	                    <tr>
-	                        <th scope="row">3</th>
-	                        <td>교사</td>
-	                        <td>mini444</td>
-	                        <td><a href="../admin/user-view.jsp" class="view">김미나</a></td>
-	                        <td>여</td>
-	                        <td>2002.4.24</td>
-	                        <td>010-9424-2777</td>
-	                        <td>kin@naver.com</td>
-	                    </tr>
-	                    <tr>
-	                        <th scope="row">4</th>
-	                        <td>교사</td>
-	                        <td>milk123</td>
-	                        <td><a href="../admin/user-view.jsp" class="view">김우유</a></td>
-	                        <td>여</td>
-	                        <td>1997.4.24</td>
-	                        <td>010-5555-4544</td>
-	                        <td>kin@naver.com</td>
-	                    </tr>
-	                    <tr>
-	                        <th scope="row">5</th>
-	                        <td>학생</td>
-	                        <td>milk578</td>
-	                        <td><a href="../admin/user-view.jsp" class="view">김우유</a></td>
-	                        <td>여</td>
-	                        <td>1997.4.24</td>
-	                        <td>010-5555-4544</td>
-	                        <td>kin@naver.com</td>
-	                    </tr>
-	                    <tr>
-	                        <th scope="row">6</th>
-	                        <td>학생</td>
-	                        <td>milk777</td>
-	                        <td><a href="../admin/user-view.jsp" class="view">김우유</a></td>
-	                        <td>여</td>
-	                        <td>1997.4.24</td>
-	                        <td>010-5555-4544</td>
-	                        <td>kin@naver.com</td>
-	                    </tr>
-	                    <tr>
-	                        <th scope="row">7</th>
-	                        <td>학생</td>
-	                        <td>milk447</td>
-	                        <td><a href="../admin/user-view.jsp" class="view">김우유</a></td>
-	                        <td>여</td>
-	                        <td>1997.4.24</td>
-	                        <td>010-5555-4544</td>
-	                        <td>kin@naver.com</td>
-	                    </tr>
-	                    <tr>
-	                        <th scope="row">8</th>
-	                        <td>학생</td>
-	                        <td>milk447</td>
-	                        <td><a href="../admin/user-view.jsp" class="view">김우유</a></td>
-	                        <td>여</td>
-	                        <td>1997.4.24</td>
-	                        <td>010-5555-4544</td>
-	                        <td>kin@naver.com</td>
-	                    </tr>                                                           
-	                    <tr>
-	                        <th scope="row">9</th>
-	                        <td>학생</td>
-	                        <td>milk447</td>
-	                        <td><a href="../admin/user-view.jsp" class="view">김우유</a></td>
-	                        <td>여</td>
-	                        <td>1997.4.24</td>
-	                        <td>010-5555-4544</td>
-	                        <td>kin@naver.com</td>
-	                    </tr>                    
-	                    <tr>
-	                        <th scope="row">10</th>
-	                        <td>학생</td>
-	                        <td>milk447</td>
-	                        <td><a href="../admin/user-view.jsp" class="view">김우유</a></td>
-	                        <td>여</td>
-	                        <td>1997.4.24</td>
-	                        <td>010-5555-4544</td>
-	                        <td>kin@naver.com</td>
-	                    </tr>                    
+	                	<c:forEach var="user" items="${userList}" varStatus="status">
+		                    <tr>
+		                        <th scope="row">${status.count}</th>
+		                        <td>${user.user_class}</td>
+		                        <%-- ${user.user_class_name} -> VO_User의 get_user_class_name() --%>
+		                        <td>${user.id}</td>
+		                        <td>${user.user_name}</td>
+		                        <td>${user.gender}</td>
+		                        <td>${user.birth}</td>
+		                        <td>${user.tel}</td>
+		                        <td>${user.email}</td>
+		                    </tr>
+	                   </c:forEach>
 	                </tbody>
 	            </table>
        		 </div>

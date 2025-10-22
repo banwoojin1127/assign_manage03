@@ -1,3 +1,9 @@
+/*
+용도 : 관리자 페이지 통합 CSS
+작성자 : 반우진
+작성일 : 2025-10-01
+*/
+
 /* ===== 통합된 admin CSS ===== */
 
 /* ===== 공통 스타일 ===== */
@@ -22,10 +28,6 @@
 
 /* 컨텐츠 중앙 여백 */
 /* admin_new.css의 form과 admin_set_v01.0.css의 .content_margin이 유사한 역할 */
-form {
-    font-size: 20px;
-}
-
 .content_margin {
     margin: 0 400px;
     font-size: 20px;
@@ -227,5 +229,19 @@ th, td {
 
 .edit_th {
 	width: 30px;
-	
+}
+
+.right-align1 {
+	margin-left: 745px;
+	width: 150px;
+	vertical-align: middle;
+	margin-bottom: -30px;
+
+}
+
+.right-align2 {
+	margin-left: 2px;
+	width: 100px;
+	vertical-align: middle;
+	margin-bottom: -30px;
 }

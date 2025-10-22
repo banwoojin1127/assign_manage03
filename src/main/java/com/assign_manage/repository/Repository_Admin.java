@@ -1,20 +1,69 @@
 package com.assign_manage.repository;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.assign_manage.vo.VO_Search;
+import com.assign_manage.vo.VO_User;
 
 @Repository
 public class Repository_Admin
 {
+	@Autowired
+	private SqlSession session;
+	
+	private static final String namespace = "Admin";
+	
+	// ✔ 관리자 > 사용자 관리
+	public List<VO_User> findAllUsers(){
+		return session.selectList(namespace + ".All_User_List");
+	}
+	
+	// ✔ 관리자 > 강의 관리
+	// 전체 교사 조회
+	public List<VO_User> findAllTeachers() {
+        // 호출 형식: "namespace.쿼리ID"
+        return session.selectList(namespace + ".All_Teacher_List");
+    }
+
+    // 2. 이름으로 특정 교사 조회 (XML ID: Name_Teacher_View)
+    public List<VO_User> findTeachersByName(String name) {
+        // XML에서 #{keyword}로 받기 위해 Map 사용
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("keyword", name);
+        
+        return session.selectList(namespace + ".Name_Teacher_View", paramMap);
+    }
+
+    // 3. 전체 학생 조회 (XML ID: All_Student_List)
+    public List<VO_User> findAllStudents() {
+        return session.selectList(namespace + ".All_Student_List");
+    }
+
+    // 4. 이름으로 특정 학생 조회 (XML ID: Name_Student_View)
+    public List<VO_User> findStudentsByName(String name) {
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("keyword", name);
+        
+        return session.selectList(namespace + ".Name_Student_View", paramMap);
+    }
+    // *필요하다면 강의 생성/삭제 등 다른 CRUD 메서드를 여기에 추가합니다.*
+}
+	
 	//✔ 유효성 검사(사용자 입력 검증 / 서버 데이터 처리 전 검증 / 데이터베이스 저장 전 검사 / 파일 업로드 시 / 프로그래밍 내부 로직에서)
 	
 	//✔ 관리자 > 사용자 관리
 	// 사용자 관리 - 검색(공백X, 입력 길이 제한, 특수문자/금지어 필터링) (등급/아이디/이름/성별)
-	
+
+	// 사용자 전체 조회 메소드
 	
 	
 	
@@ -40,12 +89,24 @@ public class Repository_Admin
 	// 이메일 : null / 중복 / 특수문자 금지 / 이메일 형식 제한조건 <<-직접 입력하는 칸 추가 (dropbox)
 		
 	
+	
+	
+	
+	
 	// 회원 탈퇴
 	// 탈퇴일 not null > 탈퇴한 회원
 	
 	
 	//✔ 관리자 > 강의 관리
 	// 강의 관리 - 검색(공백X, 입력 길이 제한, 특수문자/금지어 필터링) (전체/강의명/교사)
+		
+	
+	
+	
+	
+	
+	
+	
 	
 	// 강의 편집, 삭제(리스트에 추가된 강의를 편집 삭제) 
 	// 편집은 이 페이지 내에서, 삭제는 체크박스(전체 선택 혹은 부분 선택)으로 삭제
@@ -87,5 +148,10 @@ public class Repository_Admin
 	
 	//✔ 관리자 > 사용자 관리 
 	// 페이지 처리 (리스트 갯수에 따른 페이지 수 처리) <<- 10개씩 20개씩 50개씩으로 수정하기
-}
+	//
+	
+
+
+
+
 	
