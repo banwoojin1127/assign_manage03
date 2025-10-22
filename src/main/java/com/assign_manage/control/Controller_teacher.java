@@ -23,18 +23,20 @@ public class Controller_teacher {
     @Autowired
     private Repository_Teacher repository;
 
-    @RequestMapping(value="", method=RequestMethod.GET)
+    /** 교사 메인 페이지 **/
+    @RequestMapping(value = "", method = RequestMethod.GET)
     public String main() {
         return "teacher/teacher_main";
     }
 
-    @RequestMapping(value="/lecture_management", method=RequestMethod.GET)
+    /** 강의 관리 **/
+    @RequestMapping(value = "/lecture_management", method = RequestMethod.GET)
     public String lecture_management() {
         return "teacher/lecture_management";
     }
 
-    // 과제 목록 기본
-    @RequestMapping(value="/assignment_list", method=RequestMethod.GET)
+    /** 과제 목록 (기본 첫 번째 강의 기준) **/
+    @RequestMapping(value = "/assignment_list", method = RequestMethod.GET)
     public String assignment_list_default(Model model) {
         List<VO_Lecture> lectureList = repository.selectAllLectures();
         model.addAttribute("lectureList", lectureList);
@@ -48,8 +50,8 @@ public class Controller_teacher {
         return "teacher/assignment_list";
     }
 
-    // 과제 목록 특정 강의
-    @RequestMapping(value="/assignment_list/{lecture_no}", method=RequestMethod.GET)
+    /** 과제 목록 (특정 강의 선택 시) **/
+    @RequestMapping(value = "/assignment_list/{lecture_no}", method = RequestMethod.GET)
     public String assignment_list(@PathVariable("lecture_no") int lecture_no, Model model) {
         List<VO_Lecture> lectureList = repository.selectAllLectures();
         model.addAttribute("lectureList", lectureList);
@@ -61,14 +63,14 @@ public class Controller_teacher {
         return "teacher/assignment_list";
     }
 
-    // 과제 추가
-    @RequestMapping(value="/assignment_add", method=RequestMethod.POST)
+    /** 과제 추가 **/
+    @RequestMapping(value = "/assignment_add", method = RequestMethod.POST)
     public String assignment_add(
         @RequestParam("lecture_no") int lecture_no,
         @RequestParam("week") String week,
         @RequestParam("assign_name") String assign_name,
-        @RequestParam(value="assign_note", required=false) String assign_note,
-        @RequestParam(value="assign_method", required=false, defaultValue="파일 제출") String assign_method,
+        @RequestParam(value = "assign_note", required = false) String assign_note,
+        @RequestParam(value = "assign_method", required = false, defaultValue = "파일 제출") String assign_method,
         @RequestParam("end_date") String end_date
     ) {
         VO_Assignment vo = new VO_Assignment();
@@ -84,17 +86,55 @@ public class Controller_teacher {
         return "redirect:/teacher/assignment_list/" + lecture_no;
     }
 
-    // 과제 상세 보기
-    @RequestMapping(value="/assignment_view/{assign_no}", method=RequestMethod.GET)
+    /** 과제 상세 보기 **/
+    @RequestMapping(value = "/assignment_view/{assign_no}", method = RequestMethod.GET)
     public String assignment_view(@PathVariable("assign_no") int assign_no, Model model) {
-        VO_Assignment assignment = repository.selectAssignmentByNo(assign_no); // Repository에 메서드 추가 필요
+        // ✅ Repository_Teacher 안에 selectAssignmentByNo(int assign_no) 메서드가 존재해야 합니다.
+        VO_Assignment assignment = repository.selectAssignmentByNo(assign_no);
+
+        if (assignment == null) {
+            // 혹시 잘못된 번호라면 오류 페이지로 보내거나 메시지 출력
+            model.addAttribute("errorMsg", "해당 과제를 찾을 수 없습니다.");
+            return "teacher/assignment_not_found";
+        }
+
         model.addAttribute("assignment", assignment);
-        return "teacher/assignment_view";
+        return "teacher/assignment_view"; // JSP 파일명: assignment_view.jsp
     }
 
-    @RequestMapping(value="/statistics", method=RequestMethod.GET)
-    public String statistics() { return "teacher/statistics"; }
+    /** 통계 **/
+    @RequestMapping(value = "/statistics", method = RequestMethod.GET)
+    public String statistics() {
+        return "teacher/statistics";
+    }
 
-    @RequestMapping(value="/student_list", method=RequestMethod.GET)
-    public String student_list() { return "teacher/student_list"; }
+    /** 학생 목록 **/
+    @RequestMapping(value = "/student_list", method = RequestMethod.GET)
+    public String student_list() {
+        return "teacher/student_list";
+    }
+    
+    
+	//레포트 상세보기
+	@RequestMapping(value="/report_view", method = RequestMethod.GET)
+	public String report_view()
+	{
+		return "teacher/report_view";
+	}	
+	
+	
+	//레포트 상세보기(번호)
+	@RequestMapping(value="/report_view/{report_no}", method = RequestMethod.GET)
+	public String report_view(@PathVariable("report_no") int no)
+	{
+		return "teacher/report_view";
+	}	
+	
+	
+	//과제 피드백
+	@RequestMapping(value="/report_feedback", method = RequestMethod.GET)
+	public String report_feedback()
+	{
+		return "teacher/report_feedback";
+	}	
 }

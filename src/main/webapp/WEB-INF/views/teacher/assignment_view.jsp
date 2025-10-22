@@ -30,46 +30,41 @@
             </div>
             <!-- content main header end -->
             <!-- assignment posted info start -->
-            <div id="formAssignPostedInfo" class="tableCased d-flex flex-wrap justify-content-start align-content-start my-1" style="width: 100%;">
-                <div class="d-flex justify-content-start align-content-center w-100">
-                    <div class="tableCellName d-flex" style="min-width: 85px;">
-                        과제명
-                    </div>
-                    <div class="tableCellValue d-flex flex-grow-1">
-                        <input id="" name="" class="form-control flex-grow-1" style="border-style: none;" type="text" value="디자인을 확인하고 HTML 만들어서 제출">
-                    </div>
-                </div>
-                <div class="d-flex justify-content-start align-content-center w-100">
-                    <div class="tableCellName d-flex" style="min-width: 85px;">
-                        제출방식
-                    </div>
-                    <div class="tableCellValue d-flex flex-grow-1">
-                        <input id="" name="" class="form-control flex-grow-1" style="border-style: none;" type="text" value="HTML">
-                    </div>
-                </div>
-                <div class="d-flex justify-content-start align-content-center w-100">
-                    <div class="tableCellName d-flex" style="min-width: 85px;">
-                        주차 수
-                    </div>
-                    <div class="tableCellValue d-flex flex-grow-1">
-                        1주차
-                    </div>
-                    <div class="tableCellName d-flex" style="min-width: 85px;">
-                        종료 일
-                    </div>
-                    <div class="tableCellValue d-flex flex-grow-1">
-                        <input type="datetime-local" id="datetime-local" value="2025-10-01T18:00">
-                    </div>
-                </div>
-                <div class="d-flex justify-content-start align-content-center w-100">
-                    <div class="tableCellName d-flex" style="min-width: 85px;">
-                        내용
-                    </div>
-                    <div class="tableCellValue d-flex flex-grow-1">
-                        <input id="" name="" class="form-control flex-grow-1" style="border-style: none;" type="text" value="디자인을 보고 시스템의 흐름을 이해하며, html로 구현하는 능력을 함양하는 것">
-                    </div>
-                </div>
-            </div>
+            
+            
+ <div id="formAssignPostedInfo" class="tableCased d-flex flex-wrap justify-contenthk-start align-content-start my-1" style="width: 100%;">
+    <div class="d-flex justify-content-start align-content-center w-100">
+        <div class="tableCellName d-flex" style="min-width: 85px;">과제명</div>
+        <div class="tableCellValue d-flex flex-grow-1">
+            <input class="form-control flex-grow-1" style="border-style: none;" type="text" value="${assignment.assign_name}">
+        </div>
+    </div>
+    <div class="d-flex justify-content-start align-content-center w-100">
+        <div class="tableCellName d-flex" style="min-width: 85px;">제출방식</div>
+        <div class="tableCellValue d-flex flex-grow-1">
+            <input class="form-control flex-grow-1" style="border-style: none;" type="text" value="${assignment.assign_method}">
+        </div>
+    </div>
+    <div class="d-flex justify-content-start align-content-center w-100">
+        <div class="tableCellName d-flex" style="min-width: 85px;">주차 수</div>
+        <div class="tableCellValue d-flex flex-grow-1">
+            ${assignment.assign_name.split(' ')[0]}
+        </div>
+        <div class="tableCellName d-flex" style="min-width: 85px;">종료 일</div>
+        <div class="tableCellValue d-flex flex-grow-1">
+            <input type="datetime-local" class="form-control" value="${assignment.end_date}">
+        </div>
+    </div>
+    <div class="d-flex justify-content-start align-content-center w-100">
+        <div class="tableCellName d-flex" style="min-width: 85px;">내용</div>
+        <div class="tableCellValue d-flex flex-grow-1">
+            <input class="form-control flex-grow-1" style="border-style: none;" type="text" value="${assignment.assign_note}">
+        </div>
+    </div>
+</div>
+            
+            
+            
             <!-- assignment posted info end -->
             <!-- submission status start -->
             <div class="accordion my-1" style="width: 100%;">
