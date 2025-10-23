@@ -18,6 +18,20 @@ public class Repository_Student
 	
 	private static final String namespace = "student";
 	
+	//전체 강의의 갯수를 얻는다.
+	public int LectureTotal(VO_Search_student vo)
+	{
+		int total = session.selectOne(namespace + ".lecture_total", vo);
+		return total;
+	}
+	
+	//수강목록을 읽는다.
+	public List<VO_Lecture_list> LectureList(VO_Search_student vo)
+	{
+		List<VO_Lecture_list> list = session.selectList(namespace + ".lecture_list", vo);
+		return list;
+	}
+	
 	//과제 정보를 읽는다.
 	public VO_Assignment AssignRead(String no)
 	{
@@ -99,18 +113,18 @@ public class Repository_Student
 		return vo;
 	}
 	
+	//질문목록 정보를 읽는다.	
+	public List<VO_Question> QuestionRead(String no)
+	{
+		List<VO_Question> list = session.selectList(namespace + ".question_view", no);
+		return list;
+	}	
+	
 	//질문 정보를 등록한다.
 	public boolean QuestionInsert(VO_Question vo)
 	{
 		session.insert(namespace + ".question_insert", vo);
 		return true;
-	}	
-	
-	//질문 정보를 읽는다.	
-	public VO_Question QuestionRead(String no)
-	{
-		VO_Question vo = session.selectOne(namespace + ".question_view", no);
-		return vo;
 	}	
 	
 	//질문 정보를 변경한다.
@@ -127,25 +141,17 @@ public class Repository_Student
 		return true;
 	}
 	
-	//질문 정보를 읽는다.	
+	//답변 정보를 읽는다.	
 	public VO_Answer AnswerRead(String no)
 	{
 		VO_Answer vo = session.selectOne(namespace + ".answer_view", no);
 		return vo;
 	}
 	
-	//전체 강의의 갯수를 얻는다.
-	//return : 전체 게시물 갯수
-	public int LectureTotal(VO_Search_student vo)
+	//마이페이지 정보를 읽는다.
+	public List<VO_Main> Main(String id)
 	{
-		int total = session.selectOne(namespace + ".lecture_total", vo);
-		return total;
-	}
-	
-	//수강목록을 읽는다.
-	public List<VO_Lecture_list> LectureList(VO_Search_student vo)
-	{
-		List<VO_Lecture_list> list = session.selectList(namespace + ".lecture_list", vo);
+		List<VO_Main> list = session.selectList(namespace + ".main", id);
 		return list;
 	}
 }

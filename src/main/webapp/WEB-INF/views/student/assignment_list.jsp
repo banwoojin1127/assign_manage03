@@ -23,7 +23,7 @@
             <br><br>
             
             <!-- 강의 정보 -->
-            <c:if test="${not empty assignList}">
+            <c:if test="${not empty assignList and lecture_no != null}">
 	            <div class="listMargin" id="teacherInfo1" th:if="${assignList != null and !assignList.isEmpty()}">
 	                <img src="<c:url value="/resources/img/profile.png"/>" style="margin-left: 100px; width:250px; height:250px;">
 	                <div id="teacherInfo2">
@@ -54,7 +54,7 @@
 	            <c:forEach var="assign" items="${assignList}" varStatus="stat">
 		            <tr>
 		                <td>${stat.index + 1}</td>
-		                <td>${stat.index + 1}주차</td>
+		                <td>${assign.week_no}주차</td>
 		                <td>
 		                    <a href="<c:url value="/student/assign/${assign.assign_no}"/>">
 		                        ${assign.assign_name}

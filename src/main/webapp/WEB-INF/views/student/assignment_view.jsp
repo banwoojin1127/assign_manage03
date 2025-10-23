@@ -177,6 +177,8 @@
                     </div>
                     <div id="bodyQnAList" class="accordion-collapse collapse show">
                         <div class="d-flex flex-wrap justify-content-start align-content-start accordion-body p-0">
+                        
+							<!-- 질문하기 버튼 -->                        
                             <div class="d-flex justify-content-end my-1 w-100">
                                 <div class="align-content-center">
                                     <button class="darkBtn p-1" 
@@ -186,55 +188,147 @@
                                 </div>
                             </div>
                             <div id="tableQnAList" class="tableCased d-flex flex-wrap justify-content-start align-content-start my-1 w-100">
-                                <div id="questionWrite" class="collapse" style="width: 100%;">
-                                    <div class="d-flex justify-content-start align-content-start w-100 m-0 p-0">
+                                 <!-- 질문 입력 폼 -->
+                                <div id="questionWrite" class="collapse" style="width: 100%; margin-left: -10px">
+                                    <form class="d-flex justify-content-start align-content-start w-100 m-0 p-0"
+                                    	action="<c:url value='/student/assign/${assign.assign_no}/quest/add'/>" method="post"	>
                                         <div class="miniIcon d-flex justify-content-center m-1"></div>
                                         <div class="d-flex justify-content-center m-1">
                                             <img src="../../resources/img/profile.png" class="miniIcon">
                                         </div>
-                                        <div class="d-flex justify-content-center m-2"><div class="textWideTitle align-content-center">Q . 홍길동 : </div></div>
-                                        <input id="" name="" class="flex-grow-1" style="border-style: none;" type="text">
-                                        <input type="button" class="clearBtn d-flex justify-content-center" style="min-width: 30px; font-size: 0.8em;" value="완료">
-                                        <input type="button" class="clearBtn d-flex justify-content-center" style="min-width: 30px; font-size: 0.8em;" value="취소">
-                                    </div>
+                                        <div class="d-flex justify-content-center m-2"><div class="textWideTitle align-content-center">Q . 이젠계정 : </div></div>
+                                        <input name="quest_note" class="flex-grow-1" style="border-style: none;" type="text" placeholder="질문을 입력하세요."
+               								required oninvalid="this.setCustomValidity('질문 내용을 입력해주세요.')" oninput="this.setCustomValidity('')">
+                                        <input type="submit" class="clearBtn d-flex justify-content-center" style="min-width: 30px; font-size: 0.8em;" value="완료">
+                                        <input type="button" class="clearBtn d-flex justify-content-center" style="min-width: 30px; font-size: 0.8em;"
+                                       		value="취소" onclick="$('#questionWrite').collapse('hide')">
+                                    </form>
                                 </div>
-                                <div id="question00" class="d-flex flex-wrap justify-content-start align-content-start w-100 m-0 p-0">
-                                    <button class="clearBtn d-flex flex-wrap flex-grow-1 p-0"
-                                        data-bs-toggle="collapse" data-bs-target="#answer00" aria-expanded="false" aria-controls="answer00">
-                                        <div class="d-flex justify-content-center m-1">
-                                            <img src="../../resources/img/check2.svg" class="miniIcon">
-                                        </div>
-                                        <div class="d-flex justify-content-center m-1">
-                                            <img src="../../resources/img/profile.png" class="miniIcon">
-                                        </div>
-                                        <div class="d-flex justify-content-center m-2"><div class="textWideTitle align-content-center">Q . 홍길동 : </div></div>
-                                        <div class="d-flex justify-content-start flex-grow-1"><div class="align-content-center">과제를 잘못 올린것 같습니다.</div></div>
-                                    </button>
-                                        <input type="button" class="clearBtn d-flex justify-content-center" style="min-width: 30px; font-size: 0.8em;" value="수정">
-                                        <input type="button" class="clearBtn d-flex justify-content-center" style="min-width: 30px; font-size: 0.8em;" value="삭제">
-                                        <div class="d-flex justify-content-center m-1">
-                                            <a class="clearBtn btn align-content-center p-2" style="visibility: hidden;">
-                                                <img src="../../resources/img/x-circle-fill.svg" class="microIcon">
-                                            </a>
-                                        </div>
-                                </div>
-                                <div id="answer00" class="collapse" style="width: 100%;">
-                                    <div id="" class="d-flex justify-content-start align-content-start w-100 m-0 p-0">
-                                        <div class="miniIcon d-flex justify-content-center m-1"></div>
-                                        <div class="d-flex justify-content-center m-1">
-                                            <img src="../../resources/img/profile.png" class="miniIcon">
-                                        </div>
-                                        <div class="d-flex justify-content-center m-2"><div class="textWideTitle align-content-center">A . 선생님 : </div></div>
-                                        <div class="d-flex justify-content-start flex-grow-1">
-                                            <div class="align-content-center">제출 상태의 '수정'을 누르면 바꿀 수 있습니다.</div>
-                                        </div>
-                                    </div>
-                                </div>
+                                
+                                <!-- 질문/답변 반복 -->
+                                <c:forEach var="q" items="${quest}">
+	                                <div id="question${q.quest_no}" class="d-flex flex-wrap justify-content-start align-content-start w-100 m-0 p-0">
+	                                
+	                                	<!-- 질문 버튼 -->
+	                                    <button class="clearBtn d-flex flex-wrap flex-grow-1 p-0"
+	                                        data-bs-toggle="collapse" data-bs-target="#answer${q.quest_no}" aria-expanded="false" aria-controls="answer${q.quest_no}">
+	                                        
+	                                        <div class="d-flex justify-content-center m-1" style="width: 40px; height: 24px;">
+	                                        	<c:if test="${answer[q.quest_no] != null}">
+										        		<img src="<c:url value='/resources/img/check2.svg'/>" class="miniIcon">
+										    	</c:if>
+										    </div>
+										    
+										    <!-- 질문 내용 -->
+	                                        <div class="d-flex justify-content-center m-1">
+	                                            <img src="<c:url value="/resources/img/profile.png"/>" class="miniIcon">
+	                                        </div>
+	                                        <div class="d-flex justify-content-center m-2"><div class="textWideTitle align-content-center">Q . ${q.user_name} : </div></div>
+	                                        <div class="d-flex justify-content-start flex-grow-1">
+	                                        	<div class="align-content-center questionText">${q.quest_note}</div>
+	                                        	<input type="text" class="questionInput form-control"
+            										 value="${q.quest_note}" style="display:none; width:100%;">
+	                                        </div>
+	                                    </button>
+	                                    
+	                                    <!-- 작성자만 보이는 버튼 -->
+	                                    <!-- 기본 버튼: 수정, 삭제 -->
+                                    	<c:if test="${q.id eq 's2ezen'}">
+		                                    <div class="d-flex flex-row ms-2 align-items-center">
+		                                        <input type="button" class="clearBtn editBtn" style="min-width: 30px; font-size:0.8em;" value="수정">
+		                                        <input type="button" class="clearBtn removeBtn" style="min-width: 30px; font-size:0.8em;" value="삭제">
+		                                        <input type="button" class="clearBtn saveBtn" style="min-width: 30px; font-size:0.8em; display:none;" value="완료">
+		                                        <input type="button" class="clearBtn cancelBtn" style="min-width: 30px; font-size:0.8em; display:none;" value="취소">
+		                                    </div>
+		                                </c:if>
+	                                </div>
+	                                
+	                                <!-- 답변 영역 -->
+	                                <c:if test="${answer[q.quest_no] != null}">
+		                                <div id="answer${q.quest_no}" class="collapse" style="width: 100%; margin-left: 30px">
+		                                    <div id="" class="d-flex justify-content-start align-content-start w-100 m-0 p-0">
+		                                        <div class="miniIcon d-flex justify-content-center m-1"></div>
+		                                        <div class="d-flex justify-content-center m-1">
+		                                            <img src="<c:url value="/resources/img/profile.png"/>" class="miniIcon">
+		                                        </div>
+		                                        <div class="d-flex justify-content-center m-2"><div class="textWideTitle align-content-center">A . ${answer[q.quest_no].user_name} : </div></div>
+		                                        <div class="d-flex justify-content-start flex-grow-1">
+		                                            <div class="align-content-center">${answer[q.quest_no].answer_note}</div>
+		                                        </div>
+		                                    </div>
+		                                </div>
+		                        	</c:if>
+	                        	</c:forEach>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <script>
+            $(document).ready(function() {
+
+                // 수정 버튼 클릭
+                $(document).on('click', '.editBtn', function() {
+                	const parent = $(this).closest("div[id^='question']");
+                    const currentText = parent.find(".questionText").text().trim();  // 현재 질문 내용 읽기
+                    const input = parent.find(".questionInput");
+
+                    input.val(currentText); // input에 기존 내용 채우기
+                    parent.find(".questionText").hide();
+                    input.show().focus();
+                    parent.find(".editBtn, .removeBtn").hide();
+                    parent.find(".saveBtn, .cancelBtn").show();
+                });
+
+                // 취소 버튼 클릭
+                $(document).on('click', '.cancelBtn', function() {
+                    const parent = $(this).closest("div[id^='question']");
+                    parent.find(".questionInput").hide();
+                    parent.find(".questionText").show();
+                    parent.find(".saveBtn, .cancelBtn").hide();
+                    parent.find(".editBtn, .removeBtn").show();
+                });
+
+                // 완료 버튼 클릭
+                $(document).on('click', '.saveBtn', function() {
+                    const parent = $(this).closest("div[id^='question']");
+                    const note = parent.find(".questionInput").val();
+                    const quest_no = parent.attr("id").replace("question", "");
+
+                    if (note.trim() === "") {
+                        alert("질문 내용을 입력해주세요.");
+                        return;
+                    }
+
+                    // 컨트롤러로 POST 요청
+                    const form = $('<form>', {
+                        action: '/assign_manage03/student/assign/${assign.assign_no}/quest/edit',
+                        method: 'post'
+                    }).append($('<input>', {type: 'hidden', name: 'quest_no', value: quest_no}))
+                      .append($('<input>', {type: 'hidden', name: 'quest_note', value: note}));
+
+                    $('body').append(form);
+                    form.submit();
+                });
+
+                // 삭제 버튼 클릭
+                $(document).on('click', '.removeBtn', function() {
+                    if (!confirm("질문을 삭제하시겠습니까?")) return;
+
+                    const parent = $(this).closest("div[id^='question']");
+                    const quest_no = parent.attr("id").replace("question", "");
+
+                    const form = $('<form>', {
+                        action: '/assign_manage03/student/assign/${assign.assign_no}/quest/delete',
+                        method: 'post'
+                    }).append($('<input>', {type: 'hidden', name: 'quest_no', value: quest_no}));
+
+                    $('body').append(form);
+                    form.submit();
+                });
+
+            });
+            </script>
             <!-- QnA list end -->
         </div>
 <!-- content field end -->

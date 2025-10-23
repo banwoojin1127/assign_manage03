@@ -2,151 +2,90 @@
 <%@ include file="../include/head_student.jsp" %>
 <!-- content field start -->
         <script>
-            $(document).ready(function(){
-                $("#lectureArrow1").click(function(){
-                    var check = $(this).attr("src");
-                    if(check == "<c:url value="/resources/img/arrow1.png"/>")
-                    {
-                        $(this).attr("src", "<c:url value="/resources/img/arrow2.png"/>")
-                    }else
-                    {
-                        $(this).attr("src", "<c:url value="/resources/img/arrow1.png"/>")
-                    }
-                    $("#lectureListView1").slideToggle();
-                })
+        $(document).ready(function(){
+            $(".lectureArrow").click(function(){
+                const arrow = $(this);
+                const listId = arrow.data("target");
+                const src1 = "<c:url value='/resources/img/arrow1.png'/>";
+                const src2 = "<c:url value='/resources/img/arrow2.png'/>";
 
-                $("#lectureArrow2").click(function(){
-                    var check = $(this).attr("src");
-                    if(check == "<c:url value="/resources/img/arrow1.png"/>")
-                    {
-                        $(this).attr("src", "<c:url value="/resources/img/arrow2.png"/>")
-                    }else
-                    {
-                        $(this).attr("src", "<c:url value="/resources/img/arrow1.png"/>")
-                    }
-                    $("#lectureListView2").slideToggle();
-                })
+                // 화살표 방향 토글
+                if (arrow.attr("src") === src1) {
+                    arrow.attr("src", src2);
+                } else {
+                    arrow.attr("src", src1);
+                }
 
-                $("#lectureArrow3").click(function(){
-                    var check = $(this).attr("src");
-                    if(check == "<c:url value="/resources/img/arrow1.png"/>")
-                    {
-                        $(this).attr("src", "<c:url value="/resources/img/arrow2.png"/>")
-                    }else
-                    {
-                        $(this).attr("src", "<c:url value="/resources/img/arrow1.png"/>")
-                    }
-                    $("#lectureListView3").slideToggle();
-                })
-
-                $("#lectureArrow4").click(function(){
-                    var check = $(this).attr("src");
-                    if(check == "<c:url value="/resources/img/arrow1.png"/>")
-                    {
-                        $(this).attr("src", "<c:url value="/resources/img/arrow2.png"/>")
-                    }else
-                    {
-                        $(this).attr("src", "<c:url value="/resources/img/arrow1.png"/>")
-                    }
-                    $("#lectureListView4").slideToggle();
-                })
-            })
+                // 해당 강의 리스트 슬라이드 토글
+                $("#" + listId).slideToggle();
+            });
+        });
         </script>
         <div style="padding: 50px; float: left; text-align: center; width: 1649px;">
             <br><br><br>
             <form style="margin: 0px 350px; font-size: 23px;">
-                <div class="mainText" style="border: 2px solid #c2dcff; padding: 20px 50px 20px 0px;">
-                    <img src="<c:url value="/resources/img/folder.png"/>" style="width: 90px;">&nbsp;&nbsp;
-                    <b>홍길동</b> 님이 아직 제출하지 않은 과제가 <b>3개</b> 있습니다.
-                </div>
+            
+            <!-- 학생 이름과 미제출 과제 개수 -->
+                <c:choose>
+		            <c:when test="${not empty list}">
+		                <div class="mainText" style="border: 2px solid #c2dcff; padding: 20px 50px 20px 0px;">
+		                    <img src="<c:url value='/resources/img/folder.png'/>" style="width: 90px;">&nbsp;&nbsp;
+		                    <b>이젠계정</b> 님이 아직 제출하지 않은 과제가 
+		                    <b>${list.size()}개</b> 있습니다.
+		                </div>
+		            </c:when>
+		            <c:otherwise>
+		                <div class="mainText" style="border: 2px solid #c2dcff; padding: 20px 50px 20px 0px;">
+		                    <img src="<c:url value='/resources/img/folder.png'/>" style="width: 90px;">&nbsp;&nbsp;
+		                    <b>이젠계정</b> 님이 아직 제출하지 않은 과제가 없습니다.
+		                </div>
+		            </c:otherwise>
+		        </c:choose>
                 <br>
-                <div class="mainText lectureList">
-                    <div style="display: grid; grid-template-columns: repeat(2, 1fr);">
-                        <div style="text-align: left; margin-top: 15px;">
-                            <b>&nbsp;&nbsp;암석 탐구</b>
-                        </div>
-                        <div style="text-align: right;"><img id="lectureArrow1" src="<c:url value="/resources/img/arrow1.png"/>" style="width: 80px;"></div>
-                    </div>
-                    <a href="student/assign/1" class="lectureLink">
-                        <div id="lectureListView1" class="mainText lectureListView">
-                            <div style="display: grid; grid-template-columns: repeat(2, 1fr);">
-                                <div style="text-align: left;"><b>바위와 ROCK 페스티벌의 연관성</b></div>
-                                <br><br>
-                                <div style="text-align: left;">돌맹이 강사님</div>
-                                <div style="text-align: right;">
-                                <b>남은 기한</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <span class="endDate">3일 남았습니다.<span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <br>
-                <div class="mainText lectureList">
-                    <div style="display: grid; grid-template-columns: repeat(2, 1fr);">
-                        <div style="text-align: left; margin-top: 15px;">
-                            <b>&nbsp;&nbsp;암석 탐구</b>
-                        </div>
-                        <div style="text-align: right;"><img id="lectureArrow2" src="<c:url value="/resources/img/arrow1.png"/>" style="width: 80px;"></div>
-                    </div>
-                    <a href="student/assign/1" class="lectureLink">
-                        <div id="lectureListView2" class="mainText lectureListView">
-                            <div style="display: grid; grid-template-columns: repeat(2, 1fr);">
-                                <div style="text-align: left;"><b>바위와 ROCK 페스티벌의 연관성</b></div>
-                                <br><br>
-                                <div style="text-align: left;">돌맹이 강사님</div>
-                                <div style="text-align: right;">
-                                <b>남은 기한</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <span class="endDate">5일 남았습니다.<span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <br>
-                <div class="mainText lectureList">
-                    <div style="display: grid; grid-template-columns: repeat(2, 1fr);">
-                        <div style="text-align: left; margin-top: 15px;">
-                            <b>&nbsp;&nbsp;암석 탐구</b>
-                        </div>
-                        <div style="text-align: right;"><img id="lectureArrow3" src="<c:url value="/resources/img/arrow2.png"/>" style="width: 80px;"></div>
-                    </div>
-                    <a href="student/assign/1" class="lectureLink">
-                        <div id="lectureListView3" class="mainText lectureListView" style="display: none;">
-                            <div style="display: grid; grid-template-columns: repeat(2, 1fr);">
-                                <div style="text-align: left;"><b>바위와 ROCK 페스티벌의 연관성</b></div>
-                                <br><br>
-                                <div style="text-align: left;">돌맹이 강사님</div>
-                                <div style="text-align: right;">
-                                <b>남은 기한</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <span>14일 남았습니다.<span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <br>
-                <div class="mainText lectureList">
-                    <div style="display: grid; grid-template-columns: repeat(2, 1fr);">
-                        <div style="text-align: left; margin-top: 15px;">
-                            <b>&nbsp;&nbsp;암석 탐구</b>
-                        </div>
-                        <div style="text-align: right;"><img id="lectureArrow4" src="<c:url value="/resources/img/arrow2.png"/>" style="width: 80px;"></div>
-                    </div>
-                    <a href="student/assign/1" class="lectureLink">
-                        <div id="lectureListView4" class="mainText lectureListView" style="display: none;">
-                            <div style="display: grid; grid-template-columns: repeat(2, 1fr);">
-                                <div style="text-align: left;"><b>바위와 ROCK 페스티벌의 연관성</b></div>
-                                <br><br>
-                                <div style="text-align: left;">돌맹이 강사님</div>
-                                <div style="text-align: right;">
-                                <b>남은 기한</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <span>18일 남았습니다.<span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
+                
+                <!-- 과제 리스트 -->
+		        <c:forEach var="main" items="${list}">
+		            <div class="mainText lectureList">
+		                <div style="display: grid; grid-template-columns: repeat(2, 1fr);">
+		                    <div style="text-align: left; margin-top: 15px;">
+		                        <b>&nbsp;&nbsp;${main.lecture_name}</b>
+		                    </div>
+		                    <div style="text-align: right;">
+		                        <img 
+		                            class="lectureArrow" 
+		                            data-target="lectureListView${main.assign_no}"
+		                            src="<c:url value='/resources/img/${main.days_left <= 5 ? "arrow2.png" : "arrow1.png"}'/>" 
+		                            style="width: 80px; cursor:pointer;">
+		                    </div>
+		                </div>
+		
+		                <!-- 클릭 시 열리는 과제 상세 영역 -->
+		                <a href="<c:url value='/student/assign/${main.assign_no}'/>" class="lectureLink">
+		                    <div id="lectureListView${main.assign_no}" class="mainText lectureListView"
+		                    style="display: ${main.days_left <= 5 ? 'block' : 'none'};">
+		                        <div style="display: grid; grid-template-columns: repeat(2, 1fr);">
+		                            <div style="text-align: left;"><b>${main.assign_no}</b></div>
+		                            <br><br>
+		                            <div style="text-align: left;">${main.teacher_name} 강사님</div>
+		                            <div style="text-align: right;">
+		                                <b>남은 기한</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		                                <span class="${main.days_left <= 5 ? 'endDate' : ''}">
+		                                	${main.days_left}일 남았습니다.
+		                                </span>
+		                            </div>
+		                        </div>
+		                    </div>
+		                </a>
+		            </div>
+		            <br>
+		        </c:forEach>
+
+		        <!-- 미제출 과제가 없을 경우 -->
+		        <c:if test="${empty list}">
+		            <div class="mainText" style="padding: 30px;">
+		                제출하지 않은 과제가 없습니다.
+		            </div>
+		        </c:if>
             </form>
         </div>
 <%@ include file="../include/tail.jsp" %>
