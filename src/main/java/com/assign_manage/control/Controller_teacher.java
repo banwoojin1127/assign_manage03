@@ -12,9 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.assign_manage.repository.Repository_Admin;
 import com.assign_manage.repository.Repository_Teacher;
 import com.assign_manage.vo.VO_Assignment;
 import com.assign_manage.vo.VO_Lecture;
+import com.assign_manage.vo.VO_SearchFilter_AllStudent;
+import com.assign_manage.vo.VO_User;
 
 @Controller
 @RequestMapping("/teacher")
@@ -22,6 +25,8 @@ public class Controller_teacher {
 
     @Autowired
     private Repository_Teacher repository;
+    @Autowired
+	private Repository_Admin repositoryAdmin;
 
     /** 교사 메인 페이지 **/
     @RequestMapping(value = "", method = RequestMethod.GET)
@@ -108,11 +113,6 @@ public class Controller_teacher {
         return "teacher/statistics";
     }
 
-    /** 학생 목록 **/
-    @RequestMapping(value = "/student_list", method = RequestMethod.GET)
-    public String student_list() {
-        return "teacher/student_list";
-    }
     
     
 	//레포트 상세보기
@@ -137,4 +137,26 @@ public class Controller_teacher {
 	{
 		return "teacher/report_feedback";
 	}	
+	
+	// ===============================================
+	// 반우진 작업 시작부분
+	// ===============================================
+	
+	/** 학생 목록 **/
+	@RequestMapping(value = "/student_list", method = RequestMethod.GET)
+	public String student_list(Model model
+			,	@RequestParam VO_SearchFilter_AllStudent filter
+			) {
+		if(filter != null)
+		{
+			filter.setOffset();
+		}
+		List<VO_User> userList = repository.findAllStudent(filter); // Repository에서 전체 조회
+		model.addAttribute("userList", userList); // JSP에서 ${userList}로 접근 가능
+		
+		return "teacher/student_list";
+	}
+	// ===============================================
+	// 반우진 작업 끝 부분
+	// ===============================================
 }

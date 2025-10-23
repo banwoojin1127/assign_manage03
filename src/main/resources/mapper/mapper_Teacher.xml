@@ -54,4 +54,84 @@
         (#{lecture_no}, #{assign_name}, #{assign_note}, #{assign_method}, #{create_date}, #{end_date})
     </insert>
 
+<!-- =============================================== -->
+<!-- 반우진 작업 시작부분 -->
+<!-- =============================================== -->
+
+	<!-- 사용자 전체 조회 -->
+	<select id="All_Student_List" resultType="com.assign_manage.vo.VO_User">
+	<!-- alias를 이용해 등급 명칭을 수정 -->
+		select 
+			case user_class
+				when 0 then '관리자'
+				when 1 then '교사'
+				when 2 then '학생'
+				else '기타'
+			end as user_class,
+		id,
+		user_name,
+		gender,
+		birth,
+		tel,
+		email
+		from user
+		where user_class = 2;
+		<!-- user테이블의 id컬럼의 값을 VO_User의 setId()에 저장 -->
+	</select>
+	
+	<select id="selectListUser" 
+		parameterType="com.assign_manage.vo.VO_SearchFilter_AllStudent"
+		resultType="com.assign_manage.vo.VO_User">
+        SELECT
+            *
+        FROM
+            user
+        <where>
+            <if test="filter != null and filter != '' and q != null and q != '' and filter != 'all'">
+                <choose>
+                    <when test="filter == 'class'">
+                        AND user_class LIKE CONCAT('%', #{q}, '%')
+                    </when>
+                    <when test="filter == 'id'">
+                        AND id LIKE CONCAT('%', #{q}, '%')
+                    </when>
+                    <when test="filter == 'user_name'">
+                        AND user_name LIKE CONCAT('%', #{q}, '%')
+                    </when>
+                    <when test="filter == 'gender'">
+                        AND gender = #{q} </when>
+                </choose>
+            </if>
+        </where>
+
+        <if test="sort != null and sort != ''">
+            ORDER BY
+            <choose>
+                <when test="sort == 'asc'"> id ASC </when>
+                <when test="sort == 'desc'"> id DESC </when>
+
+                <when test="sort == '등급순(높은순)'"> user_class DESC </when>
+                <when test="sort == '등급순(낮은순)'"> user_class ASC </when>
+
+                <when test="sort == '생년월일(오름차순)'"> birth ASC </when>
+                <when test="sort == '생년월일(내림차순)'"> birth DESC </when>
+
+                <when test="sort == '이름(오름차순)'"> user_name ASC </when>
+                <when test="sort == '이름(내림차순)'"> user_name DESC </when>
+
+                <when test="sort == '아이디(오름차순)'"> id ASC </when>
+                <when test="sort == '아이디(내림차순)'"> id DESC </when>
+
+                <otherwise> join_date DESC </otherwise>
+            </choose>
+        </if>
+        <if test="sort == null or sort == ''">
+            ORDER BY join_date DESC </if>
+        <if test="pageSize != null and offset != null">
+            LIMIT #{offset}, #{pageSize}
+        </if>
+        </select>
+<!-- =============================================== -->
+<!-- 반우진 작업 끝 부분 -->
+<!-- =============================================== -->
 </mapper>
