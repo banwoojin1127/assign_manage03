@@ -49,6 +49,10 @@ public class Repository_Teacher {
 	    return session.selectList(namespace + ".LecutreName_Lecture_View", keyword);
 	}
 	
+	// ===============================================
+	// 반우진 작업 시작부분
+	// ===============================================	
+	
 	// 학생 전체 조회
 	public List<VO_User> findAllStudent(VO_SearchFilter_AllStudent filter){
 		if(filter != null)
@@ -61,4 +65,8 @@ public class Repository_Teacher {
 		}
 		return session.selectList(namespace + ".All_Student_List");
 	}
+	
+	// ===============================================
+	// 반우진 작업 끝 부분
+	// ===============================================
 }
