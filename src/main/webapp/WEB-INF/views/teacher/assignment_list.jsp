@@ -53,7 +53,7 @@
                 
                 
                 <td class="tea-td" style="padding: 8px; border: 1px solid #999;">
-                    <a href="/control/teacher/assignment_view/${assign.assign_no}">
+                    <a href="<c:url value="/teacher/assignment_view/${assign.assign_no}"/>">
                         ${assign.assign_name}
                     </a>
                 </td>
