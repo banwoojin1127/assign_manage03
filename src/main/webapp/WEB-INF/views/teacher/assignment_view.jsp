@@ -93,12 +93,12 @@
                                         <div style="width: 48px;"></div>
                                     </div>
                                     <div class="tableCellValue d-flex justify-content-center" style="min-width: 100px;">
-                                        <a href="../teacher/report_view" class="darkBtn btn align-content-center">확인</a>
+                                        <a href="/control/teacher/report_view" class="darkBtn btn align-content-center">확인</a>
                                     </div>
                                     <div class="tableCellValue d-flex justify-content-between" style="min-width: 175px;">
                                         <div style="width: 48px;"></div>
                                         <div class="align-content-center">15</div>
-                                        <div><a href="../teacher/report_feedback" class="darkBtn btn align-content-center">수정</a></div>
+                                        <div><a href="/control/teacher/report_feedback" class="darkBtn btn align-content-center">수정</a></div>
                                     </div>
                                 </div>
                                 <div class="d-flex flex flex-wrap justify-content-start align-content-start w-100">
@@ -109,12 +109,12 @@
                                         <div style="width: 48px;"></div>
                                     </div>
                                     <div class="tableCellValue d-flex justify-content-center" style="min-width: 100px;">
-                                        <a href="../teacher/report_view" class="darkBtn btn align-content-center">확인</a>
+                                        <a href="/control/teacher/report_view" class="darkBtn btn align-content-center">확인</a>
                                     </div>
                                     <div class="tableCellValue d-flex justify-content-between" style="min-width: 175px;">
                                         <div style="width: 48px;"></div>
                                         <div class="align-content-center">--</div>
-                                        <div><a href="../teacher/report_feedback" class="darkBtn btn align-content-center">평가</a></div>
+                                        <div><a href="/control/teacher/report_feedback" class="darkBtn btn align-content-center">평가</a></div>
                                     </div>
                                 </div>
                             </div>
