@@ -196,7 +196,7 @@
                                         <div class="d-flex justify-content-center m-1">
                                             <img src="../../resources/img/profile.png" class="miniIcon">
                                         </div>
-                                        <div class="d-flex justify-content-center m-2"><div class="textWideTitle align-content-center">Q . 이젠계정 : </div></div>
+                                        <div class="d-flex justify-content-center m-2"><div class="textWideTitle align-content-center">Q . ${login.user_name} : </div></div>
                                         <input name="quest_note" class="flex-grow-1" style="border-style: none;" type="text" placeholder="질문을 입력하세요."
                								required oninvalid="this.setCustomValidity('질문 내용을 입력해주세요.')" oninput="this.setCustomValidity('')">
                                         <input type="submit" class="clearBtn d-flex justify-content-center" style="min-width: 30px; font-size: 0.8em;" value="완료">
@@ -233,7 +233,7 @@
 	                                    
 	                                    <!-- 작성자만 보이는 버튼 -->
 	                                    <!-- 기본 버튼: 수정, 삭제 -->
-                                    	<c:if test="${q.id eq 's2ezen'}">
+                                    	<c:if test="${q.id eq login.id}">
 		                                    <div class="d-flex flex-row ms-2 align-items-center">
 		                                        <input type="button" class="clearBtn editBtn" style="min-width: 30px; font-size:0.8em;" value="수정">
 		                                        <input type="button" class="clearBtn removeBtn" style="min-width: 30px; font-size:0.8em;" value="삭제">

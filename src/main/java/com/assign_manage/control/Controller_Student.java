@@ -44,11 +44,8 @@ public class Controller_Student
 	@RequestMapping(value="", method = RequestMethod.GET)
 	public String Main(HttpSession session, Model model)
 	{
-		/*
 		VO_User login = (VO_User)session.getAttribute("login");
 		String id = login.getId();
-		*/
-		String id = "s2ezen";
 		
 		List<VO_Main> list = student.Main(id);
 		
@@ -62,12 +59,8 @@ public class Controller_Student
 			@RequestParam(defaultValue = "1")int page, @RequestParam(defaultValue = "10")int limitno,
 			HttpSession session, Model model)
 	{	
-		
-		/*
 		VO_User login = (VO_User)session.getAttribute("login");
 		String id = login.getId();
-		*/
-		String id = "s2ezen";
 		
 		if (page < 1) page = 1;
 	    if (limitno < 1) limitno = 10;
@@ -115,9 +108,8 @@ public class Controller_Student
 	@RequestMapping(value="/assign/list", method = RequestMethod.GET)
 	public String AssignListAll(HttpSession session, Model model) throws ParseException
 	{
-		//VO_User login = (VO_User) session.getAttribute("login");
-		//String id = login.getId();
-		String id = "s2ezen";
+		VO_User login = (VO_User) session.getAttribute("login");
+		String id = login.getId();
 		
 		Map<String, Object> params = new HashMap<>();
         params.put("id", id);
@@ -158,9 +150,8 @@ public class Controller_Student
 	@RequestMapping(value="/assign/list/{lecture_no}", method = RequestMethod.GET)
 	public String AssignList(@PathVariable("lecture_no")String no, HttpSession session, Model model) throws ParseException
 	{
-		//VO_User login = (VO_User) session.getAttribute("login");
-		//String id = login.getId();
-		String id = "s2ezen";
+		VO_User login = (VO_User) session.getAttribute("login");
+		String id = login.getId();
 		
 		Map<String, Object> params = new HashMap<>();
 	    params.put("id", id);
@@ -209,9 +200,8 @@ public class Controller_Student
 	@RequestMapping(value="/assign/{assign_no}", method = RequestMethod.GET)
 	public String AssignView(@PathVariable("assign_no")String assign_no, HttpSession session, Model model)
 	{
-		//VO_User login = (VO_User) session.getAttribute("login");
-		//String id = login.getId();
-		String id = "s2ezen";
+		VO_User login = (VO_User) session.getAttribute("login");
+		String id = login.getId();
 		
 		VO_Assignment assign = student.AssignRead(assign_no);
 		String lecture_no = String.valueOf(assign.getLecture_no());
@@ -251,9 +241,8 @@ public class Controller_Student
 	public String QuestionSubmit(@PathVariable("assign_no")int assign_no,
 			@RequestParam("quest_note") String note, HttpSession session, RedirectAttributes redirectAttr)
 	{
-		//VO_User login = (VO_User) session.getAttribute("login");
-		//String id = login.getId();
-		String id = "s2ezen";
+		VO_User login = (VO_User) session.getAttribute("login");
+		String id = login.getId();
 		
 		VO_Question q = new VO_Question();
 	    q.setAssign_no(assign_no);
@@ -304,9 +293,8 @@ public class Controller_Student
 	@RequestMapping(value="/assign/{assign_no}/report/submit", method = RequestMethod.GET)
 	public String ReportSubmit(@PathVariable("assign_no")String assign_no, HttpSession session, Model model)
 	{
-		//VO_User login = (VO_User) session.getAttribute("login");
-		//String user_name = login.getUser_name();
-		String user_name = "이젠계정";
+		VO_User login = (VO_User) session.getAttribute("login");
+		String user_name = login.getUser_name();
 				
 		VO_Assignment assign = student.AssignRead(assign_no);
 		
@@ -320,7 +308,6 @@ public class Controller_Student
 	public String ReportSubmitOK(@PathVariable("assign_no") int assign_no, VO_Report vo,
 			@RequestParam("attach") List<MultipartFile> files, HttpServletRequest request) throws IllegalStateException, IOException
 	{
-		/*
 		//로그인 조회
 		VO_User login = (VO_User)request.getSession().getAttribute("login");
 		if(login == null)
@@ -331,9 +318,6 @@ public class Controller_Student
 		//제출자 ID, 이름 설정
 		vo.setId(login.getId());
 		vo.setStudent_name(login.getUser_name());
-		*/
-		vo.setId("s2ezen");
-		vo.setStudent_name("이젠계정");
 		
 		vo.setAssign_no(assign_no);
 		
@@ -428,7 +412,6 @@ public class Controller_Student
 	        @RequestParam(value="existingFiles", required=false) List<Integer> existingFileIds,
 	        HttpServletRequest request) throws IllegalStateException, IOException 
 	{
-		/*
 		//로그인 조회
 		VO_User login = (VO_User)request.getSession().getAttribute("login");
 		if(login == null)
@@ -438,8 +421,6 @@ public class Controller_Student
 		
 		//제출자 ID 설정
 		vo.setId(login.getId());
-		*/
-		vo.setId("s2ezen");
 	    
 	    vo.setReport_no(report_no);
 	    vo.setAssign_no(assign_no);

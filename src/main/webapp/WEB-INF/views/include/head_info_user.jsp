@@ -11,11 +11,11 @@
             </span>
             &nbsp;&nbsp;&nbsp;
             <span class="d-flex align-content-center flex-wrap h-100">
-                <a href="../common/mypage" id="" class="darkBtn btn rounded" style="height: 75%;">마이 페이지</a>
+                <a href="<c:url value='/common/mypage'/>" id="" class="darkBtn btn rounded" style="height: 75%;">마이 페이지</a>
             </span>
             &nbsp;&nbsp;&nbsp;
             <span class="d-flex align-content-center flex-wrap h-100">
-                <a href="../common/logout" id="" class="darkBtn btn rounded" style="height: 75%;">로그아웃</a>
+                <a href="<c:url value='/common/logout'/>" id="" class="darkBtn btn rounded" style="height: 75%;">로그아웃</a>
             </span>
             &nbsp;&nbsp;&nbsp;
         </div>

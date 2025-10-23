@@ -27,8 +27,7 @@
             <div class="d-flex flex-wrap justify-content-center align-content-start my-3 w-100">
                 <div id="" class="darkText d-flex flex-wrap justify-content-between align-content-center rounded px-1 w-100">
                     <p class="d-flex m-0 p-2" style="text-align: left;">제출 내용</p>
-					<%-- <c:if test="${report.id == sessionScope.login.id}"> --%>
-					<c:if test="${report.id == 's2ezen'}">
+					<c:if test="${report.id == login.id and feedback == null}">
 		                <a href="<c:url value='/student/assign/${assign.assign_no}/report/${report.report_no}/modify'/>" 
 		                   class="whiteBtn btn d-flex flex-wrap align-content-center rounded my-1">수정</a>
 		            </c:if>

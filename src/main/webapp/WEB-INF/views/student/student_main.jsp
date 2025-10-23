@@ -30,14 +30,14 @@
 		            <c:when test="${not empty list}">
 		                <div class="mainText" style="border: 2px solid #c2dcff; padding: 20px 50px 20px 0px;">
 		                    <img src="<c:url value='/resources/img/folder.png'/>" style="width: 90px;">&nbsp;&nbsp;
-		                    <b>이젠계정</b> 님이 아직 제출하지 않은 과제가 
+		                    <b>${login.user_name}</b> 님이 아직 제출하지 않은 과제가 
 		                    <b>${list.size()}개</b> 있습니다.
 		                </div>
 		            </c:when>
 		            <c:otherwise>
 		                <div class="mainText" style="border: 2px solid #c2dcff; padding: 20px 50px 20px 0px;">
 		                    <img src="<c:url value='/resources/img/folder.png'/>" style="width: 90px;">&nbsp;&nbsp;
-		                    <b>이젠계정</b> 님이 아직 제출하지 않은 과제가 없습니다.
+		                    <b>${login.user_name}</b> 님이 아직 제출하지 않은 과제가 없습니다.
 		                </div>
 		            </c:otherwise>
 		        </c:choose>
