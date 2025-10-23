@@ -48,4 +48,17 @@ public class Repository_Teacher {
 	public List<VO_Lecture> findLecturesByName(String keyword) {
 	    return session.selectList(namespace + ".LecutreName_Lecture_View", keyword);
 	}
+	
+	// 학생 전체 조회
+	public List<VO_User> findAllStudent(VO_SearchFilter_AllStudent filter){
+		if(filter != null)
+		{
+			List<VO_User> voUList = session.selectList(namespace + "selectListUser",filter);
+			for(VO_User voU : voUList)
+			{
+				voU.showInnerData();
+			}
+		}
+		return session.selectList(namespace + ".All_Student_List");
+	}
 }
