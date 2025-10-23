@@ -2,6 +2,7 @@ package com.assign_manage.control;
 
 import java.io.*;
 import java.net.URLEncoder;
+import java.security.Principal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -20,21 +21,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.assign_manage.repository.Repository_Student;
-import com.assign_manage.vo.VO_Answer;
-import com.assign_manage.vo.VO_Assignment;
-import com.assign_manage.vo.VO_Assignment_student;
-import com.assign_manage.vo.VO_Feedback;
-import com.assign_manage.vo.VO_File;
-import com.assign_manage.vo.VO_Lecture;
-import com.assign_manage.vo.VO_Lecture_list;
-import com.assign_manage.vo.VO_Question;
-import com.assign_manage.vo.VO_Report;
-import com.assign_manage.vo.VO_Search_student;
-import com.assign_manage.vo.VO_User;
+import com.assign_manage.vo.*;
+
 
 @Controller
 @RequestMapping("/student")
@@ -48,8 +42,15 @@ public class Controller_Student
 	Repository_Student student;
 	
 	@RequestMapping(value="", method = RequestMethod.GET)
-	public String Main()
+	public String Main(HttpSession session, Model model)
 	{
+		VO_User login = (VO_User)session.getAttribute("login");
+		String id = login.getId();
+		
+		List<VO_Main> list = student.Main(id);
+		
+		model.addAttribute("list", list);
+		
 		return "student/student_main";
 	}
 	
@@ -58,9 +59,7 @@ public class Controller_Student
 			@RequestParam(defaultValue = "1")int page, @RequestParam(defaultValue = "10")int limitno,
 			HttpSession session, Model model)
 	{	
-		
 		VO_User login = (VO_User)session.getAttribute("login");
-		
 		String id = login.getId();
 		
 		if (page < 1) page = 1;
@@ -109,9 +108,8 @@ public class Controller_Student
 	@RequestMapping(value="/assign/list", method = RequestMethod.GET)
 	public String AssignListAll(HttpSession session, Model model) throws ParseException
 	{
-		//VO_User login = (VO_User) session.getAttribute("login");
-		//String id = login.getId();
-		String id = "s2ezen";
+		VO_User login = (VO_User) session.getAttribute("login");
+		String id = login.getId();
 		
 		Map<String, Object> params = new HashMap<>();
         params.put("id", id);
@@ -152,9 +150,8 @@ public class Controller_Student
 	@RequestMapping(value="/assign/list/{lecture_no}", method = RequestMethod.GET)
 	public String AssignList(@PathVariable("lecture_no")String no, HttpSession session, Model model) throws ParseException
 	{
-		//VO_User login = (VO_User) session.getAttribute("login");
-		//String id = login.getId();
-		String id = "s2ezen";
+		VO_User login = (VO_User) session.getAttribute("login");
+		String id = login.getId();
 		
 		Map<String, Object> params = new HashMap<>();
 	    params.put("id", id);
@@ -203,16 +200,20 @@ public class Controller_Student
 	@RequestMapping(value="/assign/{assign_no}", method = RequestMethod.GET)
 	public String AssignView(@PathVariable("assign_no")String assign_no, HttpSession session, Model model)
 	{
-		//VO_User login = (VO_User) session.getAttribute("login");
-		//String id = login.getId();
-		String id = "s2ezen";
+		VO_User login = (VO_User) session.getAttribute("login");
+		String id = login.getId();
 		
 		VO_Assignment assign = student.AssignRead(assign_no);
-		VO_Question quest = student.QuestionRead(assign_no);
-		VO_Answer answer = student.AnswerRead(assign_no);
-		
 		String lecture_no = String.valueOf(assign.getLecture_no());
 		List<VO_Assignment_student> student_list = student.StudentList(lecture_no, assign_no);
+		List<VO_Question> quest = student.QuestionRead(assign_no);
+		Map<Integer, VO_Answer> answer = new HashMap<>();
+	    for(VO_Question q : quest) {
+	        VO_Answer a = student.AnswerRead(String.valueOf(q.getQuest_no()));
+	        if(a != null) {
+	            answer.put(q.getQuest_no(), a);
+	        }
+	    }
 		
 		//end_date 포맷 변경
 	    if(assign.getEnd_date() != null && !assign.getEnd_date().isEmpty())
@@ -236,6 +237,53 @@ public class Controller_Student
 		return "student/assignment_view";
 	}
 	
+	@RequestMapping(value="/assign/{assign_no}/quest/add", method = RequestMethod.POST)
+	public String QuestionSubmit(@PathVariable("assign_no")int assign_no,
+			@RequestParam("quest_note") String note, HttpSession session, RedirectAttributes redirectAttr)
+	{
+		VO_User login = (VO_User) session.getAttribute("login");
+		String id = login.getId();
+		
+		VO_Question q = new VO_Question();
+	    q.setAssign_no(assign_no);
+	    q.setId(id);
+	    q.setQuest_note(note);
+	    q.setUser_name("이젠계정");
+
+	    student.QuestionInsert(q);
+	
+	    redirectAttr.addFlashAttribute("msg", "질문이 등록되었습니다.");
+	    
+	    return "redirect:/student/assign/" + assign_no;
+	}
+	
+	@RequestMapping(value="/assign/{assign_no}/quest/edit", method = RequestMethod.POST)
+	public String QuestionModify(@PathVariable("assign_no")int assign_no, @RequestParam("quest_no") int quest_no,
+			@RequestParam("quest_note") String note, HttpSession session, RedirectAttributes redirectAttr)
+	{
+		VO_Question q = new VO_Question();
+		q.setQuest_no(quest_no);
+	    q.setQuest_note(note);
+
+	    student.QuestionUpdate(q);
+	
+	    redirectAttr.addFlashAttribute("msg", "수정이 완료되었습니다.");
+	    
+	    return "redirect:/student/assign/" + assign_no;
+	}
+	
+	@RequestMapping(value="/assign/{assign_no}/quest/delete", method = RequestMethod.POST)
+	public String QuestionDelete(@PathVariable("assign_no")int assign_no,
+			@RequestParam("quest_no") String quest_no, HttpSession session, RedirectAttributes redirectAttr)
+	{
+	    student.QuestionDelete(quest_no);
+	
+	    redirectAttr.addFlashAttribute("msg", "질문이 삭제되었습니다.");
+	    
+	    return "redirect:/student/assign/" + assign_no;
+	}
+	
+	
 	@RequestMapping(value="/assign/{assign_no}/report", method = RequestMethod.GET)
 	public String Report()
 	{
@@ -245,9 +293,8 @@ public class Controller_Student
 	@RequestMapping(value="/assign/{assign_no}/report/submit", method = RequestMethod.GET)
 	public String ReportSubmit(@PathVariable("assign_no")String assign_no, HttpSession session, Model model)
 	{
-		//VO_User login = (VO_User) session.getAttribute("login");
-		//String user_name = login.getUser_name();
-		String user_name = "이젠계정";
+		VO_User login = (VO_User) session.getAttribute("login");
+		String user_name = login.getUser_name();
 				
 		VO_Assignment assign = student.AssignRead(assign_no);
 		
@@ -261,7 +308,6 @@ public class Controller_Student
 	public String ReportSubmitOK(@PathVariable("assign_no") int assign_no, VO_Report vo,
 			@RequestParam("attach") List<MultipartFile> files, HttpServletRequest request) throws IllegalStateException, IOException
 	{
-		/*
 		//로그인 조회
 		VO_User login = (VO_User)request.getSession().getAttribute("login");
 		if(login == null)
@@ -272,9 +318,6 @@ public class Controller_Student
 		//제출자 ID, 이름 설정
 		vo.setId(login.getId());
 		vo.setStudent_name(login.getUser_name());
-		*/
-		vo.setId("s2ezen");
-		vo.setStudent_name("이젠계정");
 		
 		vo.setAssign_no(assign_no);
 		
@@ -369,7 +412,6 @@ public class Controller_Student
 	        @RequestParam(value="existingFiles", required=false) List<Integer> existingFileIds,
 	        HttpServletRequest request) throws IllegalStateException, IOException 
 	{
-		/*
 		//로그인 조회
 		VO_User login = (VO_User)request.getSession().getAttribute("login");
 		if(login == null)
@@ -379,8 +421,6 @@ public class Controller_Student
 		
 		//제출자 ID 설정
 		vo.setId(login.getId());
-		*/
-		vo.setId("s2ezen");
 	    
 	    vo.setReport_no(report_no);
 	    vo.setAssign_no(assign_no);

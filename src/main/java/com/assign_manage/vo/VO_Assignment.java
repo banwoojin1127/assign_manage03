@@ -17,10 +17,11 @@ public class VO_Assignment
 	private String delete_date;   //삭제일
 	
 	// 추가
-    private String lecture_name;   // 강의명
-    private String teacher_name;   // 교사 이름
+    private String lecture_name;   //강의명
+    private String teacher_name;   //교사 이름
+    private int    week_no;        //주차
 	
-    public int getAssign_no()        { return assign_no;    }
+    public int getAssign_no()        { return assign_no;     }
 	public int getLecture_no()       { return lecture_no;    }
 	public String getAssign_name()   { return assign_name;   }
 	public String getAssign_note()   { return assign_note;   }
@@ -30,6 +31,7 @@ public class VO_Assignment
 	public String getDelete_date()   { return delete_date;   }
 	public String getLecture_name()  { return lecture_name;  }
 	public String getTeacher_name()  { return teacher_name;  }
+	public int    getWeek_no()       { return week_no;       }
 	
 	public void setAssign_no(int assign_no)            { this.assign_no     = assign_no;     }
 	public void setLecture_no(int lecture_no)          { this.lecture_no    = lecture_no;    }
@@ -39,6 +41,7 @@ public class VO_Assignment
 	public void setCreate_date(String create_date)     { this.create_date   = create_date;   }
 	public void setEnd_date(String end_date)           { this.end_date      = end_date;      }
 	public void setDelete_date(String delete_date)     { this.delete_date   = delete_date;   }
-	public void setLecture_name(String lecture_name)   { this.lecture_name = lecture_name;   }
-	public void setTeacher_name(String teacher_name)   { this.teacher_name = teacher_name;   }
+	public void setLecture_name(String lecture_name)   { this.lecture_name  = lecture_name;  }
+	public void setTeacher_name(String teacher_name)   { this.teacher_name  = teacher_name;  }
+	public void setWeek_no(int week_no)                { this.week_no       = week_no;       }
 }
