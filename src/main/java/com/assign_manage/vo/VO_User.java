@@ -53,6 +53,7 @@ public class VO_User
 	
 	public void showInnerData()
 	{
+		System.out.println("=====" + this.id + "=========================");
 		System.out.println(this.id);
 		System.out.println(this.pw);
 		System.out.println(this.user_name);
@@ -64,5 +65,6 @@ public class VO_User
 		System.out.println(this.email);
 		System.out.println(this.join_date);
 		System.out.println(this.modify_date);
+		System.out.println("===================================");
 	}
 }

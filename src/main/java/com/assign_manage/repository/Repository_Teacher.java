@@ -49,24 +49,21 @@ public class Repository_Teacher {
 	    return session.selectList(namespace + ".LecutreName_Lecture_View", keyword);
 	}
 	
-	// ===============================================
-	// 반우진 작업 시작부분
-	// ===============================================	
+// ===============================================
+// 반우진 작업 시작부분
+// ===============================================	
 	
 	// 학생 전체 조회
 	public List<VO_User> findAllStudent(VO_SearchFilter_AllStudent filter){
-		if(filter != null)
-		{
-			List<VO_User> voUList = session.selectList(namespace + "selectListUser",filter);
+			List<VO_User> voUList = session.selectList(namespace + ".selectListUser",filter);
 			for(VO_User voU : voUList)
 			{
 				voU.showInnerData();
 			}
-		}
-		return session.selectList(namespace + ".All_Student_List");
+		return voUList;
 	}
 	
-	// ===============================================
-	// 반우진 작업 끝 부분
-	// ===============================================
+// ===============================================
+// 반우진 작업 끝 부분
+// ===============================================
 }

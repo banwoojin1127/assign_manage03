@@ -26,6 +26,8 @@ public class VO_SearchFilter_AllStudent {
     	this.sort = "";
     	this.pageSize = 10;
     	this.pageNum = 1;
+    	
+    	this.setOffset();
     }
     
     // 2. 전체 필드 생성자 (All Args Constructor)
@@ -106,11 +108,13 @@ public class VO_SearchFilter_AllStudent {
 
     // 내용 확인용 메서드
     public void showInnerData() {
+    	System.out.println("==============================");
         System.out.println("Q: " + this.q);
         System.out.println("Filter: " + this.filter);
         System.out.println("Sort: " + this.sort);
         System.out.println("PageSize: " + this.pageSize);
         System.out.println("PageNum: " + this.pageNum);
         System.out.println("Offset: " + this.offset);
+        System.out.println("==============================");
     }
 }

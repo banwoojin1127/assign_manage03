@@ -138,25 +138,22 @@ public class Controller_teacher {
 		return "teacher/report_feedback";
 	}	
 	
-	// ===============================================
-	// 반우진 작업 시작부분
-	// ===============================================
+// ===============================================
+// 반우진 작업 시작부분
+// ===============================================
 	
 	/** 학생 목록 **/
 	@RequestMapping(value = "/student_list", method = RequestMethod.GET)
 	public String student_list(Model model
-			,	@RequestParam VO_SearchFilter_AllStudent filter
+			,	VO_SearchFilter_AllStudent filter
 			) {
-		if(filter != null)
-		{
-			filter.setOffset();
-		}
+		filter.showInnerData();
 		List<VO_User> userList = repository.findAllStudent(filter); // Repository에서 전체 조회
 		model.addAttribute("userList", userList); // JSP에서 ${userList}로 접근 가능
 		
 		return "teacher/student_list";
 	}
-	// ===============================================
-	// 반우진 작업 끝 부분
-	// ===============================================
+// ===============================================
+// 반우진 작업 끝 부분
+// ===============================================
 }

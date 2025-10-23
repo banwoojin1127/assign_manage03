@@ -50,51 +50,50 @@
             <!-- hidden spacer button to preserve layout; not interactive -->
         </button>
     </div>
-    <div class="d-flex mb-3"> 
-        <form class="d-flex align-items-center gap-2" role="search" aria-label="학생 검색 폼">
-			<div style="width: 115px;">
-                <select class="form-select" name="filter" aria-label="검색 필터">
-					<option value="all" selected>전체</option>
-                    <option value="class">등급</option>
-                    <option value="id">아이디</option>
-                    <option value="user_name">이름</option>
-                    <option value="gender">성별</option>
-				</select>
-			</div>
-			<div style="width: 220px;">
-                <label class="visually-hidden" for="inlineFormInputGroupUsername">검색어</label>
-                <div class="input-group">
-                    <input type="text" class="form-control" id="inlineFormInputGroupUsername" name="q" aria-label="검색어 입력" placeholder="검색어를 입력해주세요.">
+    <div class="d-flex mb-3">
+        <form  role="search" aria-label="학생 검색 폼">
+            <div class="d-flex align-items-center gap-2">
+                <div style="width: 115px;">
+                    <select class="form-select" name="filter" aria-label="검색 필터">
+                        <option value="all" selected>전체</option>
+                        <option value="id">아이디</option>
+                        <option value="user_name">이름</option>
+                        <option value="gender">성별</option>
+                    </select>
                 </div>
-			</div>
-			<div style="width: 75px;">
-				<button type="submit" class="btn btn-primary">검색</button>
-			</div>
-		</form>
-        <div class="d-flex mb-3 align-items-center gap-2">
-            <div>
-                <!-- avoid nested form: keep select outside of another form element -->
-                <select class="form-select form-select-sm right-align1" name="sort" aria-label="정렬 방식">
-                    <option value="asc" selected>번호(오름차순)</option>
-						<option>번호(내림차순)</option>
-						<option>등급순(높은순)</option>
-						<option>등급순(낮은순)</option>
-						<option>생년월일(오름차순)</option>
-						<option>생년월일(내림차순)</option>
-						<option>이름(오름차순)</option>
-						<option>이름(내림차순)</option>
-						<option>아이디(오름차순)</option>
-						<option>아이디(내림차순)</option>
-                </select>
-			</div>    
-			<div>
-                <select class="form-select form-select-sm right-align2" name="pageSize" aria-label="페이지 크기">
-                    <option value="10" selected>10개씩</option>
-					<option value="20">20개씩</option>
-					<option value="50">50개씩</option>
-				</select>
-			</div>
-		</div>
+                <div style="width: 220px;">
+                    <label class="visually-hidden" for="inlineFormInputGroupUsername">검색어</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="inlineFormInputGroupUsername" name="q" aria-label="검색어 입력" placeholder="검색어를 입력해주세요.">
+                    </div>
+                </div>
+                <div style="width: 75px;">
+                    <button type="submit" class="btn btn-primary">검색</button>
+                </div>
+            </div>
+            <div class="d-flex mb-3 align-items-center gap-2">
+                <div>
+                    <!-- avoid nested form: keep select outside of another form element -->
+                    <select class="form-select form-select-sm right-align1" name="sort" aria-label="정렬 방식">
+                        <option selected>번호(오름차순)</option>
+                        <option>번호(내림차순)</option>
+                        <option>생년월일(오름차순)</option>
+                        <option>생년월일(내림차순)</option>
+                        <option>이름(오름차순)</option>
+                        <option>이름(내림차순)</option>
+                        <option>아이디(오름차순)</option>
+                        <option>아이디(내림차순)</option>
+                    </select>
+                </div>    
+                <div>
+                    <select class="form-select form-select-sm right-align2" name="pageSize" aria-label="페이지 크기">
+                        <option value="10" selected>10개씩</option>
+                        <option value="20">20개씩</option>
+                        <option value="50">50개씩</option>
+                    </select>
+                </div>
+            </div>
+        </form>
 	</div>
     <div style="vertical-align:middle;">
         <table id="user-list" class="table table-bordered table-hover" style="width: 1405px;">
