@@ -302,7 +302,7 @@
 
                     // 컨트롤러로 POST 요청
                     const form = $('<form>', {
-                        action: '/assign_manage03/student/assign/${assign.assign_no}/quest/edit',
+                        action: '/control/student/assign/${assign.assign_no}/quest/edit',
                         method: 'post'
                     }).append($('<input>', {type: 'hidden', name: 'quest_no', value: quest_no}))
                       .append($('<input>', {type: 'hidden', name: 'quest_note', value: note}));
@@ -319,7 +319,7 @@
                     const quest_no = parent.attr("id").replace("question", "");
 
                     const form = $('<form>', {
-                        action: '/assign_manage03/student/assign/${assign.assign_no}/quest/delete',
+                        action: '/control/student/assign/${assign.assign_no}/quest/delete',
                         method: 'post'
                     }).append($('<input>', {type: 'hidden', name: 'quest_no', value: quest_no}));
 
