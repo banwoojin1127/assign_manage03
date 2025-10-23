@@ -4,45 +4,35 @@
 <!-- content field start -->
         <div class="d-flex flex-wrap justify-content-center align-content-start" style="padding: 50px; padding-left: 75px; min-width: 689px;">
             <!-- content main title start -->
-            <div id="" class="d-flex flex-wrap justify-content-center align-content-start my-3" style="width: 100%;">
-                <div id="" class="decoWideTitle" style="width: 12px; height: 40px;"></div>
-                &nbsp;&nbsp;
-                <div id="" class="textWideTitle d-flex flex-wrap align-content-center px-1">
-                    <p class="flex-grow-1 m-0" style="font-size: 1.5em;">과제 상세보기</p>
-                </div>
-                <div class="ms-auto">
-                    <a href="../teacher/assignment_list" class="darkBtn btn rounded px-3" style="height: 40px;"><b>이전</b></a>
-                </div>
-            </div>
-            <!-- content main title end -->
-            <!-- content main header start -->
-            <div id="" class="d-flex justify-content-center align-content-start my-4" style="width: 100%;">
-                <!-- assignment title start -->
-                <div class="darkText d-flex flex-wrap align-content-center flex-grow-1 rounded p-2">
-                    <div id="" class="darkText d-flex flex-wrap align-content-center rounded px-1">
-                        <p class="m-0 px-3" style="text-align: left; font-size: 1.25em;">강의 명 : HTML</p>
-                    </div>
-                    <div class="ms-auto">
-                        <button class="whiteBtn rounded px-3" style="height: 40px;"><b>수정</b></button>
-                    </div>
-                </div>
-                <!-- assignment title end -->
-            </div>
-            <!-- content main header end -->
-            <!-- assignment posted info start -->
             
             
- <div id="formAssignPostedInfo" class="tableCased d-flex flex-wrap justify-contenthk-start align-content-start my-1" style="width: 100%;">
+<div id="" class="d-flex justify-content-center align-content-start my-4" style="width: 100%;">
+    <!-- assignment title start -->
+    <div class="darkText d-flex flex-wrap align-content-center flex-grow-1 rounded p-2">
+        <div id="" class="darkText d-flex flex-wrap align-content-center rounded px-1">
+            <p class="m-0 px-3" style="text-align: left; font-size: 1.25em;">강의 명 : HTML</p>
+        </div>
+        <div class="ms-auto">
+            <!-- 수정 / 저장 버튼 -->
+            <button id="editBtn" class="whiteBtn rounded px-3" style="height: 40px;"><b>수정</b></button>
+            <button id="saveBtn" class="whiteBtn rounded px-3" style="height: 40px; display:none;"><b>저장</b></button>
+        </div>
+    </div>
+    <!-- assignment title end -->
+</div>
+
+<!-- assignment posted info -->
+<div id="formAssignPostedInfo" class="tableCased d-flex flex-wrap justify-content-start align-content-start my-1" style="width: 100%;">
     <div class="d-flex justify-content-start align-content-center w-100">
         <div class="tableCellName d-flex" style="min-width: 85px;">과제명</div>
         <div class="tableCellValue d-flex flex-grow-1">
-            <input class="form-control flex-grow-1" style="border-style: none;" type="text" value="${assignment.assign_name}">
+            <input id="assignName" class="form-control flex-grow-1" style="border-style: none;" type="text" value="${assignment.assign_name}" readonly>
         </div>
     </div>
     <div class="d-flex justify-content-start align-content-center w-100">
         <div class="tableCellName d-flex" style="min-width: 85px;">제출방식</div>
         <div class="tableCellValue d-flex flex-grow-1">
-            <input class="form-control flex-grow-1" style="border-style: none;" type="text" value="${assignment.assign_method}">
+            <input id="assignMethod" class="form-control flex-grow-1" style="border-style: none;" type="text" value="${assignment.assign_method}" readonly>
         </div>
     </div>
     <div class="d-flex justify-content-start align-content-center w-100">
@@ -52,18 +42,59 @@
         </div>
         <div class="tableCellName d-flex" style="min-width: 85px;">종료 일</div>
         <div class="tableCellValue d-flex flex-grow-1">
-            <input type="datetime-local" class="form-control" value="${assignment.end_date}">
+            <input id="endDate" type="datetime-local" class="form-control" value="${assignment.end_date}" readonly>
         </div>
     </div>
     <div class="d-flex justify-content-start align-content-center w-100">
         <div class="tableCellName d-flex" style="min-width: 85px;">내용</div>
         <div class="tableCellValue d-flex flex-grow-1">
-            <input class="form-control flex-grow-1" style="border-style: none;" type="text" value="${assignment.assign_note}">
+            <input id="assignNote" class="form-control flex-grow-1" style="border-style: none;" type="text" value="${assignment.assign_note}" readonly>
         </div>
     </div>
 </div>
-            
-            
+
+<script>
+$(document).ready(function() {
+
+    // 수정 버튼 클릭 시
+    $("#editBtn").click(function() {
+        // input들 편집 가능하게
+        $("#formAssignPostedInfo input").prop("readonly", false).css("border-style", "solid");
+        
+        // 버튼 전환
+        $("#editBtn").hide();
+        $("#saveBtn").show();
+    });
+
+    // 저장 버튼 클릭 시
+    $("#saveBtn").click(function() {
+        const updatedData = {
+            assign_name: $("#assignName").val(),
+            assign_method: $("#assignMethod").val(),
+            end_date: $("#endDate").val(),
+            assign_note: $("#assignNote").val()
+        };
+
+        // AJAX로 서버에 전송
+        $.ajax({
+            type: "POST",
+            url: "<c:url value='/teacher/updateAssignment'/>",  // 실제 컨트롤러 URL에 맞게 변경
+            contentType: "application/json",
+            data: JSON.stringify(updatedData),
+            success: function() {
+                alert("수정 완료!");
+                $("#formAssignPostedInfo input").prop("readonly", true).css("border-style", "none");
+                $("#saveBtn").hide();
+                $("#editBtn").show();
+            },
+            error: function() {
+                alert("수정 중 오류가 발생했습니다.");
+            }
+        });
+    });
+});
+</script>
+   
             
             <!-- assignment posted info end -->
             <!-- submission status start -->
@@ -93,12 +124,13 @@
                                         <div style="width: 48px;"></div>
                                     </div>
                                     <div class="tableCellValue d-flex justify-content-center" style="min-width: 100px;">
-                                        <a href="/control/teacher/report_view" class="darkBtn btn align-content-center">확인</a>
+                                        <a href="<c:url value='/teacher/report_view'/>" class="darkBtn btn align-content-center">확인</a>
                                     </div>
                                     <div class="tableCellValue d-flex justify-content-between" style="min-width: 175px;">
                                         <div style="width: 48px;"></div>
                                         <div class="align-content-center">15</div>
-                                        <div><a href="/control/teacher/report_feedback" class="darkBtn btn align-content-center">수정</a></div>
+                                        <div>
+                                        <a href="<c:url value='/teacher/report_feedback'/>" class="darkBtn btn align-content-center">수정</a></div>
                                     </div>
                                 </div>
                                 <div class="d-flex flex flex-wrap justify-content-start align-content-start w-100">
@@ -109,12 +141,12 @@
                                         <div style="width: 48px;"></div>
                                     </div>
                                     <div class="tableCellValue d-flex justify-content-center" style="min-width: 100px;">
-                                        <a href="/control/teacher/report_view" class="darkBtn btn align-content-center">확인</a>
+                                        <a href="<c:url value='/teacher/report_view'/>" class="darkBtn btn align-content-center">확인</a>
                                     </div>
                                     <div class="tableCellValue d-flex justify-content-between" style="min-width: 175px;">
                                         <div style="width: 48px;"></div>
                                         <div class="align-content-center">--</div>
-                                        <div><a href="/control/teacher/report_feedback" class="darkBtn btn align-content-center">평가</a></div>
+                                        <div><a href="<c:url value='/teacher/report_feedback'/>" class="darkBtn btn align-content-center">평가</a></div>
                                     </div>
                                 </div>
                             </div>

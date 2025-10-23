@@ -22,12 +22,12 @@
     <!-- 강의 버튼 -->
     <div style="line-height: 5px; width: 1310px; text-align: left;">
         <c:forEach var="lecture" items="${lectureList}">
-            <a href="/control/teacher/assignment_list/${lecture.lecture_no}" 
-            
-            
-               class="btn tea-lecture ${selectedLectureNo == lecture.lecture_no ? 'btn-outline-primary' : 'btn-outline-secondary'}">
-               ${lecture.lecture_name}
-            </a>
+ <a href="<c:url value='/teacher/assignment_list/${lecture.lecture_no}'/>"
+       class="btn tea-lecture ${selectedLectureNo == lecture.lecture_no ? 'btn-outline-primary' : 'btn-outline-secondary'}">
+       ${lecture.lecture_name}
+    </a>
+
+
         </c:forEach>
     </div>
 
