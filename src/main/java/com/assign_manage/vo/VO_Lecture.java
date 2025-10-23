@@ -43,5 +43,11 @@ public class VO_Lecture
 	public void setUser_name(String user_name) 		 { this.user_name = user_name;}
 	
 	public void setCnt(int cnt) 					 { this.cnt = cnt; }
+	@Override
+	public String toString() {
+		return "VO_Lecture [lecture_no=" + lecture_no + ", id=" + id + ", lecture_name=" + lecture_name + ", cap=" + cap
+				+ ", create_date=" + create_date + ", start_date=" + start_date + ", end_date=" + end_date
+				+ ", delete_date=" + delete_date + ", user_name=" + user_name + ", cnt=" + cnt + "]";
+	}
 	
 }

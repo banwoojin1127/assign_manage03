@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.assign_manage.vo.VO_Lecture;
 import com.assign_manage.vo.VO_Search;
 import com.assign_manage.vo.VO_User;
 
@@ -31,7 +32,7 @@ public class Repository_Admin
 	// 전체 교사 조회
 	public List<VO_User> findAllTeachers() {
         // 호출 형식: "namespace.쿼리ID"
-        return session.selectList(namespace + ".All_Teacher_List");
+        return session.selectList(namespace + ".Admin_Teacher_List");
     }
 
     // 2. 이름으로 특정 교사 조회 (XML ID: Name_Teacher_View)
@@ -62,5 +63,19 @@ public class Repository_Admin
     
     
     // *필요하다면 강의 생성/삭제 등 다른 CRUD 메서드를 여기에 추가합니다.*
+    
+    // 강의 등록
+    public void insertLecture(VO_Lecture lectureVO) {
+        // MyBatis에게 "Admin" 네임스페이스의 "Lecture_Create" 쿼리를 실행하라고 명령
+        session.insert(namespace + ".Lecture_Create", lectureVO);
+    }
+    
+    // 강의 삭제
+	// ✔ 관리자 > 강의 관리 > 강의 삭제 (논리적 삭제)
+	    public void deleteLecture(int lecture_no) {
+	        // session.update(네임스페이스.쿼리ID, 파라미터)
+	        // MyBatis에게 "Admin" 네임스페이스의 "deleteLecture" 쿼리를 실행하라고 명령
+	        session.update(namespace + ".deleteLecture", lecture_no);
+	    }
 }
 	

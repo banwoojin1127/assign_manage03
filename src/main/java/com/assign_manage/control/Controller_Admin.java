@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.assign_manage.repository.*;
 import com.assign_manage.vo.*;
@@ -25,12 +26,12 @@ public class Controller_Admin
 	private static final String AF = "/admin"; 
 	
 	//✔ 관리자 > 사용자 관리 - 사용자 관리
-	@RequestMapping(value = "/", method = RequestMethod.GET) 
+	@RequestMapping(method = RequestMethod.GET) 
 	public String admin_main()
 	{
-		return  AF + "/user_management";
+		return "redirect:/admin/user_management";
 	}
-	
+
 	@Autowired
 	private Repository_Admin repositoryAdmin;
 	
@@ -98,13 +99,6 @@ public class Controller_Admin
 //		return  AF + "/lecture_management";
 //	}
 	
-	// 강의 추가
-	@RequestMapping(value = "/lecture_management_ok", method = RequestMethod.POST) 
-	public String lecture_management_ok()
-	{
-		return  AF + "/lecture_management_ok";
-	}
-	
 	// 모든 강의 조회
 	@RequestMapping(value = "/lecture_management", method = RequestMethod.GET)
 	public String lecture_management(
@@ -133,7 +127,85 @@ public class Controller_Admin
 	    return AF + "/lecture_management";
 	}
 	
+	// modal 학생 추가시 제한 조건(중복X, 교사,관리자X only학생)
+	@RequestMapping(value = "/getUserList")
+	//@ResponseBody
+	public String getUserList(@RequestParam("lectureNo") int lectureNo,Model model)
+	{
+		//Repository에서 DB조회
+		List<VO_User> studentList = repositoryAdmin.selectUserNotExistsLecturListAndTeacher(lectureNo);
 	
+		System.out.println("getUserList===>");
+		for(VO_User user : studentList)
+		{
+			System.out.println("id:" + user.getId());
+			System.out.println("name:" + user.getUser_name());
+		}
+		model.addAttribute("list",studentList);
+		
+		return AF + "/user_list";
+	}
+	
+	// 강의 등록 (GET)
+	// 강의 등록 폼을 띄우기 전에 교사 목록을 조회하여 JSP로 전달
+	@RequestMapping(value = "/lecture_register", method = RequestMethod.GET) 
+	public String lecture_register(Model model)
+	{
+	    // Repository에 정의된 모든 교사(user_class=1)를 조회하는 메서드를 호출합니다.
+	    List<VO_User> teacherList = repositoryAdmin.findAllTeachers(); 
+	    
+	    // 조회된 교사 목록을 "teacherList"라는 이름으로 Model에 담아 JSP로 전달
+	    model.addAttribute("teacherList", teacherList);
+	    
+	    return AF + "/lecture_register";
+	}
+	
+	// 강의 등록 (POST)
+	@RequestMapping(value = "/lecture_register_ok", method = RequestMethod.POST) 
+	public String lectureRegisterOk(VO_Lecture lectureVO) // VO_Lecture로 폼 데이터 받기
+	{
+		System.out.println(lectureVO);
+	    try {
+	        // 1. Repository 호출하여 DB 삽입(INSERT) 쿼리 실행
+	        // VO_Lecture에는 강의명, 정원, 시작/종료일, 그리고 교수 이름(user_name)이 담겨 있어야 합니다.
+	        repositoryAdmin.insertLecture(lectureVO); 
+	        
+	        // 2. 등록 성공 후 목록 페이지로 리다이렉트
+	        // success=true 파라미터와 메시지를 전달하여 브라우저에서 confirm/alert 창을 띄움
+	        return "redirect:" + AF + "/lecture_management";
+	        
+	    } catch (Exception e) {
+	        // 오류 발생 시 목록 페이지로 리다이렉트하며 오류 메시지 전달
+	        System.err.println("강의 등록 오류: " + e.getMessage());
+	        return "redirect:" + AF + "/lecture_management"; 
+	    }
+	}
+	
+	// 학생 추가
+	@RequestMapping(value = "/lecture_student", method = RequestMethod.GET) 
+	public String lecture_student()
+	{
+		return  AF + "/lecture_student";
+	}	
+	
+	// 강의 삭제
+	@RequestMapping(value = "/lecture_delete", method = RequestMethod.GET) 
+	public String lectureDelete(@RequestParam("no") int lectureNo) // no 파라미터로 강의 번호 받기
+	{
+	    try {
+	        // 1. Repository 호출하여 DB 삭제(UPDATE) 쿼리 실행
+	        repositoryAdmin.deleteLecture(lectureNo); 
+	        
+	        // 2. 삭제 성공 후 강의 목록 페이지로 리다이렉트
+	        // 리다이렉트 시 성공 메시지를 파라미터로 전달하여 브라우저에서 알림창 띄우기 가능
+	        return "redirect:" + AF + "/lecture_management?deleteSuccess=true"; 
+	        
+	    } catch (Exception e) {
+	        System.err.println("강의 삭제 오류: " + e.getMessage());
+	        // 3. 오류 발생 시 목록 페이지로 리다이렉트하며 오류 메시지 전달
+	        return "redirect:" + AF + "/lecture_management?deleteSuccess=false"; 
+	    }
+	}
 	
 	// 강의 검색 제한
 	
@@ -198,4 +270,11 @@ public class Controller_Admin
 	{
 		return  AF + "/statistics";
 	}
+
+	
+
 }
+
+
+
+

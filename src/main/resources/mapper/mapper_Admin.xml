@@ -84,41 +84,47 @@
 		max(lecture_list.create_date) desc
 	</select>
 	
-	<!-- 강의 생성( 생성 > 저장 ) -->
-	<insert id="Lecture_Create">
-	insert into lecture(
+	<!-- 강의 등록 > 교사 목록 -->
+	<select id="Admin_Teacher_List" resultType="com.assign_manage.vo.VO_User">
+	select 
+		id, 
+		user_name, 
+		gender 
+    from 
+    	user 
+    where 
+    	user_class = 1
+	</select>
+
+	<!-- 강의 등록 -->
+	<insert id="Lecture_Create" parameterType="com.assign_manage.vo.VO_Lecture">
+	INSERT INTO lecture(
 		lecture_name, 
-		teacher_id,
+		id, 
 		cap, 
-		start_date, 
-		end_date
+		start_date,  end_date,    create_date
 	)
-	select
+	VALUES (
 		#{lecture_name},
-		#{user.id},
+		#{id}, 
 		#{cap},
 		#{start_date},
-		#{end_date}
-	from
-		user
-	where
-		user.user_name = #{keyword}
+		#{end_date},
+		NOW()
+	)
 	</insert>
 	
-	<!-- 강의 삭제( 체크 > 삭제 ) -->
-	<delete id="Lecture_Delete">
-	delete from lecture 
-	where lecture_no in
-	<foreach item="item" index="index" collection="lectureNoList" open="(" separator="," close=")">
-	    #{item}
-	</foreach>
-</delete>
+	<!-- 강의 삭제 -->
+	<update id="deleteLecture" parameterType="int">
+		update lecture
+		set delete_date = now()
+		where lecture_no = #{lecture_no}
+	</update>
 	
 	<!-- modal 이름으로 특정 교사 조회 -->
 	<select id="Name_Teacher_View" resultType="com.assign_manage.vo.VO_User">
 		select id, user_name, gender from user where user_class = 1 and name = #{keyword}
 	</select>
-
 
 	<!-- modal 전체 학생 조회 -->
 	<select id="All_Student_List" resultType="com.assign_manage.vo.VO_User">
@@ -134,10 +140,17 @@
 	<select id="selectUserNotExistsLecturListAndTeacher" 
 		resultType="com.assign_manage.vo.VO_User" 
 		parameterType="int">
-		select * from 
+		select 
+			id, user_name, gender 
+		from 
 			user 
-		where id not in(select id from lecture_list where lecture_no = #{no}) 
-		and user_class = 2;
+		where 
+			id not in(
+				select id 
+				from lecture_list 
+				where lecture_no = #{lectureNo}
+				) 
+				and user_class = 2;
 	</select>
 	
 	<!-- 강의 관리 페이지네이션 -->
@@ -166,4 +179,6 @@
 		max(lecture_list.create_date) desc
 	limit 10
 	</select>
+	
+	
 </mapper>
