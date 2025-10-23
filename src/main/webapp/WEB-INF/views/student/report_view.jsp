@@ -67,7 +67,7 @@
                     </div>
                     <div class="d-flex px-1">
 					    <div class="d-flex flex-wrap align-content-center px-3">
-					        <c:out value="${feedback.score != null ? feedback.score : '--'}"/> / 20
+					        <c:out value="${feedback.score != null ? feedback.score : '--'}"/> / 100
 					    </div>
 					</div>
                 </div>
