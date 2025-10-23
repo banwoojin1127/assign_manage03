@@ -114,12 +114,39 @@
 	)
 	</insert>
 	
+	<!-- 강의 수정 -->
+	<update id="Lecture_Update" parameterType="com.assign_manage.vo.VO_Lecture">
+		update lecture 
+			set 
+		lecture_name = #{lecture_name}, 
+		id = #{id}, 
+		cap = #{cap},
+		start_date = #{start_date},
+		end_date = #{end_date}
+		where lecture_no = #{lecture_no}
+	</update>
+	
 	<!-- 강의 삭제 -->
 	<update id="deleteLecture" parameterType="int">
 		update lecture
 		set delete_date = now()
 		where lecture_no = #{lecture_no}
 	</update>
+	
+	<!-- 강의 수정 -->
+	<select id="Lecture_View" resultType="com.assign_manage.vo.VO_Lecture" parameterType="int">
+    SELECT 
+        lecture_no,
+        lecture_name,
+        id,  
+        cap,
+        create_date,
+        start_date,
+        end_date
+    FROM lecture
+    WHERE lecture_no = #{lectureNo}
+      AND delete_date IS NULL
+</select>
 	
 	<!-- modal 이름으로 특정 교사 조회 -->
 	<select id="Name_Teacher_View" resultType="com.assign_manage.vo.VO_User">

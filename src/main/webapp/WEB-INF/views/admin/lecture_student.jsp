@@ -12,7 +12,7 @@
 	</h3>
 
 	<div style="text-align: center; margin: 5%;">
-		<h4 style="text-align: left; width: 500px;">강의명 : 웹 프로그래밍</h4>
+		<h4 style="text-align: left; width: 500px;"><B>강의명 : 웹 프로그래밍</B></h4>
 		<div style="height: 40px;"></div>
 
 		<table id="class_content">		
@@ -32,32 +32,14 @@
 			</thead>
 			<tbody class="saveAdd">
 				<tr>
-			 		<td>1</td>
-			 		<td>abcd</td>
-			 		<td>홍길동</td>
-			 		<td>남자</td>
+			 		<td></td>
+			 		<td>${user.id}</td>
+			 		<td>${user.user_name}</td>
+			 		<td>${user.gender}</td>
 			 		<td>
-			 			<button onclick="AddStudent('4','abcd')" type="button" class="btn btn-primary" >추가</button>
+			 			<button onclick="AddStudent('4','abcd')" type="button" class="btn btn-primary">추가</button>
 			 		</td>
 			 	</tr>
-				<tr>
-			 		<td>1</td>
-			 		<td>abcd</td>
-			 		<td>홍길동</td>
-			 		<td>남자</td>
-			 		<td>
-			 			<button onclick="AddStudent('4','abcd')" type="button" class="btn btn-primary" >추가</button>
-			 		</td>
-			 	</tr>
-				<tr>
-			 		<td>1</td>
-			 		<td>abcd</td>
-			 		<td>홍길동</td>
-			 		<td>남자</td>
-			 		<td>
-			 			<button onclick="AddStudent('4','abcd')" type="button" class="btn btn-primary" >추가</button>
-			 		</td>
-			 	</tr>			 				 	
 			 </tbody>
 		</table>
 		

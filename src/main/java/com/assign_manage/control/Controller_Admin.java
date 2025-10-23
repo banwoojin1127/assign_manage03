@@ -10,6 +10,7 @@ import javax.servlet.http.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -181,6 +182,27 @@ public class Controller_Admin
 	    }
 	}
 	
+	// 강의 수정 (POST)
+	@RequestMapping(value = "/lecture_modify_ok", method = RequestMethod.POST) 
+	public String lectureModifyOk(VO_Lecture lectureVO) // VO_Lecture로 폼 데이터 받기
+	{
+		System.out.println(lectureVO);
+	    try {
+	        // 1. Repository 호출하여 DB 삽입(INSERT) 쿼리 실행
+	        // VO_Lecture에는 강의명, 정원, 시작/종료일, 그리고 교수 이름(user_name)이 담겨 있어야 합니다.
+	        repositoryAdmin.updateLecture(lectureVO); 
+	        
+	        // 2. 등록 성공 후 목록 페이지로 리다이렉트
+	        // success=true 파라미터와 메시지를 전달하여 브라우저에서 confirm/alert 창을 띄움
+	        return "redirect:" + AF + "/lecture_management";
+	        
+	    } catch (Exception e) {
+	        // 오류 발생 시 목록 페이지로 리다이렉트하며 오류 메시지 전달
+	        System.err.println("강의 등록 오류: " + e.getMessage());
+	        return "redirect:" + AF + "/lecture_management"; 
+	    }
+	}
+	
 	// 학생 추가
 	@RequestMapping(value = "/lecture_student", method = RequestMethod.GET) 
 	public String lecture_student()
@@ -207,8 +229,22 @@ public class Controller_Admin
 	    }
 	}
 	
-	// 강의 검색 제한
-	
+	// ✔ 강의 수정 폼 로드 (GET 요청)
+	@RequestMapping(value = "/lecture_register/{lecture_no}", method = RequestMethod.GET)
+	public String lectureEdit(@PathVariable("lecture_no") int lectureNo, Model model) {
+	    // 1. 특정 강의 정보 조회
+	    VO_Lecture lectureVO = repositoryAdmin.findLectureByNo(lectureNo);
+	    
+	    // 2. 전체 교사 목록 조회 (등록 폼과 동일)
+	    List<VO_User> teacherList = repositoryAdmin.findAllTeachers(); 
+	    
+	    // 3. Model에 데이터 담기
+	    model.addAttribute("lecture", lectureVO);
+	    model.addAttribute("teacherList", teacherList);
+	    
+	    // 등록 폼과 동일한 JSP를 재사용
+	    return AF + "/lecture_modify";
+	}
 	
 	
 	//✔ 관리자 > 과제 관리 - 과제 리스트

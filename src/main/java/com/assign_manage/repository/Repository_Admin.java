@@ -70,12 +70,23 @@ public class Repository_Admin
         session.insert(namespace + ".Lecture_Create", lectureVO);
     }
     
+    public void updateLecture(VO_Lecture lectureVO) {
+        // MyBatis에게 "Admin" 네임스페이스의 "Lecture_Create" 쿼리를 실행하라고 명령
+        session.insert(namespace + ".Lecture_Update", lectureVO);
+    }
+    
     // 강의 삭제
 	// ✔ 관리자 > 강의 관리 > 강의 삭제 (논리적 삭제)
 	    public void deleteLecture(int lecture_no) {
 	        // session.update(네임스페이스.쿼리ID, 파라미터)
 	        // MyBatis에게 "Admin" 네임스페이스의 "deleteLecture" 쿼리를 실행하라고 명령
 	        session.update(namespace + ".deleteLecture", lecture_no);
+	    }
+	    
+	 // 강의 수정 특정 강의 정보 조회 (수정/상세보기용)
+	    public VO_Lecture findLectureByNo(int lectureNo) {
+	        // MyBatis에게 "Admin" 네임스페이스의 "Lecture_View" 쿼리를 실행하라고 명령
+	        return session.selectOne(namespace + ".Lecture_View", lectureNo);
 	    }
 }
 	

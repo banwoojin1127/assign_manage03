@@ -11,7 +11,7 @@
             <div class="decoWideTitle" style="width: 12px;"></div>
             &nbsp;&nbsp;
             <div class="textWideTitle d-flex flex-wrap justify-content-between align-content-center px-1" style="width: 95%;">
-                <p class="m-0" style="font-size: 1.5em;">강의 등록</p>
+                <p class="m-0" style="font-size: 1.5em;">강의 정보 수정</p>
             </div>
         </div>
         <div id="formJoinRequest" class="col-12 d-flex flex-wrap justify-content-center align-content-center border border-dark border-1 rounded pt-3 pb-5">
@@ -21,15 +21,17 @@
             
             <%-- ⭐⭐ 폼 시작: Context Path 및 모든 입력 요소를 감싸도록 수정 ⭐⭐ --%>
             <form id="lectureRegisterForm" name="join" 
-                action="${pageContext.request.contextPath}/admin/lecture_register_ok" 
+                action="${pageContext.request.contextPath}/admin/lecture_modify_ok" 
                 method="post"  
                 class="d-flex flex-wrap justify-content-center align-content-center w-100">
                 
+                <input type="hidden" value="${lecture.lecture_no}" name="lecture_no">
+                
                 <%-- 1. 강의명 --%>
                 <div class="w-75 my-1">
-                    <input id="lecture_name" name="lecture_name" class="form-control" type="text" placeholder="*강의명" required>
+                    <input id="lecture_name" value="${lecture.lecture_name}" name="lecture_name" class="form-control" type="text" placeholder="*강의명" required>
                     <div id="msg_id" class="form-text h-auto">
-                        <span style='color:#dc3545'>강의명을 입력해주세요.</span>
+                        <span style='color:#dc3545'></span>
                     </div>
                 </div>
                 
@@ -38,19 +40,19 @@
                     <select id="teacher_name" name="id" class="form-control" required>
                         <option value="" selected disabled>*교사를 선택하세요.</option>
                         <c:forEach var="teacher" items="${teacherList}"> 
-                            <option value="${teacher.id}">${teacher.user_name}</option> 
+                            <option value="${teacher.id}" ${lecture.id == teacher.id ? 'selected' : ''}>${teacher.user_name}</option> 
                         </c:forEach>
                     </select>
                     <div id="msg_pw" class="form-text h-auto">
-                        <span style='color:#dc3545'>*교사를 선택하세요.</span>
+                        <span style='color:#dc3545'></span>
                     </div>
                 </div>
                 
                 <%-- 3. 정원 --%>
                 <div class="w-75 my-1">
-                    <input id="cap" name="cap" class="form-control" type="number" placeholder="*정원" min="1" required>
+                    <input id="cap" name="cap" value="${lecture.cap}" class="form-control" type="number" placeholder="*정원" min="1" required>
                     <div id="msg_pwConfirm" class="form-text w-75 h-auto">
-                        <span style='color:#dc3545'>*정원을 입력해주세요.</span>
+                        <span style='color:#dc3545'></span>
                     </div>
                 </div>
                 
@@ -58,15 +60,15 @@
                 <div class="w-75 my-1">
                     <div class="input-group">
                         <select id="year_start" name="year_start" class="form-control" required>
-                            <option value="" selected disabled>*연도</option>
+                            <option value="" disabled>*연도</option>
                         </select>
                         <span class="input-group-text">-</span>
                         <select id="month_start" name="month_start" class="form-control" required>
-                            <option value="" selected disabled>*월</option>
+                            <option value="" disabled>*월</option>
                         </select>
                         <span class="input-group-text">-</span>
                         <select id="day_start" name="day_start" class="form-control rounded-end" required>
-                            <option value="" selected disabled>*일</option>
+                            <option value="" disabled>*일</option>
                         </select>
                     </div>
                     <%-- 서버 전송용 Hidden 필드 (JS에서 YYYY-MM-DD 형식으로 값을 채웁니다.) --%>
@@ -100,7 +102,7 @@
                 
                 <%-- 6. 버튼 --%>
                 <button id="btn_register_new" class="btnWide align-content-center w-75 my-1" style="height: 50px;" type="submit">
-                    강의 등록
+                    강의 수정
                 </button>
             </form>
             <%-- ⭐⭐ 폼 종료 ⭐⭐ --%>
@@ -111,6 +113,22 @@
 <script>
     // 날짜 드롭다운 옵션 생성
     // ----------------------------------------------------
+    
+    const currentStartDate = '${lecture.start_date}';	//2025-02-11 09:00:00
+    //currentStartDate.split(" ") -> [2025-02-11, 09:00:00]
+    //[0] 2025-02-11
+    //.split("-")
+    const currentStartYear = currentStartDate.split(" ")[0].split("-")[0]
+    const currentStartMonth = currentStartDate.split(" ")[0].split("-")[1]
+    const currentStartDay = currentStartDate.split(" ")[0].split("-")[2]
+    
+    
+    const currentEndDate = '${lecture.end_date}';	//2025-02-11 09:00:00
+    
+    const currentEndYear = currentEndDate.split(" ")[0].split("-")[0]
+    const currentEndMonth = currentEndDate.split(" ")[0].split("-")[1]
+    const currentEndDay = currentEndDate.split(" ")[0].split("-")[2]
+    
     
     const startYearSelect = document.getElementById('year_start');
     const endYearSelect = document.getElementById('year_end');
@@ -128,6 +146,9 @@
         startYearSelect.appendChild(option.cloneNode(true));
         endYearSelect.appendChild(option.cloneNode(true));
     }
+    
+    startYearSelect.value = currentStartYear;
+    endYearSelect.value = currentEndYear;
 
     // Month options
     for (let month = 1; month <= 12; month++) {
@@ -137,6 +158,9 @@
         endMonthSelect.appendChild(option.cloneNode(true));
     }
     
+    startMonthSelect.value = currentStartMonth;
+    endMonthSelect.value = currentEndMonth;
+    
     // Day options
     for (let day = 1; day <= 31; day++) {
         const paddedDay = day.toString().padStart(2, '0');
@@ -144,6 +168,9 @@
         startDaySelect.appendChild(option.cloneNode(true));
         endDaySelect.appendChild(option.cloneNode(true));
     }
+    
+    startDaySelect.value = currentStartDay
+    endDaySelect.value = currentEndDay;
     
     // ----------------------------------------------------
     

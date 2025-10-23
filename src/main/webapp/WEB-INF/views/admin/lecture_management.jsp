@@ -65,11 +65,10 @@
 
 		<div style="height: 20px;"></div>
 		<form>
-			<button type="button" onclick="document.location='lecture_register'"
-				class="btn_align2 btn btn-outline-primary"
-				style="float: right; padding-block: 5px; color: #000000;">
-				<b>강의 등록</b>
-			</button>
+			<button onclick="document.location='lecture_create'" 
+                type="button" class="btn btn-primary" id="btnRegister" style="position:fixed; margin-left:200x;">
+            강의 등록
+        </button>
 		</form>
 		<div style="height: 40px;"></div>
 
@@ -119,7 +118,10 @@
 				 		<td>${lecture.start_date}</td>
 				 		<td>${lecture.end_date}</td>
 				 		<td>
-				 			<button onclick="document.location='lecture_update?no=${lecture.lecture_no}'" type="button" class="btn btn-primary" >변경</button>
+						    <button onclick="document.location='lecture_register/${lecture.lecture_no}'" 
+						            type="button" class="btn btn-primary">
+						        수정
+						    </button>
 				 			<button onclick="if(confirm('강의를 삭제하시겠습니까?')) { document.location='lecture_delete?no=${lecture.lecture_no}' }" 
                     				type="button" class="btn btn-danger">삭제</button>
 				 			<button onclick="document.location='lecture_student?no=${lecture.lecture_no}'" type="button" class="btn btn-secondary" >학생추가</button>
