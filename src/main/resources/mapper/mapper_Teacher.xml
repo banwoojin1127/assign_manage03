@@ -11,10 +11,24 @@
 	</select>
 	
     <!-- 전체 강의 조회 -->
-    <select id="selectAllLectures" resultType="com.assign_manage.vo.VO_Lecture">
-        SELECT * FROM lecture
-        WHERE delete_date IS NULL
-        ORDER BY lecture_no
+    <select id="selectAllLectures" resultType="com.assign_manage.vo.VO_Lecture" parameterType="String">
+    
+    	<!-- select * from lecture WHERE delete_date IS null ORDER BY lecture_no --> 
+    
+    
+    <!-- select count(*) from lecture_list where lecture_no = ? -->
+    
+        SELECT 
+			le.*, 
+			(select count(*) from lecture_list where lecture_no = le.lecture_no) as cnt,
+			u.user_name
+		FROM lecture le
+		inner join user u on le.id = u.id
+		WHERE delete_date IS null
+		<!-- <if test="!value.equals('') and value != null">
+        	AND lecture_name = #{value}
+        </if> -->
+		ORDER BY lecture_no
     </select>
 
     <!-- 특정 강의 과제 목록 -->

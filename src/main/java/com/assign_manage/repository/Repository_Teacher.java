@@ -15,10 +15,16 @@ public class Repository_Teacher {
 
     private static final String namespace = "teacher";
 
+    // 전체 강의 조회
+    
     public List<VO_Lecture> selectAllLectures() {
-        return session.selectList(namespace + ".selectAllLectures");
+        return session.selectList(namespace + ".selectAllLectures", null);
     }
-
+    
+    public List<VO_Lecture> selectAllLectures(String keyword) {
+        return session.selectList(namespace + ".selectAllLectures", keyword);
+    }
+    
     public List<VO_Assignment> selectAssignmentsByLecture(int lecture_no) {
         return session.selectList(namespace + ".selectAssignmentsByLecture", lecture_no);
     }
@@ -32,9 +38,14 @@ public class Repository_Teacher {
         return session.selectOne(namespace + ".selectAssignmentByNo", assign_no);
     }
     
-    //교사 전체 목록 조회
+    // 교사 전체 목록 조회
     public List<VO_User> selectAllTeachers()
     {
     	return session.selectList(namespace + ".All_Teacher_List");
     }
+    
+    // 특정 강의명 조회
+	public List<VO_Lecture> findLecturesByName(String keyword) {
+	    return session.selectList(namespace + ".LecutreName_Lecture_View", keyword);
+	}
 }

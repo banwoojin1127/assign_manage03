@@ -234,7 +234,7 @@ th, td {
 .right-align1 {
 	margin-left: 745px;
 	width: 150px;
-	vertical-align: middle;
+	vertical-align :middle;
 	margin-bottom: -30px;
 
 }

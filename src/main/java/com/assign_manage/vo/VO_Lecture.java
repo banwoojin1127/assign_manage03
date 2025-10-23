@@ -15,6 +15,7 @@ public class VO_Lecture
 	private String start_date;   //시작일
 	private String end_date;     //종료일
 	private String delete_date;  //삭제일
+	
 	private String user_name;	 //유저이름 
 	private int    cnt;			 //수강인원
 	
@@ -27,6 +28,7 @@ public class VO_Lecture
 	public String getStart_date()   { return start_date; }
 	public String getEnd_date()     { return end_date; }
 	public String getDelete_date()  { return delete_date; }
+	
 	public String getUser_name() 	{ return user_name;	}
 	public int getCnt() 			{ return cnt; }
 	//Setter
@@ -39,6 +41,7 @@ public class VO_Lecture
 	public void setEnd_date(String end_date)         { this.end_date = end_date; }
 	public void setDelete_date(String delete_date)   { this.delete_date = delete_date; }
 	public void setUser_name(String user_name) 		 { this.user_name = user_name;}
+	
 	public void setCnt(int cnt) 					 { this.cnt = cnt; }
 	
 }

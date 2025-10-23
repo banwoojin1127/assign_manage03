@@ -4,8 +4,8 @@
 <!-- content field start -->
 <script>
 
-
-var selectedObj    = null;    //교사 선택이 눌린 경우 눌린 행 기억
+//교사 선택이 눌린 경우 눌린 행 기억
+var selectedObj    = null;    
 var selecteTeacher = null;
 //강의추가시 교사 선택 버튼 클릭
 function RememberOne(obj)
@@ -48,30 +48,25 @@ function addRow() {
         const rowIndex = tableBody.rows.length; // 현재 행 수 기반 번호
         
         // --- 첫 번째 행 (헤더 역할) 수정 ---
-        
         const cell0 = row1.insertCell(0);
-        cell0.innerHTML = "번호";
-        cell0.className = "thwidth1 tea-td"; // 클래스 추가
-        
+        cell0.innerText = "강의명";
+        cell0.className = "tea-td"; // 클래스 추가
+
         const cell1 = row1.insertCell(1);
-        cell1.innerText = "강의명";
+        cell1.innerText = "교사명";
         cell1.className = "tea-td"; // 클래스 추가
 
         const cell2 = row1.insertCell(2);
-        cell2.innerText = "교사명";
-        cell2.className = "tea-td"; // 클래스 추가
-
-        const cell3 = row1.insertCell(3);
-        cell3.innerText = "최대정원";
-        cell3.className = "thwidth2 tea-td"; // 클래스 추가
+        cell2.innerText = "최대정원";
+        cell2.className = "thwidth2 tea-td"; // 클래스 추가
         
-        const cell4 = row1.insertCell(4);
-        cell4.innerText = "시작일";
-        cell4.className = "thwidth3 tea-td"; // 클래스 추가
+        const cell3 = row1.insertCell(3);
+        cell3.innerText = "시작일";
+        cell3.className = "thwidth3 tea-td"; // 클래스 추가
 
-        const cell5 = row1.insertCell(5);
-        cell5.innerText = "종료일";
-        cell5.className = "thwidth3 tea-td"; // 클래스 추가
+        const cell4 = row1.insertCell(4);
+        cell4.innerText = "종료일";
+        cell4.className = "thwidth3 tea-td"; // 클래스 추가
                 
         
         // ------------------------------------
@@ -84,84 +79,37 @@ function addRow() {
         
         // --- 두 번째 행 (데이터 역할) 수정 ---
         const r2_c0 = row2.insertCell(0);
-        r2_c0.innerHTML = rowsAdded + 1;
+        r2_c0.innerHTML = "<input type='text' style='border:none; box-sizing: content-box; width: 97%;'>";
         r2_c0.className = "tea-td"; // 클래스 추가
-        
+        r2_c0.querySelector('input').id = "lecture_name_" + rowsAdded; 
         
         const r2_c1 = row2.insertCell(1);
-        r2_c1.innerHTML = "<input type='text' style='border:none; box-sizing: content-box; width: 97%;'>";
+        r2_c1.innerHTML  = "<input type='hidden' id='user_id' name='user_id'>";
+        r2_c1.innerHTML += "<button type='button' class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#addTeacherModal' onclick='RememberOne(this);'>선택</button>";
         r2_c1.className = "tea-td"; // 클래스 추가
-        r2_c1.querySelector('input').id = "lecture_name_" + rowsAdded; 
+        r2_c1.querySelector('button').id = "teacher_name" + rowsAdded; 
         
         const r2_c2 = row2.insertCell(2);
-        r2_c2.innerHTML  = "<input type='hidden' id='user_id' name='user_id'>";
-        r2_c2.innerHTML += "<button type='button' class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#addTeacherModal' onclick='RememberOne(this);'>선택</button>";
+        r2_c2.innerHTML = "<input type='number' style='border:none; box-sizing: content-box; width: 90%;'>";
         r2_c2.className = "tea-td"; // 클래스 추가
-        r2_c2.querySelector('button').id = "teacher_name" + rowsAdded; 
+        r2_c2.querySelector('input').id = "cap" + rowsAdded; 
+        
         
         const r2_c3 = row2.insertCell(3);
-        r2_c3.innerHTML = "<input type='number' style='border:none; box-sizing: content-box; width: 90%;'>";
+        r2_c3.innerHTML = "<input type='date' style='border:none; box-sizing: content-box; width: 90%;'>";
         r2_c3.className = "tea-td"; // 클래스 추가
-        r2_c3.querySelector('input').id = "cap" + rowsAdded; 
+        r2_c3.querySelector('input').id = "start_date" + rowsAdded; 
         
         
         const r2_c4 = row2.insertCell(4);
         r2_c4.innerHTML = "<input type='date' style='border:none; box-sizing: content-box; width: 90%;'>";
         r2_c4.className = "tea-td"; // 클래스 추가
-        r2_c4.querySelector('input').id = "start_date" + rowsAdded; 
-        
-        
-        const r2_c5 = row2.insertCell(5);
-        r2_c5.innerHTML = "<input type='date' style='border:none; box-sizing: content-box; width: 90%;'>";
-        r2_c5.className = "tea-td"; // 클래스 추가
-        r2_c5.querySelector('input').id = "end_date" + rowsAdded; 
+        r2_c4.querySelector('input').id = "end_date" + rowsAdded; 
         
         rowsAdded++;
         
      // ------------------------------------
     }
-    
-    else {
-        // 이후 추가: 한 줄씩
-        const newRow = tableBody.insertRow();
-
-        // --- 이후 추가되는 행 수정 ---
-        
-        const new_c0 = newRow.insertCell(0);
-        new_c0.innerHTML = rowsAdded + 1;
-        new_c0.className = "tea-td"; // 클래스 추가
-        
-        const new_c1 = newRow.insertCell(1);
-        new_c1.innerHTML = "<input type='text' style='border:none; box-sizing: content-box; width: 97%;'>";
-        new_c1.className = "tea-td"; // 클래스 추가
-        new_c1.querySelector('input').id = "lecture_name_" + rowsAdded; 
-        
-        const new_c2 = newRow.insertCell(2);
-        new_c2.innerHTML  = "<input type='hidden' id='user_id' name='user_id'>";        
-        new_c2.innerHTML += "<button type='button' class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#addTeacherModal' onclick='RememberOne(this);'>선택</button>";
-        new_c2.className = "tea-td"; // 클래스 추가
-        new_c2.querySelector('button').id = "teacher_name" + rowsAdded; 
-        
-        const new_c3 = newRow.insertCell(3);
-        new_c3.innerHTML = "<input type='text' style='border:none; box-sizing: content-box; width: 90%;'>";
-        new_c3.className = "tea-td"; // 클래스 추가
-        new_c3.querySelector('input').id = "cap" + rowsAdded; 
-        
-        const new_c4 = newRow.insertCell(4);
-        new_c4.innerHTML = "<input type='text' style='border:none; box-sizing: content-box; width: 90%;'>";
-        new_c4.className = "tea-td"; // 클래스 추가
-        new_c4.querySelector('input').id = "start_date" + rowsAdded; 
-        
-        const new_c5 = newRow.insertCell(5);
-        new_c5.innerHTML = "<input type='text' style='border:none; box-sizing: content-box; width: 90%;'>";
-        new_c5.className = "tea-td"; // 클래스 추가
-        new_c5.querySelector('input').id = "end_date" + rowsAdded; 
-        // ------------------------------------
-
-        rowsAdded ++;
-    }
-    
-    
 }
 
     // 전체 선택 체크 박스 실행
@@ -360,7 +308,7 @@ function addRow() {
 	    	alert("강의명을 입력하세요.");
 	    	};
 	   */
-	
+
 </script>
 
 
@@ -374,11 +322,10 @@ function addRow() {
 	</h3>
 
 	<div style="text-align: center; margin: 5%;">
-		<form class="search-box d-flex align-items-center" action="" method="get">
-			<input type="text" id="class" class="form-control"
+		<form class="search-box d-flex align-items-center" action="/admin/lecture_management" method="get">
+			<input type="text" name="keyword" id="lectureSearch" class="form-control"
 				style="width: 250px; float: left;" placeholder="강의명">
-			<button type="submit" class="btn btn-primary ms-2"
-				style="float: left; background-color: #3a8efd;">검색</button>
+			<button type="submit" class="btn btn-primary ms-2">검색</button>
 		</form>
 		
 		<div style="height:30px;"></div>
@@ -388,7 +335,7 @@ function addRow() {
 				<b>저장</b>
 			</button>
 
-			<button type="button" class="btn btn-outline-secondary"
+			<button type="button" class="btn btn-outline-secondary" onclick="location.href='lecture_management'"
 				style="color: #000000; float: right; padding-block: 5px; margin-right: 5px;">
 				<b>취소</b>
 			</button>
@@ -403,70 +350,75 @@ function addRow() {
 		<div style="height: 20px;"></div>
 		<form>
 			<button type="button" onclick="addRow(); showBtn();"
-				class="btn btn-outline-primary"
+				class="btn_align2 btn btn-outline-primary"
 				style="float: right; padding-block: 5px; color: #000000;">
 				<b>생성</b>
 			</button>
 
-			<button type="button" class="btn btn-outline-secondary"
+			<button type="button" class="btn_align1 btn btn-outline-secondary"
 				onclick="class_Delete()"
 				style="color: #000000; float: right; padding-block: 5px; margin-right: 5px;">
 				<b>삭제</b>
 			</button>
 		</form>
 		<div style="height: 40px;"></div>
-		</form>	
 
 		<table id="class_content">
-		<thead>
-			<tr style="height: 40px;">
-				<!-- 전체 선택 체크 박스 버튼 -->
-				<th class="tea-th chwidth1"><input type="checkbox" name="check"
-					class="class_add" onclick='selectAll(this)'>
-				</th>
-				<th class="tea-th thwidth1">번호
-				</th>
-				<th class="tea-th thwidth2">강의명
-				</th>
-				<th class="tea-th thwidth2">교사명
-				</th>
-				<th class="tea-th thwidth2">정원
-				</th>
-				<th class="tea-th thwidth3">시작일
-				</th>
-				<th class="tea-th thwidth3">종료일
-				</th>
-				<th class="edit_th"></th>
-		</thead>
-			</tr>
-			<tr>
+		
+			<thead>
+				<tr style="height: 40px;">
+					<!-- 전체 선택 체크 박스 버튼 -->
+					<th class="tea-th chwidth1"><input type="checkbox" name="check"
+						class="class_add" onclick='selectAll(this)'>
+					</th>
+					<th class="tea-th thwidth1">번호
+					</th>
+					<th class="tea-th thwidth2">강의명
+					</th>
+					<th class="tea-th thwidth2">교사명
+					</th>
+					<th class="tea-th thwidth2">정원
+					</th>
+					<th class="tea-th thwidth3">시작일
+					</th>
+					<th class="tea-th thwidth3">종료일
+					</th>
+					<th class="edit_th"></th>
+				</tr>
+			</thead>
+		
+		<%-- <tr>
 				<!-- 체크 박스 네임 지정 -->
 				<td class="tea-td"><input type="checkbox" name="check"></td>
 				<td class="tea-td">1</td>
 				<td class="tea-td"><a href="../teacher/assignment_list"
-					style="width: 100%; height: 100%; text-decoration: none;">자바의정석</a></td>
-				<td class="tea-td">김정석</td>
+					style="width: 100%; height: 100%; text-decoration: none;">${lecture.lecture_name}</a></td>
+				<td class="tea-td">${lecture.user_name}</td>
 				<td class="tea-td"" data-ref="http://localhost:8080/control/admin/user_management">29/35
 					<button type="button" class="btn btn-primary"
 						data-bs-toggle="modal" data-bs-target="#addStudentModal">추가</button>
 				</td>
-				<td class="tea-td">2025.09.29</td>
-				<td class="tea-td">2025.09.29</td>
+				<td class="tea-td">${lecture.start_date}</td>
+				<td class="tea-td">${lecture.end_date}</td>
 				<td id="edit_td"><button class="edit" onclick="edit(this)">✏️</button></td>
-			</tr>
-			<tr>
-				<td class="tea-td"><input type="checkbox" name="check"></td>
-				<td class="tea-td">2</td>
-				<td class="tea-td"></td>
-				<td class="tea-td"></td>
-				<td class="tea-td"></td>
-				<td class="tea-td"></td>
-				<td class="tea-td"></td>
-				<td id="edit_td"><button class="edit" onclick="edit(this)">✏️</button></td>
-			</tr>
+			</tr> --%>
 
 			<tbody class="saveAdd">
-			 <!-- 이후 추가되는 데이터가 여기에 들어갈 것입니다. -->
+				<c:forEach var="lecture" items="${lectureList}" varStatus="status">
+					<tr>
+				 	<!-- 이후 추가되는 데이터가 여기에 들어갈 것입니다. -->
+				 		<td><input type="checkbox" name="check"></td>
+				 		<td>${status.count}</td>
+				 		<td><a href="../teacher/assignment_list">${lecture.lecture_name}</a></td>
+				 		<td>${lecture.user_name}</td>
+				 		<td>${lecture.cnt}/${lecture.cap}
+				 			<button onclick="getUserList(${lecture.lecture_no})" type="button" class="btn btn-primary" >추가</button>
+						</td>
+				 		<td>${lecture.start_date}</td>
+				 		<td>${lecture.end_date}</td>
+				 		<td><button class="edit" onclick="edit(this)">✏️</button></td>
+				 	</tr>
+				</c:forEach>
 			 </tbody>
 		</table>
 		
@@ -696,6 +648,19 @@ function addRow() {
 		</div>
 	</div>
 </div>
+<script>
+	function getUserList(lectureNo){
+		//ajax로 데이터 받기
+		//lectureNo가 강의 번호
+		//mapper_Admin의 selectUserNotExistsLecturListAndTeacher의 파라미터로 lectureNo를 넘겨줄 수 있게 처리
+		//컨트롤러, 레파지토리, 매퍼
+		//응답받은 유저 목록을 "addStudentModal" 안에 채우기
+		//그리고 모달 띄우기
+		
+		$('#addStudentModal').modal('show');
+		
+	}
+</script>
 <!--  ]] =================================  교사를 선택하시 위한 다이얼로그 선택창 표시 시작  -->
 <!-- add student Modal end-->
 <%@ include file="../include/tail.jsp"%>

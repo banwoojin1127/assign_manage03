@@ -88,15 +88,15 @@ public class Controller_Admin
 	@Autowired
 	Repository_Teacher repos_teacher; 
 	//✔ 관리자 > 강의 관리 - 강의 조회
-	@RequestMapping(value = "/lecture_management", method = RequestMethod.GET) 
-	public String lecture_management(Model model)
-	{
-		List<VO_User> teacher_list = repos_teacher.selectAllTeachers();
-		
-		model.addAttribute("teacher_list",teacher_list);
-				
-		return  AF + "/lecture_management";
-	}
+//	@RequestMapping(value = "/lecture_management", method = RequestMethod.GET) 
+//	public String lecture_management(Model model)
+//	{
+//		List<VO_User> teacher_list = repos_teacher.selectAllTeachers();
+//		
+//		model.addAttribute("teacher_list",teacher_list);
+//				
+//		return  AF + "/lecture_management";
+//	}
 	
 	// 강의 추가
 	@RequestMapping(value = "/lecture_management_ok", method = RequestMethod.POST) 
@@ -106,6 +106,33 @@ public class Controller_Admin
 	}
 	
 	// 모든 강의 조회
+	@RequestMapping(value = "/lecture_management", method = RequestMethod.GET)
+	public String lecture_management(
+        @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword,
+        Model model) {
+		
+		List<VO_User> teacher_list = repos_teacher.selectAllTeachers();
+
+	    List<VO_Lecture> lectureList;
+
+//	    if (keyword == null || keyword.trim().isEmpty()) 
+//	    {
+//	        // 전체 조회
+//	        lectureList = repos_teacher.selectAllLectures(); 
+//	    } 
+//	    else 
+//	    {
+//	        // 검색어가 있는 경우 강의명으로 검색
+//	        lectureList = repos_teacher.findLecturesByName(keyword.trim());
+//	    }
+	    
+	    lectureList = repos_teacher.selectAllLectures(keyword.trim()); 
+
+	    model.addAttribute("lectureList", lectureList);
+	    model.addAttribute("teacher_list",teacher_list);
+	    return AF + "/lecture_management";
+	}
+	
 	
 	
 	// 강의 검색 제한

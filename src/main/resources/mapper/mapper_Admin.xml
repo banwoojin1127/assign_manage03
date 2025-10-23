@@ -130,6 +130,16 @@
 		select id, user_name, gender from user where user_class = 2 and name = #{keyword}
 	</select>
 	
+	<!-- 특정 강의를 수강중인 유저와, 교수를 제외한 나머지 유저목록 -->
+	<select id="selectUserNotExistsLecturListAndTeacher" 
+		resultType="com.assign_manage.vo.VO_User" 
+		parameterType="int">
+		select * from 
+			user 
+		where id not in(select id from lecture_list where lecture_no = #{no}) 
+		and user_class = 2;
+	</select>
+	
 	<!-- 강의 관리 페이지네이션 -->
 	<select id="Lecture_Managemetn_page">
 	select 
