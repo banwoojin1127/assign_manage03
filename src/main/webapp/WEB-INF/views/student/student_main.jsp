@@ -64,7 +64,7 @@
 		                    <div id="lectureListView${main.assign_no}" class="mainText lectureListView"
 		                    style="display: ${main.days_left <= 5 ? 'block' : 'none'};">
 		                        <div style="display: grid; grid-template-columns: repeat(2, 1fr);">
-		                            <div style="text-align: left;"><b>${main.assign_no}</b></div>
+		                            <div style="text-align: left;"><b>${main.assign_name}</b></div>
 		                            <br><br>
 		                            <div style="text-align: left;">${main.teacher_name} 강사님</div>
 		                            <div style="text-align: right;">
