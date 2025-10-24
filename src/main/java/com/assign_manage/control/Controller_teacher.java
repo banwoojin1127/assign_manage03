@@ -412,6 +412,30 @@ public class Controller_teacher {
 // ===============================================
 // 이하늘 작업 시작 부분
 // ===============================================
+	
+	// 강의 수정 폼 (GET) - 경로에 번호를 받음
+	@RequestMapping(value = "/lecture_register/{lecture_no}", method = RequestMethod.GET) 
+	public String lecture_modify(@PathVariable("lecture_no") int lectureNo, 
+	                             HttpSession session, 
+	                             Model model) 
+	{
+	    // 1. 세션 체크
+	    VO_User login = (VO_User) session.getAttribute("login");
+	    if (login == null) {
+	        return "redirect:/common/login"; 
+	    }
+
+	    // 2. 해당 강의 번호(lectureNo)로 DB에서 강의 정보(VO_Lecture)를 조회합니다.
+	    // ※ Repository_Teacher에 이 강의 하나를 조회하는 메서드가 필요합니다. (selectLectureByNo 등)
+	    //    지금은 임시로 주석 처리합니다.
+	    
+	    // VO_Lecture lectureVO = repositoryTeacher.selectLectureByNo(lectureNo);
+	    // model.addAttribute("lectureVO", lectureVO);
+	    
+	    // 3. 기존 등록 폼 JSP를 수정 폼으로 재활용합니다.
+	    return "teacher/lecture_register";
+	}
+	
 	@RequestMapping(value = "/lecture_management", method = RequestMethod.GET)
 	public String lecture_management(
 	    @RequestParam(value = "pageNum", defaultValue = "1") int pageNum, // 현재 페이지 번호
@@ -513,6 +537,8 @@ public class Controller_teacher {
 	        System.err.println("강의 등록 오류: " + e.getMessage());
 	        return "redirect:/teacher/lecture_management?registerSuccess=false"; 
 	    }
+	    
+	    
 	}
 	}
 

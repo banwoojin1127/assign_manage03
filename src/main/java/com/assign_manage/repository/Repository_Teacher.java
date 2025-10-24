@@ -207,6 +207,11 @@ public class Repository_Teacher {
 	    return session.selectOne(namespace + ".Count_All_Lectures", voSearch);
 	}
 	// 참고: VO_Search에 teacherId 필드가 반드시 존재해야 합니다.
+	
+	// ✔ 3. 특정 강의 번호로 강의 정보 조회 (수정 폼에 사용)
+	public VO_Lecture selectLectureByNo(int lectureNo) {
+	    return session.selectOne(namespace + ".selectLectureByNo", lectureNo);
+	}
 
 // ===============================================
 // 이하늘 작업 끝 부분

@@ -68,7 +68,7 @@
 		<div style="height: 20px;"></div>
 		<form>
     <button onclick="document.location='<c:url value='/teacher/lecture_register'/>'"
-            type="button" class="d-flex btn btn-primary" id="btnRegister" style="margin-left: 950px; width: 100px; text-align: center;">
+            type="button" class="d-flex btn btn-primary" id="btnRegister" style="margin-left: 1225px; width: 100px; text-align: center;">
         강의 등록
     </button>
 </form>
@@ -89,7 +89,7 @@
 					</th>
 					<th class="tea-th thwidth3">종료일
 					</th>
-					<th class="edit_th" ></th>
+					<th style="width: 150px;" border="1";> </th>
 				</tr>
 			</thead>
 		
@@ -124,17 +124,21 @@
 				 		<td>${lecture.start_date}</td>
 				 		<td>${lecture.end_date}</td>
 				 		<td>
-						   <button onclick="document.location='<c:url value='/teacher/lecture_register/${lecture.lecture_no}'/>'" type="button" class="btn btn-primary">
-                    			수정
-						    </button>
-				 			<button onclick="if(confirm('강의를 삭제하시겠습니까?')) { document.location='<c:url value='/teacher/lecture_delete?no=${lecture.lecture_no}'/>' }" type="button" class="btn btn-danger">
-                    			삭제
-                			</button>
-                    				
-				 			<button onclick="document.location='<c:url value='/teacher/lecture_student_add?no=${lecture.lecture_no}'/>'" type="button" class="btn btn-secondary">
+			                <%-- 🚨 수정 버튼 경로 수정 --%>
+			                <button onclick="document.location='<c:url value='/teacher/lecture_register/${lecture.lecture_no}'/>'" type="button" class="btn btn-primary">
+			                    수정
+			                </button>
+			                	
+			                <%-- 🚨 삭제 버튼 경로 수정 --%>
+			                <button onclick="if(confirm('강의를 삭제하시겠습니까?')) { document.location='<c:url value='/teacher/lecture_delete?no=${lecture.lecture_no}'/>' }" type="button" class="btn btn-danger">
+			                    삭제
+			                </button>
+			                
+			                <%-- 🚨 학생추가 버튼 경로 수정 --%>
+			                <button onclick="document.location='<c:url value='/teacher/lecture_student_add?no=${lecture.lecture_no}'/>'" type="button" class="btn btn-secondary">
 			                    학생추가
 			                </button>
-				 		</td>
+			            </td>
 				 	</tr>
 				</c:forEach>
 			 </tbody>

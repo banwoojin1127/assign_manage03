@@ -322,4 +322,12 @@
 <!-- 이승헌 작업 끝부분 -->
 <!-- =============================================== -->
 
+
+<select id="selectLectureByNo" resultType="com.assign_manage.vo.VO_Lecture" parameterType="int">
+    SELECT 
+        * FROM lecture 
+    WHERE lecture_no = #{lectureNo} 
+    AND delete_date IS NULL
+</select>
+
 </mapper>
