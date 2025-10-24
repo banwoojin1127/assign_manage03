@@ -487,25 +487,33 @@ public class Controller_teacher {
 	}
 		
 		// 강의 등록 (POST)
-		@RequestMapping(value = "/lecture_register_ok", method = RequestMethod.POST) 
-		public String lectureRegisterOk(VO_Lecture lectureVO) // VO_Lecture로 폼 데이터 받기
-		{
-			System.out.println(lectureVO);
-		    try {
-		        // 1. Repository 호출하여 DB 삽입(INSERT) 쿼리 실행
-		        // VO_Lecture에는 강의명, 정원, 시작/종료일, 그리고 교수 이름(user_name)이 담겨 있어야 합니다.
-		        repositoryAdmin.insertLecture(lectureVO); 
-		        
-		        // 2. 등록 성공 후 목록 페이지로 리다이렉트
-		        // success=true 파라미터와 메시지를 전달하여 브라우저에서 confirm/alert 창을 띄움
-		        return "redirect:/teacher/lecture_management";
-		        
-		    } catch (Exception e) {
-		        // 오류 발생 시 목록 페이지로 리다이렉트하며 오류 메시지 전달
-		        System.err.println("강의 등록 오류: " + e.getMessage());
-		        return "redirect:/teacher/lecture_management"; 
-		    }
-		}
+	// 🚨 기존 메서드 signature를 변경하고 HttpSession 추가
+	@RequestMapping(value = "/lecture_register_ok", method = RequestMethod.POST) 
+	public String lectureRegisterOk(VO_Lecture lectureVO, HttpSession session) // 🚨 HttpSession 추가
+	{
+	    VO_User login = (VO_User) session.getAttribute("login");
+
+	    if (login == null) {
+	        return "redirect:/common/login"; 
+	    }
+	    
+	    // 🚨 필수! VO_Lecture에 교사 ID와 이름 주입
+	    // DB의 lecture 테이블의 교사 ID 컬럼이 'id'라고 가정
+	    lectureVO.setId(login.getId());       
+	    
+	    System.out.println("등록 시도 VO: " + lectureVO);
+
+	    try {
+	        repositoryAdmin.insertLecture(lectureVO); 
+	        
+	        // 리다이렉트 경로 절대 경로로 수정
+	        return "redirect:/teacher/lecture_management?registerSuccess=true";
+	        
+	    } catch (Exception e) {
+	        System.err.println("강의 등록 오류: " + e.getMessage());
+	        return "redirect:/teacher/lecture_management?registerSuccess=false"; 
+	    }
+	}
 	}
 
 // ===============================================
