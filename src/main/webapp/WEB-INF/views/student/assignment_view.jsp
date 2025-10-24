@@ -50,7 +50,7 @@
                         주차 수
                     </div>
                     <div class="tableCellValue d-flex flex-grow-1">
-                        1주차
+                        ${assign.week_no}주차
                     </div>
                     <div class="tableCellName d-flex" style="min-width: 85px;">
                         제출 기한

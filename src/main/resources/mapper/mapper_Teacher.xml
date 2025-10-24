@@ -153,12 +153,37 @@
 			resultType="com.assign_manage.vo.VO_Assignment">
 			select 
 				a.assign_no, a.lecture_no, a.assign_name, a.assign_note, a.assign_method,
-				a.end_date, l.lecture_name as lecture_name, u.user_name as teacher_name 
+				a.end_date, l.lecture_name as lecture_name, u.user_name as teacher_name,
+				floor(datediff(a.create_date, min(a.create_date) over(partition by a.lecture_no)) / 7) + 1 as week_no
 			from assignment a
 			join lecture l on a.lecture_no = l.lecture_no
 			join user u on l.id = u.id
 			where assign_no = #{ assign_no }
 		</select>
+		
+		<select id="assign_list" parameterType="map" 
+				resultType="com.assign_manage.vo.VO_Assignment">
+			select 
+				a.assign_no, a.lecture_no, a.assign_name, a.end_date, 
+				l.lecture_name as lecture_name, u.user_name as teacher_name, 
+				floor(datediff(a.create_date, min(a.create_date) over(partition by a.lecture_no)) / 7) + 1 as week_no
+			from assignment a
+			inner join lecture l on a.lecture_no = l.lecture_no
+			inner join user u on l.id = u.id
+			where l.id = #{ id } 
+			  <if test="lecture_no != null and lecture_no != ''">
+			      and a.lecture_no = #{ lecture_no } 
+			  </if>
+			  and a.delete_date is null
+			order by a.create_date asc
+		</select>
+		
+		<update id="assign_update" parameterType="com.assign_manage.vo.VO_Assignment">
+			update assignment set
+			assign_name = #{ assign_name }, assign_note = #{ assign_note }, 
+			assign_method = #{ assign_method } 
+			where assign_no = #{ assign_no }
+		</update>
 		
 		<select id="report_view" parameterType="java.lang.String" 
 			resultType="com.assign_manage.vo.VO_Report">

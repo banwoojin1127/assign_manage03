@@ -48,7 +48,8 @@
 			resultType="com.assign_manage.vo.VO_Assignment">
 		select 
 			a.assign_no, a.lecture_no, a.assign_name, a.assign_note, a.assign_method,
-			a.end_date, l.lecture_name as lecture_name, u.user_name as teacher_name 
+			a.end_date, l.lecture_name as lecture_name, u.user_name as teacher_name, 
+			floor(datediff(a.create_date, min(a.create_date) over(partition by a.lecture_no)) / 7) + 1 as week_no 
 		from assignment a
 		join lecture l on a.lecture_no = l.lecture_no
 		join user u on l.id = u.id

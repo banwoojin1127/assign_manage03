@@ -82,6 +82,20 @@ public class Repository_Teacher {
 		return vo;
 	}
 	
+	//과제 리스트를 읽는다.
+	public List<VO_Assignment> AssignList(Map<String, Object> params)
+	{
+		List<VO_Assignment> list = session.selectList(namespace + ".assign_list", params);
+		return list;
+	}
+	
+	//과제 정보를 변경한다.
+	public boolean AssignModify(VO_Assignment vo)
+	{
+		session.update(namespace + ".assign_update", vo);
+		return true;
+	}
+	
 	//과제물 정보를 읽는다.	
 	public VO_Report ReportRead(String no)
 	{

@@ -6,9 +6,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -53,39 +57,106 @@ public class Controller_teacher {
 	 * public String lecture_management() { return "teacher/lecture_management"; }
 	 */
 
-    /** 과제 목록 (기본 첫 번째 강의 기준) **/
-    @RequestMapping(value = "/assignment_list", method = RequestMethod.GET)
-    public String assignment_list_default(Model model) {
-        List<VO_Lecture> lectureList = repository.selectAllLectures();
-        model.addAttribute("lectureList", lectureList);
-
-        int defaultLectureNo = lectureList.isEmpty() ? 0 : lectureList.get(0).getLecture_no();
-        model.addAttribute("selectedLectureNo", defaultLectureNo);
-
-        List<VO_Assignment> assignmentList = repository.selectAssignmentsByLecture(defaultLectureNo);
-        model.addAttribute("assignmentList", assignmentList);
-
-        return "teacher/assignment_list";
+    /** 통계 **/
+    @RequestMapping(value = "/statistics", method = RequestMethod.GET)
+    public String statistics() {
+        return "teacher/statistics";
     }
 
-    /** 과제 목록 (특정 강의 선택 시) **/
-    @RequestMapping(value = "/assignment_list/{lecture_no}", method = RequestMethod.GET)
-    public String assignment_list(@PathVariable("lecture_no") int lecture_no, Model model) {
-        List<VO_Lecture> lectureList = repository.selectAllLectures();
-        model.addAttribute("lectureList", lectureList);
-        model.addAttribute("selectedLectureNo", lecture_no);
+// ===============================================
+// 이승헌 작업 시작부분
+// ===============================================
+     
+    @RequestMapping(value="/assign/list", method = RequestMethod.GET)
+	public String AssignListAll(HttpSession session, Model model) throws ParseException
+	{
+		VO_User login = (VO_User) session.getAttribute("login");
+		String id = login.getId();
+		
+		Map<String, Object> params = new HashMap<>();
+        params.put("id", id);
 
-        List<VO_Assignment> assignmentList = repository.selectAssignmentsByLecture(lecture_no);
-        model.addAttribute("assignmentList", assignmentList);
+        //전체 과제 목록
+        List<VO_Assignment> assignList = repository.AssignList(params);
 
-        return "teacher/assignment_list";
-    }
+        //end_date를 문자열로 변환
+        SimpleDateFormat dbFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //DB 저장 형식
+        SimpleDateFormat displayFormat = new SimpleDateFormat("MM-dd HH:mm");
+        
+        for (VO_Assignment assign : assignList)
+        {
+        	if(assign.getEnd_date() != null && !assign.getEnd_date().isEmpty())
+        	{
+                Date date = dbFormat.parse(assign.getEnd_date());
+                assign.setEnd_date(displayFormat.format(date));
+            }else
+            {
+                assign.setEnd_date("미정");
+            }
+        }
+        
+        //과제에서 강의 목록 추출
+        Map<String, String> lectureMap = new LinkedHashMap<>();
+        for (VO_Assignment assign : assignList)
+        {
+            lectureMap.put(String.valueOf(assign.getLecture_no()), assign.getLecture_name());
+        }
 
-    /** 과제 추가 **/
-    @RequestMapping(value = "/assignment_add", method = RequestMethod.POST)
+        model.addAttribute("assignList", assignList);      
+        model.addAttribute("lectureMap", lectureMap);
+        model.addAttribute("lecture_no", null);
+        
+		return "teacher/assignment_list";
+	}
+	
+	@RequestMapping(value="/assign/list/{lecture_no}", method = RequestMethod.GET)
+	public String AssignList(@PathVariable("lecture_no")String no, HttpSession session, Model model) throws ParseException
+	{
+		VO_User login = (VO_User) session.getAttribute("login");
+		String id = login.getId();
+		
+		Map<String, Object> params = new HashMap<>();
+	    params.put("id", id);
+	    
+	    //전체 과제 목록 조회 (강의 버튼용)
+	    List<VO_Assignment> allAssignList = repository.AssignList(params);
+	    Map<String, String> lectureMap = new LinkedHashMap<>();
+	    for(VO_Assignment assign : allAssignList)
+	    {
+	        lectureMap.put(String.valueOf(assign.getLecture_no()), assign.getLecture_name());
+	    }
+	    
+	    //선택 강의 과제만 조회
+	    params.put("lecture_no", no);
+	    List<VO_Assignment> assignList = repository.AssignList(params);
+	    
+	    //end_date를 문자열로 변환
+        SimpleDateFormat dbFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //DB 저장 형식
+        SimpleDateFormat displayFormat = new SimpleDateFormat("MM-dd HH:mm");
+        
+        for(VO_Assignment assign : assignList)
+        {
+        	if(assign.getEnd_date() != null && !assign.getEnd_date().isEmpty())
+        	{
+                Date date = dbFormat.parse(assign.getEnd_date());
+                assign.setEnd_date(displayFormat.format(date));
+            }else
+            {
+                assign.setEnd_date("미정");
+            }
+        }
+
+	    model.addAttribute("assignList", assignList);
+	    model.addAttribute("lectureMap", lectureMap);
+	    model.addAttribute("lecture_no", no);
+
+		return "teacher/assignment_list";
+	}
+	
+	/** 과제 추가 **/
+    @RequestMapping(value = "/assign/add", method = RequestMethod.POST)
     public String assignment_add(
         @RequestParam("lecture_no") int lecture_no,
-        @RequestParam("week") String week,
         @RequestParam("assign_name") String assign_name,
         @RequestParam(value = "assign_note", required = false) String assign_note,
         @RequestParam(value = "assign_method", required = false, defaultValue = "파일 제출") String assign_method,
@@ -93,7 +164,7 @@ public class Controller_teacher {
     ) {
         VO_Assignment vo = new VO_Assignment();
         vo.setLecture_no(lecture_no);
-        vo.setAssign_name(week + " " + assign_name);
+        vo.setAssign_name(assign_name);
         vo.setAssign_note(assign_note != null ? assign_note : "");
         vo.setAssign_method(assign_method);
         vo.setCreate_date(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
@@ -101,7 +172,7 @@ public class Controller_teacher {
 
         repository.insertAssignment(vo);
 
-        return "redirect:/teacher/assignment_list/" + lecture_no;
+        return "redirect:/teacher/assign/list/" + lecture_no;
     }
 
     /** 과제 상세 보기 **/
@@ -142,19 +213,31 @@ public class Controller_teacher {
 		model.addAttribute("student_list", student_list);
 		model.addAttribute("id", id);
 		
-		return "student/assignment_view";
+		return "teacher/assignment_view";
 	}
+	
+    //과제 수정
+    @RequestMapping(value = "/assign/{assign_no}/modify", method = RequestMethod.POST)
+    public String assignModify(@PathVariable("assign_no") int assign_no, @RequestParam("assign_name") String assign_name,
+            @RequestParam("assign_method") String assign_method, @RequestParam("assign_note") String assign_note)
+    {
 
-    /** 통계 **/
-    @RequestMapping(value = "/statistics", method = RequestMethod.GET)
-    public String statistics() {
-        return "teacher/statistics";
+        VO_Assignment vo = new VO_Assignment();
+        vo.setAssign_no(assign_no);
+        vo.setAssign_name(assign_name);
+        vo.setAssign_method(assign_method);
+        vo.setAssign_note(assign_note);
+
+        boolean result = repository.AssignModify(vo);
+
+        // 실패 시도 페이지 새로고침 처리
+        if (!result) {
+            return "redirect:/teacher/assign/" + assign_no;
+        }
+
+        return "redirect:/teacher/assign/" + assign_no;
     }
-
-// ===============================================
-// 이승헌 작업 시작부분
-// ===============================================
-     
+    
  	//과제물 상세보기
     @RequestMapping(value="/assign/{assign_no}/report/{report_no}", method = RequestMethod.GET)
  	public String report_view(@PathVariable("assign_no") String assign_no,
@@ -252,39 +335,39 @@ public class Controller_teacher {
  		return "redirect:/teacher/assign/" + assign_no + "/report/" + report_no;
  	}
  	
- 		//피드백 수정
- 	 	@RequestMapping(value="/assign/{assign_no}/report/{report_no}/feedback/modify", method = RequestMethod.GET)
- 	 	public String report_feedback_modify(@PathVariable("assign_no") String assign_no,
- 	 			@PathVariable("report_no") String report_no, Model model)
- 	 	{
- 	 		VO_Assignment assign = repository.AssignRead(assign_no);
- 	 		VO_Report report = repository.ReportRead(report_no);;
- 	 		VO_Feedback feedback = repository.FeedbackRead(report_no);
- 	 		
- 	 		model.addAttribute("assign", assign);
- 	 		model.addAttribute("report", report);
- 	 		model.addAttribute("feedback", feedback);
- 	 		
- 	 		return "teacher/report_feedback_modify";
- 	 	}
+	//피드백 수정
+ 	@RequestMapping(value="/assign/{assign_no}/report/{report_no}/feedback/modify", method = RequestMethod.GET)
+ 	public String report_feedback_modify(@PathVariable("assign_no") String assign_no,
+ 			@PathVariable("report_no") String report_no, Model model)
+ 	{
+ 		VO_Assignment assign = repository.AssignRead(assign_no);
+ 		VO_Report report = repository.ReportRead(report_no);;
+ 		VO_Feedback feedback = repository.FeedbackRead(report_no);
+ 		
+ 		model.addAttribute("assign", assign);
+ 		model.addAttribute("report", report);
+ 		model.addAttribute("feedback", feedback);
+ 		
+ 		return "teacher/report_feedback_modify";
+ 	}
  	 	
- 	 	@RequestMapping(value="/assign/{assign_no}/report/{report_no}/feedback/modify", method = RequestMethod.POST)
- 	 	public String report_feedback_submit_modifyOK(@PathVariable("assign_no") int assign_no,
- 	 			@PathVariable("report_no") int report_no, @RequestParam("feedback") String feedback,
- 	 			@RequestParam(value="score", required=false, defaultValue="0") int score,
- 	 			HttpSession session, RedirectAttributes redirectAttr)
- 	 	{
- 	 		VO_Feedback f = new VO_Feedback();
- 	 	    f.setReport_no(report_no);
- 	 	    f.setFeedback(feedback);
- 	 	    f.setScore(score);
+ 	@RequestMapping(value="/assign/{assign_no}/report/{report_no}/feedback/modify", method = RequestMethod.POST)
+ 	public String report_feedback_submit_modifyOK(@PathVariable("assign_no") int assign_no,
+ 			@PathVariable("report_no") int report_no, @RequestParam("feedback") String feedback,
+ 			@RequestParam(value="score", required=false, defaultValue="0") int score,
+ 			HttpSession session, RedirectAttributes redirectAttr)
+ 	{
+ 		VO_Feedback f = new VO_Feedback();
+ 	    f.setReport_no(report_no);
+ 	    f.setFeedback(feedback);
+ 	    f.setScore(score);
 
- 	 	    repository.FeedbackUpdate(f);
- 	 	
- 	 	    redirectAttr.addFlashAttribute("msg", "수정이 완료되었습니다.");
- 	 		
- 	 		return "redirect:/teacher/assign/" + assign_no + "/report/" + report_no;
- 	 	}
+ 	    repository.FeedbackUpdate(f);
+ 	
+ 	    redirectAttr.addFlashAttribute("msg", "수정이 완료되었습니다.");
+ 		
+ 		return "redirect:/teacher/assign/" + assign_no + "/report/" + report_no;
+ 	}
  	
 // ===============================================
 // 이승헌 작업 끝부분
