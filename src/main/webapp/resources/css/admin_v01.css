@@ -245,3 +245,7 @@ th, td {
 	vertical-align: middle;
 	margin-bottom: -30px;
 }
+
+#grayTitle {
+	background-color: gray;
+}

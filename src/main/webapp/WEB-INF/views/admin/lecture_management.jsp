@@ -65,12 +65,12 @@
 
 		<div style="height: 20px;"></div>
 		<form>
-			<button onclick="document.location='lecture_create'" 
-                type="button" class="btn btn-primary" id="btnRegister" style="position:fixed; margin-left:200x;">
+			<button onclick="document.location='lecture_register'" 
+                type="button" class="d-flex btn btn-primary" id="btnRegister" style="margin-left: 950px; width: 100px; text-align: center;">
             강의 등록
         </button>
 		</form>
-		<div style="height: 40px;"></div>
+		<div style="height: 20px;"></div>
 
 		<table id="class_content">		
 			<thead>
@@ -112,9 +112,13 @@
 					<tr>
 				 	<!-- 이후 추가되는 데이터가 여기에 들어갈 것입니다. -->
 				 		<td>${status.count}</td>
-				 		<td><a href="../teacher/assignment_list/${lecture.lecture_no}">${lecture.lecture_name}</a></td>
+				 		<td><a style="text-decoration-line: none; color:black;" href="../teacher/assignment_list/${lecture.lecture_no}">${lecture.lecture_name}</a></td>
 				 		<td>${lecture.user_name}</td>
-				 		<td>${lecture.cnt}/${lecture.cap}</td>
+				 		<td>
+					 		<a style="text-decoration-line: none; color:black;" href="${pageContext.request.contextPath}/admin/lecture_student_view?no=${lecture.lecture_no}">
+					 		${lecture.cnt}/${lecture.cap}
+					 		</a>
+				 		</td>
 				 		<td>${lecture.start_date}</td>
 				 		<td>${lecture.end_date}</td>
 				 		<td>
@@ -124,7 +128,9 @@
 						    </button>
 				 			<button onclick="if(confirm('강의를 삭제하시겠습니까?')) { document.location='lecture_delete?no=${lecture.lecture_no}' }" 
                     				type="button" class="btn btn-danger">삭제</button>
-				 			<button onclick="document.location='lecture_student?no=${lecture.lecture_no}'" type="button" class="btn btn-secondary" >학생추가</button>
+                    				
+				 			<button onclick="document.location='lecture_student_add?no=${lecture.lecture_no}'" 
+				 			type="button" class="btn btn-secondary" >학생추가</button>
 				 		</td>
 				 	</tr>
 				</c:forEach>

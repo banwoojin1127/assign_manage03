@@ -88,5 +88,25 @@ public class Repository_Admin
 	        // MyBatis에게 "Admin" 네임스페이스의 "Lecture_View" 쿼리를 실행하라고 명령
 	        return session.selectOne(namespace + ".Lecture_View", lectureNo);
 	    }
+	    
+	 // ✔ 1. 강의에 학생 추가 (XML ID: Insert_Student_To_Lecture)
+    public void insertStudentToLecture(int lectureNo, String studentId) {
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("lectureNo", lectureNo);
+        paramMap.put("id", studentId);
+        session.insert(namespace + ".Insert_Student_To_Lecture", paramMap);
+    }
+
+    // ✔ 2. 특정 강의를 수강하는 학생 목록 조회 (XML ID: Lecture_Student_List)
+    public List<VO_User> findStudentsInLecture(int lectureNo) {
+        return session.selectList(namespace + ".Lecture_Student_List", lectureNo);
+    }
+
+    // ✔ 3. 특정 강의의 현재 수강생 수 조회 (VO_Lecture의 cnt 필드에 사용)
+    // *참고: 이 메서드는 사실 All_Lecture_List 쿼리에 카운트가 포함되어 있다면 필요 없을 수 있습니다.*
+    public int countCurrentStudents(int lectureNo) {
+        return session.selectOne(namespace + ".Count_Current_Students", lectureNo);
+    }
+	 
 }
 	

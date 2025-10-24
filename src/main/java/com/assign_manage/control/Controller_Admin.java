@@ -147,6 +147,53 @@ public class Controller_Admin
 		return AF + "/user_list";
 	}
 	
+	// ✔ 1. 학생 추가 폼 로드 (GET 요청)
+		@RequestMapping(value = "/lecture_student_add", method = RequestMethod.GET)
+		public String lectureStudentAdd(@RequestParam("no") int lectureNo, Model model) {
+		    
+		    // 1. 해당 강의 정보 조회 (제목 출력을 위해)
+		    VO_Lecture lectureVO = repositoryAdmin.findLectureByNo(lectureNo);
+		    
+		    // 2. 해당 강의를 수강하지 않는 학생 목록 조회 (추가 가능한 학생 리스트)
+		    List<VO_User> nonLectureStudents = repositoryAdmin.selectUserNotExistsLecturListAndTeacher(lectureNo); 
+		    
+		    model.addAttribute("lectureVO", lectureVO);
+		    model.addAttribute("studentList", nonLectureStudents);
+		    
+		    return AF + "/lecture_student_add"; // 🚨 lecture_student_add.jsp 로드
+		}
+		
+		// ✔ 2. 학생 추가 처리 (POST 요청)
+		@RequestMapping(value = "/lecture_student_ok", method = RequestMethod.POST)
+		public String lectureStudentOk(@RequestParam("lectureNo") int lectureNo,
+		                               @RequestParam(value = "studentIds", required = false) List<String> studentIds) {
+		    
+		    if (studentIds != null && !studentIds.isEmpty()) {
+		        for (String studentId : studentIds) {
+		            repositoryAdmin.insertStudentToLecture(lectureNo, studentId);
+		        }
+		    }
+		    
+		    // 처리 후 수강생 리스트 보기 페이지로 이동하여 결과를 즉시 확인
+		    return "redirect:/admin/lecture_student_view?no=" + lectureNo; 
+		}
+		
+		// ✔ 3. 수강생 리스트 보기 (GET 요청)
+		@RequestMapping(value = "/lecture_student_view", method = RequestMethod.GET)
+		public String lectureStudentView(@RequestParam("no") int lectureNo, Model model) {
+		    
+		    // 1. 해당 강의 정보 조회 (제목 출력을 위해)
+		    VO_Lecture lectureVO = repositoryAdmin.findLectureByNo(lectureNo);
+		    
+		    // 2. 해당 강의를 수강하는 학생 목록 조회
+		    List<VO_User> studentsInLecture = repositoryAdmin.findStudentsInLecture(lectureNo);
+		    
+		    model.addAttribute("lectureVO", lectureVO);
+		    model.addAttribute("studentsInLecture", studentsInLecture);
+		    
+		    return AF + "/lecture_student_view"; // 🚨 lecture_student_view.jsp 로드
+		}
+	
 	// 강의 등록 (GET)
 	// 강의 등록 폼을 띄우기 전에 교사 목록을 조회하여 JSP로 전달
 	@RequestMapping(value = "/lecture_register", method = RequestMethod.GET) 

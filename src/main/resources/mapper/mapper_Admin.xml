@@ -207,5 +207,28 @@
 	limit 10
 	</select>
 	
+	<!-- 강의에 학생 추가 -->
+	<insert id="Insert_Student_To_Lecture" parameterType="Map">
+    INSERT INTO lecture_list (lecture_no, id) 
+    VALUES (#{lectureNo}, #{id})
+	</insert>
+	
+	<select id="Lecture_Student_List" resultType="com.assign_manage.vo.VO_User" parameterType="int">
+	    SELECT 
+	        u.id, 
+	        u.user_name, 
+	        u.gender,
+	        u.email 
+	    FROM user u
+	    INNER JOIN lecture_list ll ON u.id = ll.id
+	    WHERE ll.lecture_no = #{lectureNo}
+	      AND u.user_class = 2  ORDER BY u.user_name
+	</select>
+	
+	<select id="Count_Current_Students" resultType="int" parameterType="int">
+	    SELECT COUNT(*) 
+	    FROM lecture_list 
+	    WHERE lecture_no = #{lectureNo}
+	</select>
 	
 </mapper>

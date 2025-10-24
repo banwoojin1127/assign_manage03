@@ -33,6 +33,7 @@
 					<input type="text" class="form-control" id="inlineFormInputGroupUsername" name="q" aria-label="검색어 입력" placeholder="검색어를 입력해주세요.">
 				</div>
 			</div>
+			
 			<div style="width: 75px;">
 				<button type="submit" class="btn btn-primary">검색</button>
 			</div>
