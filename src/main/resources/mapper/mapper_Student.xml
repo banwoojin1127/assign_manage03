@@ -186,17 +186,18 @@
 	<select id="main" parameterType="java.lang.String" 
 		resultType="com.assign_manage.vo.VO_Main">
 		select 
-			 a.assign_no as assign_no, l.lecture_name as lecture_name, a.assign_name as assign_name, 
+			 distinct a.assign_no as assign_no, l.lecture_name as lecture_name, a.assign_name as assign_name, 
 			 u.user_name as teacher_name, datediff(a.end_date, now()) as days_left
 		from assignment a
 		join lecture l on a.lecture_no = l.lecture_no 
         join user u on l.id = u.id
+        join lecture_list l_l on a.lecture_no = l_l.lecture_no
         where not exists
         (
         	select 1
         	from report r
         	where r.assign_no = a.assign_no
-          	and r.id = #{ id }
+          	and l_l.id = #{ id }
     	)
     	and datediff(a.end_date, now()) >= 1
         order by days_left asc
