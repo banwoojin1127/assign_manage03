@@ -188,33 +188,6 @@
                     <div id="bodyQnAList" class="accordion-collapse collapse show">
                         <div class="d-flex flex-wrap justify-content-start align-content-start accordion-body p-0">
                         
-							<!-- 질문하기 버튼 -->                        
-                            <div class="d-flex justify-content-end my-1 w-100">
-                                <div class="align-content-center">
-                                    <button class="darkBtn p-1" 
-                                        data-bs-toggle="collapse" data-bs-target="#questionWrite" aria-expanded="false" aria-controls="questionWrite">
-                                        질문하기
-                                    </button>
-                                </div>
-                            </div>
-                            <div id="tableQnAList" class="tableCased d-flex flex-wrap justify-content-start align-content-start my-1 w-100">
-                                 <!-- 질문 입력 폼 -->
-                                <div id="questionWrite" class="collapse" style="width: 100%; margin-left: -10px">
-                                    <form class="d-flex justify-content-start align-content-start w-100 m-0 p-0"
-                                    	action="<c:url value='/student/assign/${assign.assign_no}/quest/add'/>" method="post"	>
-                                        <div class="miniIcon d-flex justify-content-center m-1"></div>
-                                        <div class="d-flex justify-content-center m-1">
-                                            <img src="../../resources/img/profile.png" class="miniIcon">
-                                        </div>
-                                        <div class="d-flex justify-content-center m-2"><div class="textWideTitle align-content-center">Q . ${login.user_name} : </div></div>
-                                        <input name="quest_note" class="flex-grow-1" style="border-style: none;" type="text" placeholder="질문을 입력하세요."
-               								required oninvalid="this.setCustomValidity('질문 내용을 입력해주세요.')" oninput="this.setCustomValidity('')">
-                                        <input type="submit" class="clearBtn d-flex justify-content-center" style="min-width: 30px; font-size: 0.8em;" value="완료">
-                                        <input type="button" class="clearBtn d-flex justify-content-center" style="min-width: 30px; font-size: 0.8em;"
-                                       		value="취소" onclick="$('#questionWrite').collapse('hide')">
-                                    </form>
-                                </div>
-                                
                                 <!-- 질문/답변 반복 -->
                                 <c:forEach var="q" items="${quest}">
 	                                <div id="question${q.quest_no}" class="d-flex flex-wrap justify-content-start align-content-start w-100 m-0 p-0">
