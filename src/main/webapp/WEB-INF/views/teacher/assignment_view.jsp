@@ -23,56 +23,61 @@
                         	강의명 : ${assign.lecture_name}
                         </p>
                     </div>
-                    <div class="ms-auto">
-			            <!-- 수정 / 저장 버튼 -->
+                    
+                    <div class="ms-auto d-flex gap-2">
+			            <!-- 수정 / 저장 / 버튼 -->
 			            <button id="editBtn" class="whiteBtn rounded px-3" style="height: 40px;"><b>수정</b></button>
 			            <button id="saveBtn" class="whiteBtn rounded px-3" style="height: 40px; display:none;"><b>저장</b></button>
+			            <button id="cancelEditBtn" class="whiteBtn rounded px-3" style="height: 40px; display:none;"><b>취소</b></button>
+			            
 			        </div>
                 </div>
                 <!-- assignment title end -->
             </div>
             <!-- content main header end -->
             <!-- assignment posted info start -->
-            <div id="formAssignPostedInfo" class="tableCased d-flex flex-wrap justify-content-start align-content-start my-1" style="width: 100%;">
-                <div class="d-flex justify-content-start align-content-center w-100">
-                    <div class="tableCellName d-flex" style="min-width: 85px;">
-                        과제명
-                    </div>
-                    <div class="tableCellValue d-flex flex-grow-1">
-                        ${assign.assign_name}
-                    </div>
-                </div>
-                <div class="d-flex justify-content-start align-content-center w-100">
-                    <div class="tableCellName d-flex" style="min-width: 85px;">
-                        제출방식
-                    </div>
-                    <div class="tableCellValue d-flex flex-grow-1">
-                        ${assign.assign_method}
-                    </div>
-                </div>
-                <div class="d-flex justify-content-start align-content-center w-100">
-                    <div class="tableCellName d-flex" style="min-width: 85px;">
-                        주차 수
-                    </div>
-                    <div class="tableCellValue d-flex flex-grow-1">
-                        1주차
-                    </div>
-                    <div class="tableCellName d-flex" style="min-width: 85px;">
-                        제출 기한
-                    </div>
-                    <div class="tableCellValue d-flex flex-grow-1">
-                        ${assign.end_date}
-                    </div>
-                </div>
-                <div class="d-flex justify-content-start align-content-center w-100">
-                    <div class="tableCellName d-flex" style="min-width: 85px;">
-                        내용
-                    </div>
-                    <div class="tableCellValue d-flex flex-grow-1">
-                        ${assign.assign_note}
-                    </div>
-                </div>
-            </div>
+            <form id="assignModifyForm" action="<c:url value='/teacher/assign/${assign.assign_no}/modify'/>" method="post" style="width:100%;">
+	            <div id="formAssignPostedInfo" class="tableCased d-flex flex-wrap justify-content-start align-content-start my-1" style="width: 100%;">
+	                <div class="d-flex justify-content-start align-content-center w-100">
+	                    <div class="tableCellName d-flex" style="min-width: 85px;">
+	                        과제명
+	                    </div>
+	                    <div class="tableCellValue d-flex flex-grow-1" data-field="assign_name">
+	                        ${assign.assign_name}
+	                    </div>
+	                </div>
+	                <div class="d-flex justify-content-start align-content-center w-100">
+	                    <div class="tableCellName d-flex" style="min-width: 85px;">
+	                        제출방식
+	                    </div>
+	                    <div class="tableCellValue d-flex flex-grow-1" data-field="assign_method">
+	                        ${assign.assign_method}
+	                    </div>
+	                </div>
+	                <div class="d-flex justify-content-start align-content-center w-100">
+	                    <div class="tableCellName d-flex" style="min-width: 85px;">
+	                        주차 수
+	                    </div>
+	                    <div class="tableCellValue d-flex flex-grow-1">
+	                        ${assign.week_no}주차
+	                    </div>
+	                    <div class="tableCellName d-flex" style="min-width: 85px;">
+	                        제출 기한
+	                    </div>
+	                    <div class="tableCellValue d-flex flex-grow-1" data-field="assign_end_date">
+	                        ${assign.end_date}
+	                    </div>
+	                </div>
+	                <div class="d-flex justify-content-start align-content-center w-100">
+	                    <div class="tableCellName d-flex" style="min-width: 85px;">
+	                        내용
+	                    </div>
+	                    <div class="tableCellValue d-flex flex-grow-1" data-field="assign_note">
+	                        ${assign.assign_note}
+	                    </div>
+	                </div>
+	            </div>
+            </form>
             <!-- assignment posted info end -->
             <!-- submission status start -->
             <div class="accordion my-1" style="width: 100%;">
@@ -136,27 +141,31 @@
 	                                    
 	                                    <!-- 과제 확인 -->
 	                                    <div class="tableCellValue d-flex justify-content-center" style="min-width: 100px;">
-										    <a href="javascript:void(0);" class="darkBtn btn"
-										       onclick="     
-										               if ('${student.report_no}' === '' || '${student.report_no}' === 'null') {
-										                   alert('제출한 과제물이 없습니다.');
-										               } else {
-										                   // 제출한 과제물이 있으면 페이지 이동
-										                   window.location.href = '<c:url value='/student/assign/${assign.assign_no}/report/${student.report_no}'/>';
-										               }
-										           }
-										       ">
-										       확인
-										    </a>
+										    <c:choose>
+										        <c:when test="${student.report_no != null}">
+										            <a href="<c:url value='/teacher/assign/${assign.assign_no}/report/${student.report_no}'/>" class="darkBtn btn">
+										                확인
+										            </a>
+										        </c:when>
+										        <c:otherwise>
+										            <button type="button" class="darkBtn btn" onclick="alert('제출한 과제물이 없습니다.')">
+										                확인
+										            </button>
+										        </c:otherwise>
+										    </c:choose>
 										</div>
 	                                    
 	                                    <!-- 평가 -->
-	                                    <div class="tableCellValue d-flex justify-content-between" style="min-width: 175px;">
-	                                        <div style="width: 48px;"></div>
+	                                    <div class="tableCellValue d-flex justify-content-between" style="min-width: 175px; justify-content: flex-start; gap: 8px;">
+	                                        <div style="width: 48px; text-align: center;"></div>
 	                                        <div class="align-content-center">
 												<c:out value="${student.score != null ? student.score : '--'}"/>
 											</div>
-	                                        <div style="width: 48px;"></div>
+											<a href="<c:url value='/teacher/assign/${assign.assign_no}/report/${student.report_no}/feedback/modify'/>" 
+										       class="darkBtn btn btn-sm"
+										       style="${student.report_no == null ? 'visibility:hidden;' : ''}">
+										       수정
+										    </a>
 	                                    </div>
 	                                </div>
                                 </c:forEach>
@@ -232,16 +241,10 @@
 	                                        </div>
 	                                    </button>
 	                                    
-	                                    <!-- 작성자만 보이는 버튼 -->
 	                                    <!-- 기본 버튼: 수정, 삭제 -->
-                                    	<c:if test="${q.id eq login.id}">
-		                                    <div class="d-flex flex-row ms-2 align-items-center">
-		                                        <input type="button" class="clearBtn editBtn" style="min-width: 30px; font-size:0.8em;" value="수정">
-		                                        <input type="button" class="clearBtn removeBtn" style="min-width: 30px; font-size:0.8em;" value="삭제">
-		                                        <input type="button" class="clearBtn saveBtn" style="min-width: 30px; font-size:0.8em; display:none;" value="완료">
-		                                        <input type="button" class="clearBtn cancelBtn" style="min-width: 30px; font-size:0.8em; display:none;" value="취소">
-		                                    </div>
-		                                </c:if>
+	                                    <div class="d-flex flex-row ms-2 align-items-center">
+	                                        <input type="button" class="clearBtn removeBtnQuest" style="min-width: 30px; font-size:0.8em;" value="삭제">
+	                                    </div>
 	                                </div>
 	                                
 	                                <!-- 답변 영역 -->
@@ -267,46 +270,55 @@
             </div>
             <!-- QnA list end -->
             <script>
-			$(document).ready(function() {
-			
-			    // 수정 버튼 클릭 시
-			    $("#editBtn").click(function() {
-			        // input들 편집 가능하게
-			        $("#formAssignPostedInfo input").prop("readonly", false).css("border-style", "solid");
-			        
-			        // 버튼 전환
-			        $("#editBtn").hide();
-			        $("#saveBtn").show();
-			    });
-			
-			    // 저장 버튼 클릭 시
-			    $("#saveBtn").click(function() {
-			        const updatedData = {
-			            assign_name: $("#assignName").val(),
-			            assign_method: $("#assignMethod").val(),
-			            end_date: $("#endDate").val(),
-			            assign_note: $("#assignNote").val()
-			        };
-			
-			        // AJAX로 서버에 전송
-			        $.ajax({
-			            type: "POST",
-			            url: "<c:url value='/teacher/updateAssignment'/>",  // 실제 컨트롤러 URL에 맞게 변경
-			            contentType: "application/json",
-			            data: JSON.stringify(updatedData),
-			            success: function() {
-			                alert("수정 완료!");
-			                $("#formAssignPostedInfo input").prop("readonly", true).css("border-style", "none");
-			                $("#saveBtn").hide();
-			                $("#editBtn").show();
-			            },
-			            error: function() {
-			                alert("수정 중 오류가 발생했습니다.");
-			            }
-			        });
-			    });
-			});
-			</script>
+            $(document).ready(function() {
+                let originalValues = {};
+
+                // 수정 버튼 클릭
+                $("#editBtn").click(function() {
+                    const fields = {
+                        "assign_name": $("[data-field='assign_name']").text().trim(),
+                        "assign_method": $("[data-field='assign_method']").text().trim(),
+                        "assign_note": $("[data-field='assign_note']").text().trim()
+                    };
+
+                    originalValues = {...fields};
+
+                    $("[data-field='assign_name']").html(`<input name="assign_name" class="form-control" value="${fields.assign_name}" style="width:100%; border:1px solid #ccc;">`);
+                    $("[data-field='assign_method']").html(`<input name="assign_method" class="form-control" value="${fields.assign_method}" style="width:100%; border:1px solid #ccc;">`);
+                    $("[data-field='assign_note']").html(`<textarea name="assign_note" class="form-control" rows="3" style="width:100%; border:1px solid #ccc;">${fields.assign_note}</textarea>`);
+
+                    $("#editBtn").hide();
+                    $("#saveBtn, #cancelEditBtn").show();
+
+                    $("#editAssignName")?.focus();
+                });
+
+                // 저장 버튼 클릭 → form submit
+                $("#saveBtn").click(function() {
+                    $("#assignModifyForm").submit();
+                });
+
+                // 취소 버튼 클릭 → 페이지 새로고침
+                $("#cancelEditBtn").click(function() {
+                    location.reload();
+                });
+            });
+            
+            $(document).on('click', '.removeBtnQuest', function() {
+                if (!confirm("질문을 삭제하시겠습니까?")) return;
+
+                const parent = $(this).closest("div[id^='question']");
+                const quest_no = parent.attr("id").replace("question", "");
+
+                const form = $('<form>', {
+                    action: '/control/student/assign/${assign.assign_no}/quest/delete',
+                    method: 'post'
+                }).append($('<input>', {type: 'hidden', name: 'quest_no', value: quest_no}));
+
+                $('body').append(form);
+                form.submit();
+            });
+            </script>
         </div>
 <!-- content field end -->
 <%@ include file="../include/tail.jsp" %>
