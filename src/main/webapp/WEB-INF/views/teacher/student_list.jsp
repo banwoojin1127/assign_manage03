@@ -115,7 +115,7 @@ function LoadTheyLecture(from, idValue)
                     </select>
                 </div>    
                 <div>
-                    <select class="form-select form-select-sm right-align2" name="pageSize" aria-label="페이지 크기">
+                    <select class="form-select form-select-sm right-align2" style="visibility : hidden;" name="pageSize" aria-label="페이지 크기">
                         <option value="10" selected>10개씩</option>
                         <option value="20">20개씩</option>
                         <option value="50">50개씩</option>
@@ -153,19 +153,6 @@ function LoadTheyLecture(from, idValue)
         </table>
     </div>
     <nav aria-label="Page navigation example" id="page">
-        <ul class="pagination justify-content-center ">
-            <li class="page-item disabled">
-                <a class="page-link">&lt;</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item"><a class="page-link" href="#">4</a></li>
-            <li class="page-item"><a class="page-link" href="#">5</a></li>
-            <li class="page-item">
-                <a class="page-link" href="#">&gt;</a>
-            </li>
-        </ul>
     </nav>
     <br><br>
 </div>
