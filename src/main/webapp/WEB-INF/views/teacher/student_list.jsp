@@ -2,39 +2,68 @@
 <%@ include file="/WEB-INF/views/include/head_teacher.jsp" %>
 <!-- content field start -->
 <script>
+let openedDetailRow;
+let table;
+let detailContent;
+
     document.addEventListener('DOMContentLoaded', function () {
-        const table = document.getElementById('user-list');
-        let openedDetailRow = null; // 열려있는 상세보기 행
-
+        openedDetailRow = null; // 열려있는 상세보기 행
+        table = document.getElementById('user-list');
+        detailContent = "";
         table.querySelectorAll('tbody > tr').forEach(row => {
-            row.addEventListener('click', function () {
-                // 이미 상세보기 행이 있고, 클릭한 행 아래면 상세보기 제거
-                if (openedDetailRow && openedDetailRow.previousElementSibling === this) {
-                    openedDetailRow.remove();
-                    openedDetailRow = null;
-                    return;
-                }
+        row.addEventListener('click', function () {
+            // 이미 상세보기 행이 있고, 클릭한 행 아래면 상세보기 제거
+            if (openedDetailRow && openedDetailRow.previousElementSibling === this) {
+                openedDetailRow.remove();
+                openedDetailRow = null;
+                return;
+            }
 
-                // 다른 상세보기 행이 열려있으면 닫기
-                if (openedDetailRow) {
-                    openedDetailRow.remove();
-                    openedDetailRow = null;
-                }
+            // 다른 상세보기 행이 열려있으면 닫기
+            if (openedDetailRow) {
+                openedDetailRow.remove();
+                openedDetailRow = null;
+            }
 
-                // 상세보기 내용 구성 (여기서 필요에 따라 내용 바꾸면 됨)
-                const detailContent = `<td colspan="8" style="background-color: #f0f0f0; font-style: italic;">수강과목: 수강과목1, 수강광목2 등...</td>`;
-
-                // 상세보기 행 생성
-                const detailRow = document.createElement('tr');
-                detailRow.innerHTML = detailContent;
-
-                // 클릭한 행 바로 아래에 삽입
-                this.parentNode.insertBefore(detailRow, this.nextSibling);
-
-                openedDetailRow = detailRow;
-            });
+            // 상세보기 내용 구성 (여기서 필요에 따라 내용 바꾸면 됨)
+            LoadTheyLecture($(this), $(this).children("td").eq(0).text());
         });
     });
+});
+
+function LoadTheyLecture(from, idValue)
+{
+    $.ajax({
+        url : "studnet_theylecure?id=" + encodeURIComponent(idValue),
+        type : "get",
+        dataType : "html",
+        success : function(res)
+        {
+            res = (res || '').toString().trim();
+
+            console.log('LoadTheyLecture response:', res);
+
+            // 상세보기 행 생성 (colspan은 테이블 컬럼 수에 맞게 설정)
+            const detailRow = document.createElement('tr');
+            detailRow.innerHTML = '<td colspan="7" style="background-color: #f0f0f0; font-style: italic;">' + res + '</td>';
+
+            // 클릭한 행 바로 아래에 삽입. 'from'은 호출 시에 전달된 jQuery 객체임.
+            try {
+                if (from && typeof from.after === 'function') {
+                    from.after(detailRow);
+                } else if (from && from.nodeType === 1) {
+                    from.parentNode.insertBefore(detailRow, from.nextSibling);
+                }
+                openedDetailRow = detailRow;
+            } catch (e) {
+                console.error('Failed to insert detail row:', e);
+            }
+        },
+        error: function(xhr, status, err) {
+            console.error('LoadTheyLecture AJAX error:', status, err);
+        }
+    })
+}
 </script>
 <div style="padding: 80px 130px; text-align: center;">
     <h3 style="text-align: left; width: 500px;">
@@ -112,7 +141,7 @@
                 <c:forEach var="user" items="${userList}" varStatus="status">
                     <tr>
                         <th scope="row">${status.count}</th>
-                        <td>${user.id}</td>
+                        <td id="${user.id}" class="idValue">${user.id}</td>
                         <td>${user.user_name}</td>
                         <td>${user.gender}</td>
                         <td>${user.birth}</td>

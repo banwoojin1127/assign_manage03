@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.assign_manage.repository.Repository_Admin;
@@ -301,11 +303,24 @@ public class Controller_teacher {
 	public String student_list(Model model
 			,	VO_SearchFilter_AllStudent filter
 			) {
-		filter.showInnerData();
+// 			filter.showInnerData();
 		List<VO_User> userList = repository.findAllStudent(filter); // Repository에서 전체 조회
 		model.addAttribute("userList", userList); // JSP에서 ${userList}로 접근 가능
 		
 		return "teacher/student_list";
+	}
+	
+	// 학생의 강의 조회
+	@RequestMapping(value = "/studnet_theylecure", produces="application/text;charset=utf8" )
+	@ResponseBody
+	public String studnet_theylecure(
+			String id
+,			HttpServletRequest request
+			)
+	{
+		String nameArrayOfLecture = repository.TheyLecture(id);
+		
+		return nameArrayOfLecture;
 	}
 // ===============================================
 // 반우진 작업 끝 부분

@@ -145,7 +145,7 @@ function CheckPW()
     let pw = $("#pw").val();
     if(pw == "")
     {
-        if(sessionLogin == "" || sessionLogin == null)
+        if( sessionClass == 0 || sessionLogin == "" || sessionLogin == null)
         {
             $("#msg_pw").html("<span style='color:#dc3545'>*비밀번호를 입력해주세요.</span>");
             return;
@@ -175,7 +175,7 @@ function CheckPWConfirm()
 
     if( pwConfirmVal == "" || pwConfirmVal == null )
     {
-        if( sessionLogin == "" || sessionLogin == null || changePW )
+        if( sessionClass == 0 || sessionLogin == "" || sessionLogin == null || changePW )
         {
             $("#msg_pwConfirm").html("<span style='color:#dc3545'>*동일한 비밀번호를 입력해주세요.</span>");
             return;
@@ -252,7 +252,7 @@ function CheckTel()
     let require = /^01\d{7,9}$/;
     let tel = $("#tel").val();
 
-    if (sessionLogin == "" || sessionLogin == null) 
+    if ( sessionClass == 0 || sessionLogin == "" || sessionLogin == null) 
     {
         if (tel == "") {
             $("#msg_tel").html("<span style='color:#dc3545'>*전화번호를 입력해주세요.</span>");
@@ -324,7 +324,7 @@ function CheckEmail()
     $("#email").val( persnal + "@" + domain );
     let email = $("#email").val();
 
-    if (sessionLogin == "" || sessionLogin == null) 
+    if ( sessionClass == 0 || sessionLogin == "" || sessionLogin == null) 
     {
         if (persnal == "" || domain == "") {
             $("#msg_email").html("<span style='color:#dc3545'>*메일주소를 입력해주세요.</span>");
@@ -458,7 +458,7 @@ function CheckBeforeDoing()
     }
     if($("#pw").val() == "")
     {
-        if(sessionLogin == "" || sessionLogin == null)
+        if( sessionClass == 0 || sessionLogin == "" || sessionLogin == null)
         {
             $("#msg_pw").html("<span style='color:#dc3545'>*비밀번호를 입력해주세요.</span>");
             $("#pw").focus();
@@ -490,7 +490,7 @@ function CheckBeforeDoing()
     }
     if($("#year").val() == "" || $("#month").val() == "" || $("#day").val() == "")
     {
-        if(sessionLogin == "" || sessionLogin == null)
+        if(  sessionClass == 0 || sessionLogin == "" || sessionLogin == null)
         {
             $("#msg_birth").html("<span style='color:#dc3545'>*생년월일을 선택해주세요.</span>");
             $("#year").focus();
@@ -502,7 +502,7 @@ function CheckBeforeDoing()
     }
     if($("#tel").val() == "")
     {
-        if(sessionLogin == "" || sessionLogin == null)
+        if( sessionClass == 0 || sessionLogin == "" || sessionLogin == null)
         {
             $("#msg_tel").html("<span style='color:#dc3545'>*전화번호를 입력해주세요.</span>");
             $("#tel").focus();
@@ -514,7 +514,7 @@ function CheckBeforeDoing()
     }
     if($("#persnal").val() == "" || $("#domain").val() == "")
     {
-        if(sessionLogin == "" || sessionLogin == null || changeEmail )
+        if( sessionClass == 0 || sessionLogin == "" || sessionLogin == null || changeEmail )
         {
             $("#msg_email").html("<span style='color:#dc3545'>*메일주소를 입력해주세요.</span>");
             $("#persnal").focus();
@@ -544,7 +544,7 @@ function CheckBeforeDoing()
     }
     
     //메일 인증문제 미해결 시 submit 중지
-    if( sessionLogin == "" || sessionLogin == null || changeEmail)
+    if(  sessionClass == 0 || sessionLogin == "" || sessionLogin == null || changeEmail)
     {
         if( $("#code").val() == "" )
         {
@@ -560,7 +560,7 @@ function CheckBeforeDoing()
         }
     }
 
-    if( sessionLogin == "" || sessionLogin == null )
+    if( sessionClass == 0 || sessionLogin == "" || sessionLogin == null )
     {
         //가입 의사 재확인
         let question = "회원가입을 진행하시겠습니까?";

@@ -60,11 +60,35 @@ public class Repository_Teacher {
 	// 학생 전체 조회
 	public List<VO_User> findAllStudent(VO_SearchFilter_AllStudent filter){
 			List<VO_User> voUList = session.selectList(namespace + ".selectListUser",filter);
-			for(VO_User voU : voUList)
-			{
-				voU.showInnerData();
-			}
+//				for(VO_User voU : voUList)
+//				{
+//					voU.showInnerData();
+//				}
 		return voUList;
+	}
+	
+	// 학생의 강의 조회
+	public String TheyLecture(String id)
+	{
+		List<VO_Lecture> voLecList = session.selectList(namespace + ".theyLectureName", id);
+		
+		StringBuilder sb = new StringBuilder();
+		int listSize = voLecList.size();
+
+		for(int i = 0; i < listSize; i++) {
+		    VO_Lecture voLec = voLecList.get(i);
+		    
+		    sb.append(voLec.getLecture_name());
+		    
+		    // 마지막 요소가 아닌 경우에만 ", "를 추가
+		    if (i < listSize - 1) {
+		        sb.append(", ");
+		    }
+		}
+
+		String nameArrayOfLecture = sb.toString();
+		
+		return nameArrayOfLecture;
 	}
 	
 // ===============================================

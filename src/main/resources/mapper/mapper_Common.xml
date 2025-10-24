@@ -24,7 +24,12 @@
 		<if test='tel == null or tel.equals("")'>
 			,null
 		</if>
-		,#{email}
+		<if test='email != null and !email.equals("")'>
+			,#{email}
+		</if> 
+		<if test='email == null or email.equals("")'>
+			,null
+		</if>
 		)
 </insert>
 

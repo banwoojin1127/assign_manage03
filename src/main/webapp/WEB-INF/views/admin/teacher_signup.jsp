@@ -5,6 +5,7 @@
     const CONTEXT_PATH = "${pageContext.request.contextPath}"; 
     const userInfoUrl = CONTEXT_PATH + "/common/"; 
     sessionLogin = "<c:out value='${login}'/>";
+    sessionClass = "<c:out value='${login.user_class}'/>";
     sessionTel = "<c:out value='${login.tel}'/>";
     sessionEmail = "<c:out value='${login.email}'/>";
 </script>
