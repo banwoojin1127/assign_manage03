@@ -114,7 +114,7 @@
 					<tr>
 				 	<!-- 이후 추가되는 데이터가 여기에 들어갈 것입니다. -->
 				 		<td>${status.count}</td>
-				 		<td><a style="text-decoration-line: none; color:black;" href="../teacher/assignment_list/${lecture.lecture_no}">${lecture.lecture_name}</a></td>
+				 		<td><a style="text-decoration-line: none; color:black;" href="../teacher/assign/list/${lecture.lecture_no}">${lecture.lecture_name}</a></td>
 				 		<td>${lecture.user_name}</td>
 				 		<td>
 					 		<a style="text-decoration-line: none; color:black;" href="${pageContext.request.contextPath}/teacher/lecture_student_view?no=${lecture.lecture_no}">

@@ -313,6 +313,11 @@
         ORDER BY le.lecture_no DESC
         LIMIT #{startRow}, #{endRow}
     </select>
+    
+    <delete id="question_delete" parameterType="java.lang.String">
+		delete from question
+		where quest_no = #{ quest_no }
+	</delete>
 <!-- =============================================== -->
 <!-- 이승헌 작업 끝부분 -->
 <!-- =============================================== -->
