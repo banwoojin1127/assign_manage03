@@ -124,15 +124,16 @@
 				 		<td>${lecture.start_date}</td>
 				 		<td>${lecture.end_date}</td>
 				 		<td>
-						    <button onclick="document.location='lecture_register/${lecture.lecture_no}'" 
-						            type="button" class="btn btn-primary">
-						        수정
+						   <button onclick="document.location='<c:url value='/teacher/lecture_register/${lecture.lecture_no}'/>'" type="button" class="btn btn-primary">
+                    			수정
 						    </button>
-				 			<button onclick="if(confirm('강의를 삭제하시겠습니까?')) { document.location='lecture_delete?no=${lecture.lecture_no}' }" 
-                    				type="button" class="btn btn-danger">삭제</button>
+				 			<button onclick="if(confirm('강의를 삭제하시겠습니까?')) { document.location='<c:url value='/teacher/lecture_delete?no=${lecture.lecture_no}'/>' }" type="button" class="btn btn-danger">
+                    			삭제
+                			</button>
                     				
-				 			<button onclick="document.location='lecture_student_add?no=${lecture.lecture_no}'" 
-				 			type="button" class="btn btn-secondary" >학생추가</button>
+				 			<button onclick="document.location='<c:url value='/teacher/lecture_student_add?no=${lecture.lecture_no}'/>'" type="button" class="btn btn-secondary">
+			                    학생추가
+			                </button>
 				 		</td>
 				 	</tr>
 				</c:forEach>

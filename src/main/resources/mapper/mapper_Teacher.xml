@@ -286,6 +286,33 @@
 			left join user u on a.id = u.id
 			where quest_no = #{ quest_no }
 		</select>
+		
+		<select id="Count_All_Lectures" resultType="int" parameterType="com.assign_manage.vo.VO_Search">
+        SELECT 
+            COUNT(*) 
+        FROM lecture le
+        WHERE le.delete_date IS NULL
+        AND le.id = #{teacherId}
+        <if test="keyword != null and keyword != ''">
+            AND le.lecture_name LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+    </select>
+    
+    <select id="All_Lecture_List_Page" resultType="com.assign_manage.vo.VO_Lecture" parameterType="com.assign_manage.vo.VO_Search">
+        SELECT 
+            le.*, 
+            (SELECT COUNT(*) FROM lecture_list WHERE lecture_no = le.lecture_no) AS cnt,
+            u.user_name
+        FROM lecture le
+        INNER JOIN user u ON le.id = u.id
+        WHERE le.delete_date IS NULL
+        AND le.id = #{teacherId}
+        <if test="keyword != null and keyword != ''">
+            AND le.lecture_name LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+        ORDER BY le.lecture_no DESC
+        LIMIT #{startRow}, #{endRow}
+    </select>
 <!-- =============================================== -->
 <!-- 이승헌 작업 끝부분 -->
 <!-- =============================================== -->

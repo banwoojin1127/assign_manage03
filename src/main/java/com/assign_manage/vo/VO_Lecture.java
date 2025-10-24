@@ -49,5 +49,9 @@ public class VO_Lecture
 				+ ", create_date=" + create_date + ", start_date=" + start_date + ", end_date=" + end_date
 				+ ", delete_date=" + delete_date + ", user_name=" + user_name + ", cnt=" + cnt + "]";
 	}
+	public void setUser_id(String id2) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }
