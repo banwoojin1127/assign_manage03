@@ -107,6 +107,17 @@ public class Repository_Admin
     public int countCurrentStudents(int lectureNo) {
         return session.selectOne(namespace + ".Count_Current_Students", lectureNo);
     }
-	 
+    
+	 // VO_Search가 startRow, endRow, keyword를 가지고 페이지별 목록을 조회합니다.
+	 // ✔ 1. 페이지별 강의 목록 조회
+	 public List<VO_Lecture> selectLecturesByPage(VO_Search voSearch) {
+	     return session.selectList(namespace + ".All_Lecture_List_Page", voSearch); 
+	 }
+	
+	 // ✔ 2. 전체 강의 레코드 수 조회 (총 페이지 계산용)
+	 public int countTotalLectures(VO_Search voSearch) {
+	     return session.selectOne(namespace + ".Count_All_Lectures", voSearch);
+	 }
+		 
 }
 	

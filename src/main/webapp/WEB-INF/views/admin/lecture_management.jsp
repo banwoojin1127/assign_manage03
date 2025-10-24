@@ -55,13 +55,14 @@
 			<div id="" class="decoWideTitle" style="width: 12px;"></div>
 			&nbsp;&nbsp; <b>강의 관리</b>
 	</h3>
-
-	<div style="text-align: center; margin: 5%;">
-		<form class="search-box d-flex align-items-center" action="/admin/lecture_management" method="get">
-			<input type="text" name="keyword" id="lectureSearch" class="form-control"
-				style="width: 250px; float: left;" placeholder="강의명">
-			<button type="submit" class="btn btn-primary ms-2">검색</button>
-		</form>
+		<br>
+		<div style="text-align: center; class="mb-3 d-flex justify-content-end">
+		    <form action="lecture_management" method="get" class="d-flex">
+		        <input type="text" name="keyword" class="form-control me-2" style="width: 250px; float: left;" placeholder="강의명" value="${keyword}">
+		        <button type="submit" class="btn btn-primary ms-2">검색</button>
+		        <a href="lecture_management" class="btn btn-outline-secondary ms-2">전체 목록</a>
+		    </form>
+		</div>
 
 		<div style="height: 20px;"></div>
 		<form>
@@ -139,25 +140,53 @@
 		
 		<br><br>
 		
-		<nav aria-label="Page navigation example" id="page">
-            <ul class="pagination justify-content-center ">
-                <li class="page-item disabled">
-                    <a class="page-link">&lt;</a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">4</a></li>
-                <li class="page-item"><a class="page-link" href="#">5</a></li>
-                <li class="page-item"><a class="page-link" href="#">6</a></li>
-                <li class="page-item"><a class="page-link" href="#">7</a></li>
-                <li class="page-item"><a class="page-link" href="#">8</a></li>
-                <li class="page-item"><a class="page-link" href="#">9</a></li>
+		<p class="text-center">총 ${totalCount}개의 강의 중 ${startRow + 1} ~ ${startRow + lectureList.size()}번째 강의</p>
+
+<div class="d-flex justify-content-center mt-4">
+    <nav aria-label="Page navigation example" id="page">
+        <ul class="pagination justify-content-center">
+        
+            <c:if test="${startPage > pageBlock}">
                 <li class="page-item">
-                    <a class="page-link" href="#">&gt;</a>
+                    <a class="page-link" href="lecture_management?pageNum=${startPage - pageBlock}&keyword=${keyword}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
                 </li>
-            </ul>
-        </nav>
+            </c:if>
+
+            <c:if test="${pageNum > 1}">
+                <li class="page-item">
+                    <a class="page-link" href="lecture_management?pageNum=${pageNum - 1}&keyword=${keyword}" aria-label="Previous">
+                        <span aria-hidden="true">&lt;</span>
+                    </a>
+                </li>
+            </c:if>
+
+            <c:forEach var="i" begin="${startPage}" end="${endPage}">
+                <li class="page-item ${i == pageNum ? 'active' : ''}">
+                    <a class="page-link" href="lecture_management?pageNum=${i}&keyword=${keyword}">${i}</a>
+                </li>
+            </c:forEach>
+
+            <c:if test="${pageNum < totalPage}">
+                <li class="page-item">
+                    <a class="page-link" href="lecture_management?pageNum=${pageNum + 1}&keyword=${keyword}" aria-label="Next">
+                        <span aria-hidden="true">&gt;</span>
+                    </a>
+                </li>
+            </c:if>
+
+            <c:if test="${endPage < totalPage}">
+                <li class="page-item">
+                    <a class="page-link" href="lecture_management?pageNum=${startPage + pageBlock}&keyword=${keyword}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </c:if>
+
+        </ul>
+    </nav>
+</div>
 		
 	</div>
 	<!-- content field end -->

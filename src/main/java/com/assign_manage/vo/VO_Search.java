@@ -14,6 +14,10 @@ public class VO_Search
 	
 	//VO추가 251020
 	private String option;   //검색 옵션
+	
+	//VO추가 251024
+	private int startRow; // DB LIMIT의 OFFSET (시작점)
+	private int endRow;   // DB LIMIT의 LIMIT (개수)
 
 	//----------------------------------------------------------------
 	
@@ -24,6 +28,10 @@ public class VO_Search
 	
 	//getter추가 251020
 	public String getOption() { return option; }
+	
+	//getter추가 251024
+	public int getStartRow() { return startRow; }
+	public int getEndRow()   { return endRow; }
 	
 	//----------------------------------------------------------------
 	
@@ -37,4 +45,11 @@ public class VO_Search
 	
 	//setter추가 251020
 	public void setOption(String option) { this.option = option; }
+	
+	//setter추가 251024
+	public void setPage_no(int page_no) { this.page_no = page_no; }
+	public void setOffset(int offset) { this.offset = offset; }
+	public void setStartRow(int startRow) { this.startRow = startRow; }
+	public void setEndRow(int endRow) { this.endRow = endRow; }
+
 }

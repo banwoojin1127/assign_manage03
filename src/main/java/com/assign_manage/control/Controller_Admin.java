@@ -102,14 +102,51 @@ public class Controller_Admin
 	
 	// 모든 강의 조회
 	@RequestMapping(value = "/lecture_management", method = RequestMethod.GET)
-	public String lecture_management(
-        @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword,
-        Model model) {
-		
-		List<VO_User> teacher_list = repos_teacher.selectAllTeachers();
+	public String lectureManagement(
+	    @RequestParam(value = "pageNum", defaultValue = "1") int pageNum, // 현재 페이지 번호
+	    @RequestParam(value = "keyword", defaultValue = "") String keyword, // 검색 키워드
+	    Model model) {
 
-	    List<VO_Lecture> lectureList;
+	    // 1. 페이지 설정 상수 (필요에 따라 변경 가능)
+	    final int pageSize = 10;   // 한 페이지당 레코드 수
+	    final int pageBlock = 5;   // 하단에 보일 페이지 번호 개수
 
+	    // 2. VO_Search 객체 생성 및 값 설정
+	    VO_Search voSearch = new VO_Search();
+	    voSearch.setKeyword(keyword);
+
+	    // 3. 전체 레코드 수 및 총 페이지 수 계산
+	    int totalCount = repositoryAdmin.countTotalLectures(voSearch);
+	    int totalPage = (int) Math.ceil((double) totalCount / pageSize);
+
+	    // 4. DB 조회용 시작 행 (OFFSET) 계산
+	    int startRow = (pageNum - 1) * pageSize; // MySQL OFFSET은 0부터 시작
+	    voSearch.setStartRow(startRow);
+	    voSearch.setEndRow(pageSize); // LIMIT은 페이지 사이즈와 동일
+
+	    // 5. 페이지 블록 계산
+	    int startPage = (pageNum / pageBlock) * pageBlock + 1;
+	    if (pageNum % pageBlock == 0) startPage -= pageBlock;
+
+	    int endPage = startPage + pageBlock - 1;
+	    if (endPage > totalPage) endPage = totalPage;
+	    
+	    // 6. 페이지별 강의 목록 조회
+	    List<VO_Lecture> lectureList = repositoryAdmin.selectLecturesByPage(voSearch);
+
+	    // 7. Model에 데이터 담기 (JSP로 전달)
+	    model.addAttribute("lectureList", lectureList);
+	    model.addAttribute("totalCount", totalCount);
+	    model.addAttribute("totalPage", totalPage);
+	    model.addAttribute("pageNum", pageNum);
+	    model.addAttribute("startPage", startPage);
+	    model.addAttribute("endPage", endPage);
+	    model.addAttribute("pageBlock", pageBlock);
+	    model.addAttribute("keyword", keyword);
+	    model.addAttribute("startRow", startRow); // JSP 목록 범위 표시용
+
+	    return AF + "/lecture_management";
+	    
 //	    if (keyword == null || keyword.trim().isEmpty()) 
 //	    {
 //	        // 전체 조회
@@ -120,12 +157,6 @@ public class Controller_Admin
 //	        // 검색어가 있는 경우 강의명으로 검색
 //	        lectureList = repos_teacher.findLecturesByName(keyword.trim());
 //	    }
-	    
-	    lectureList = repos_teacher.selectAllLectures(keyword.trim()); 
-
-	    model.addAttribute("lectureList", lectureList);
-	    model.addAttribute("teacher_list",teacher_list);
-	    return AF + "/lecture_management";
 	}
 	
 	// modal 학생 추가시 제한 조건(중복X, 교사,관리자X only학생)
