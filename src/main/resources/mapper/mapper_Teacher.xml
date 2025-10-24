@@ -244,4 +244,215 @@
 <!-- 이승헌 작업 끝부분 -->
 <!-- =============================================== -->
 
+<!-- =============================================== -->
+<!-- 이하늘 작업 시작부분 -->
+<!-- =============================================== -->
+
+	<!-- ✔ 교사 > 강의 관리 -->
+	<!-- 교사가 수업하는 강의 조회 -->
+	<!-- 강의명 교사명 정원 시작일 종료일  -->
+	<select id="All_Lecture_List" resultType="com.assign_manage.vo.VO_Lecture">
+	select 
+		lecture.lecture_name,
+		user_name as teacher_name,
+		count(lecture_list.id) as current_students,
+		lecture.cap as max_students,
+		concat(count(lecture_list.id), '/', lecture.cap) as student_ratio,
+		start_date,
+		end_date
+	from lecture
+	left join lecture_list 
+		on lecture.lecture_no = lecture_list.lecture_no
+	left join user
+		on lecture.teacher_id = user.id
+	group by
+		lecture.lecture_no,
+		lecture.lecture_name,
+		user.user_name,
+	    lecture.cap,
+	    lecture.start_date,
+	    lecture.end_date
+	order by
+		max(lecture_list.create_date) desc
+	</select>
+
+	<!-- 강의명으로 특정 강의 조회 -->
+	<select id="LecutreName_Lecture_View" resultType="com.assign_manage.vo.VO_Lecture">
+	select 
+		lecture.lecture_name,
+		user_name as teacher_name,
+		count(lecture_list.id) as current_students,
+		lecture.cap as max_students,
+		concat(count(lecture_list.id), '/', lecture.cap) as student_ratio,
+		start_date,
+		end_date
+	from lecture
+	left join lecture_list 
+		on lecture.lecture_no = lecture_list.lecture_no
+	left join user
+		on lecture.teacher_id = user.id
+	where
+		lecture_name = #{keyword}
+	group by
+		lecture.lecture_no,
+		lecture.lecture_name,
+		user.user_name,
+	    lecture.cap,
+	    lecture.start_date,
+	    lecture.end_date
+	order by
+		max(lecture_list.create_date) desc
+	</select>
+	
+	<!-- 강의명으로 검색할 때 일부 단어가 일치할 때 검색 조건  -->
+	<select id="Count_All_Lectures" resultType="int" parameterType="com.assign_manage.vo.VO_Search">
+    SELECT COUNT(le.lecture_no)
+    FROM lecture le
+    LEFT JOIN user u ON le.id = u.id
+    WHERE le.delete_date IS NULL
+    AND le.id = #{teacherId} <if test="keyword != null and !keyword.equals('')">
+        AND le.lecture_name LIKE CONCAT('%', #{keyword}, '%')
+    </if>
+	</select>
+	
+	<!-- 강의명으로 검색할 때 페이징 조건 -->
+	<select id="All_Lecture_List_Page" resultType="com.assign_manage.vo.VO_Lecture" parameterType="com.assign_manage.vo.VO_Search">
+    SELECT 
+        le.lecture_no,
+        le.lecture_name,
+        le.cap AS cap, 
+        le.start_date,
+        le.end_date,
+        u.user_name AS user_name, 
+        (SELECT COUNT(*) FROM lecture_list WHERE lecture_no = le.lecture_no) AS cnt 
+    FROM lecture le
+    LEFT JOIN user u ON le.id = u.id
+    WHERE le.delete_date IS NULL
+    AND le.id = #{teacherId} <if test="keyword != null and !keyword.equals('')">
+        AND le.lecture_name LIKE CONCAT('%', #{keyword}, '%')
+    </if>
+    
+    ORDER BY le.lecture_no DESC
+    LIMIT #{endRow} OFFSET #{startRow}
+	</select>
+	
+	<!-- 강의 등록 > 교사 본인의 id,user_name,gender -->
+	<select id="Admin_Teacher_List" resultType="com.assign_manage.vo.VO_User">
+	select 
+		id, 
+		user_name, 
+		gender 
+    from 
+    	user 
+    where 
+    	user_class = 1
+	</select>
+
+	<!-- 강의 등록 -->
+	<insert id="Lecture_Create" parameterType="com.assign_manage.vo.VO_Lecture">
+	INSERT INTO lecture(
+		lecture_name, 
+		id, 
+		cap, 
+		start_date,  end_date,    create_date
+	)
+	VALUES (
+		#{lecture_name},
+		#{id}, 
+		#{cap},
+		#{start_date},
+		#{end_date},
+		NOW()
+	)
+	</insert>
+	
+	<!-- 강의 수정 -->
+	<update id="Lecture_Update" parameterType="com.assign_manage.vo.VO_Lecture">
+		update lecture 
+			set 
+		lecture_name = #{lecture_name}, 
+		id = #{id}, 
+		cap = #{cap},
+		start_date = #{start_date},
+		end_date = #{end_date}
+		where lecture_no = #{lecture_no}
+	</update>
+	
+	<!-- 강의 삭제 -->
+	<update id="deleteLecture" parameterType="int">
+		update lecture
+		set delete_date = now()
+		where lecture_no = #{lecture_no}
+	</update>
+	
+	<!-- 강의 수정 -->
+	<select id="Lecture_View" resultType="com.assign_manage.vo.VO_Lecture" parameterType="int">
+    SELECT 
+        lecture_no,
+        lecture_name,
+        id,  
+        cap,
+        create_date,
+        start_date,
+        end_date
+    FROM lecture
+    WHERE lecture_no = #{lectureNo}
+      AND delete_date IS NULL
+</select>
+	<!-- 강의 관리 페이지네이션 -->
+	<select id="Lecture_Managemetn_page">
+	select 
+		lecture.lecture_name,
+		user_name as teacher_name,
+		count(lecture_list.id) as current_students,
+		lecture.cap as max_students,
+		concat(count(lecture_list.id), '/', lecture.cap) as student_ratio,
+		start_date,
+		end_date
+	from lecture
+	left join lecture_list 
+		on lecture.lecture_no = lecture_list.lecture_no
+	left join user
+		on lecture.teacher_id = user.id
+	group by
+		lecture.lecture_no,
+		lecture.lecture_name,
+		user.user_name,
+	    lecture.cap,
+	    lecture.start_date,
+	    lecture.end_date
+	order by
+		max(lecture_list.create_date) desc
+	limit 10
+	</select>
+	
+	<!-- 강의에 학생 추가 -->
+	<insert id="Insert_Student_To_Lecture" parameterType="Map">
+    INSERT INTO lecture_list (lecture_no, id) 
+    VALUES (#{lectureNo}, #{id})
+	</insert>
+	
+	<select id="Lecture_Student_List" resultType="com.assign_manage.vo.VO_User" parameterType="int">
+	    SELECT 
+	        u.id, 
+	        u.user_name, 
+	        u.gender,
+	        u.email 
+	    FROM user u
+	    INNER JOIN lecture_list ll ON u.id = ll.id
+	    WHERE ll.lecture_no = #{lectureNo}
+	      AND u.user_class = 2  ORDER BY u.user_name
+	</select>
+	
+	<select id="Count_Current_Students" resultType="int" parameterType="int">
+	    SELECT COUNT(*) 
+	    FROM lecture_list 
+	    WHERE lecture_no = #{lectureNo}
+	</select>
+
+
+<!-- =============================================== -->
+<!-- 이하늘 작업 끝부분 -->
+<!-- =============================================== -->
+
 </mapper>

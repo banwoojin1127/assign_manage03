@@ -18,8 +18,12 @@ public class VO_Search
 	//VO추가 251024
 	private int startRow; // DB LIMIT의 OFFSET (시작점)
 	private int endRow;   // DB LIMIT의 LIMIT (개수)
+	
+	private String teacherId; // 교사 아이디
 
 	//----------------------------------------------------------------
+	
+	
 	
 	public int getPage_no()    { return page_no; }
 	public int getOffset()     { return offset;  }
@@ -31,7 +35,9 @@ public class VO_Search
 	
 	//getter추가 251024
 	public int getStartRow() { return startRow; }
-	public int getEndRow()   { return endRow; }
+	public int getEndRow()   { return endRow;   }
+	
+	public String getTeacherId() { return teacherId; }
 	
 	//----------------------------------------------------------------
 	
@@ -47,9 +53,10 @@ public class VO_Search
 	public void setOption(String option) { this.option = option; }
 	
 	//setter추가 251024
-	public void setPage_no(int page_no) { this.page_no = page_no; }
-	public void setOffset(int offset) { this.offset = offset; }
+	public void setPage_no(int page_no)   { this.page_no = page_no;   }
+	public void setOffset(int offset)     { this.offset = offset;     }
 	public void setStartRow(int startRow) { this.startRow = startRow; }
-	public void setEndRow(int endRow) { this.endRow = endRow; }
+	public void setEndRow(int endRow)     { this.endRow = endRow;     }
 
+	public void setTeacherId(String teacherId) { this.teacherId = teacherId; }
 }

@@ -9,6 +9,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import com.assign_manage.vo.*;
+import com.assign_manage.vo.VO_Search;
 
 @Repository
 public class Repository_Teacher {
@@ -151,4 +152,28 @@ public class Repository_Teacher {
 // ===============================================
 // 이승헌 작업 끝 부분
 // ===============================================
+
+// ===============================================
+// 이하늘 작업 시작 부분
+// ===============================================	
+
+	// ✔ 1. 교사 본인의 페이지별 강의 목록 조회
+	public List<VO_Lecture> selectMyLecturesByPage(VO_Search voSearch) {
+	    // 쿼리 ID: All_Lecture_List_Page
+	    return session.selectList(namespace + ".All_Lecture_List_Page", voSearch); 
+	}
+
+	// ✔ 2. 교사 본인의 전체 강의 레코드 수 조회 (총 페이지 계산용)
+	public int countTotalMyLectures(VO_Search voSearch) {
+	    // 쿼리 ID: Count_All_Lectures
+	    return session.selectOne(namespace + ".Count_All_Lectures", voSearch);
+	}
+	// 참고: VO_Search에 teacherId 필드가 반드시 존재해야 합니다.
+
+// ===============================================
+// 이하늘 작업 끝 부분
+// ===============================================
 }
+
+
+

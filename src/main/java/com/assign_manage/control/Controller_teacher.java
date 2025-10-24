@@ -27,6 +27,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.assign_manage.repository.Repository_Admin;
 import com.assign_manage.repository.Repository_Teacher;
 import com.assign_manage.vo.*;
+import javax.servlet.http.HttpSession;
 
 
 @Controller
@@ -47,10 +48,10 @@ public class Controller_teacher {
     }
 
     /** 강의 관리 **/
-    @RequestMapping(value = "/lecture_management", method = RequestMethod.GET)
-    public String lecture_management() {
-        return "teacher/lecture_management";
-    }
+	/*
+	 * @RequestMapping(value = "/lecture_management", method = RequestMethod.GET)
+	 * public String lecture_management() { return "teacher/lecture_management"; }
+	 */
 
     /** 과제 목록 (기본 첫 번째 강의 기준) **/
     @RequestMapping(value = "/assignment_list", method = RequestMethod.GET)
@@ -309,4 +310,106 @@ public class Controller_teacher {
 // ===============================================
 // 반우진 작업 끝 부분
 // ===============================================
-}
+	
+// ===============================================
+// 이하늘 작업 시작 부분
+// ===============================================
+	@RequestMapping(value = "/lecture_management", method = RequestMethod.GET)
+	public String lecture_management(
+	    @RequestParam(value = "pageNum", defaultValue = "1") int pageNum, // 현재 페이지 번호
+	    @RequestParam(value = "keyword", defaultValue = "") String keyword, // 검색 키워드
+	    HttpSession session, // 세션 객체 주입
+	    Model model) {
+
+	    // 🚨 1. 로그인한 교사 객체 확인 (세션 키를 "login"으로 통일)
+	    VO_User login = (VO_User) session.getAttribute("login");
+	    
+	    if (login == null) {
+	        // 🚨 리다이렉트 경로를 /common/login으로 수정하여 404 문제 해결
+	        return "redirect:/common/login"; 
+	    }
+
+	    // 2. VO_Search 객체에 데이터 설정
+	    String teacherId = login.getId(); // VO_User 객체에서 ID 추출
+	    
+	    // 3. 페이지 설정 상수
+	    final int pageSize = 10;   
+	    final int pageBlock = 5;   
+	    
+	    // 4. VO_Search 객체에 데이터 설정
+	    VO_Search voSearch = new VO_Search();
+	    voSearch.setKeyword(keyword);
+	    voSearch.setTeacherId(teacherId); // 필터링을 위한 교사 ID 설정
+
+	    // 5. 전체 레코드 수 및 총 페이지 수 계산
+	    int totalCount = repository.countTotalMyLectures(voSearch); // Repository_Teacher 호출
+	    int totalPage = (int) Math.ceil((double) totalCount / pageSize);
+
+	    // 6. DB 조회용 시작/끝 행 (startRow = OFFSET, endRow = LIMIT) 계산
+	    int startRow = (pageNum - 1) * pageSize; 
+	    voSearch.setStartRow(startRow);
+	    voSearch.setEndRow(pageSize); 
+
+	    // 7. 페이지 블록 계산
+	    int startPage = (pageNum / pageBlock) * pageBlock + 1;
+	    if (pageNum % pageBlock == 0) startPage -= pageBlock;
+	    int endPage = startPage + pageBlock - 1;
+	    if (endPage > totalPage) endPage = totalPage;
+	    
+	    // 8. 페이지별 강의 목록 조회
+	    List<VO_Lecture> lectureList = repository.selectMyLecturesByPage(voSearch); // Repository_Teacher 호출
+
+	    // 9. Model에 데이터 담기 (JSP로 전달)
+	    model.addAttribute("lectureList", lectureList);
+	    model.addAttribute("totalCount", totalCount);
+	    model.addAttribute("totalPage", totalPage);
+	    model.addAttribute("pageNum", pageNum);
+	    model.addAttribute("startPage", startPage);
+	    model.addAttribute("endPage", endPage);
+	    model.addAttribute("pageBlock", pageBlock);
+	    model.addAttribute("keyword", keyword);
+	    model.addAttribute("startRow", startRow); 
+
+	    return "teacher/lecture_management";
+		}
+	    // 강의 등록 (GET)
+		// 강의 등록 폼을 띄우기 전에 교사 목록을 조회하여 JSP로 전달
+	@RequestMapping(value = "/lecture_register", method = RequestMethod.GET) 
+	public String lecture_register(HttpSession session, Model model) 
+	{
+	    // 1. 세션 체크 로직 (기존 유지)
+	    VO_User login = (VO_User) session.getAttribute("login");
+	    if (login == null) {
+	        return "redirect:/common/login"; 
+	    }
+	    // ✅ FIX: 로그인한 사용자 객체를 'loginUser'라는 이름으로 Model에 담습니다.
+	    model.addAttribute("loginUser", login); 
+	    
+	    return "teacher/lecture_register";
+	}
+		
+		// 강의 등록 (POST)
+		@RequestMapping(value = "/lecture_register_ok", method = RequestMethod.POST) 
+		public String lectureRegisterOk(VO_Lecture lectureVO) // VO_Lecture로 폼 데이터 받기
+		{
+			System.out.println(lectureVO);
+		    try {
+		        // 1. Repository 호출하여 DB 삽입(INSERT) 쿼리 실행
+		        // VO_Lecture에는 강의명, 정원, 시작/종료일, 그리고 교수 이름(user_name)이 담겨 있어야 합니다.
+		        repositoryAdmin.insertLecture(lectureVO); 
+		        
+		        // 2. 등록 성공 후 목록 페이지로 리다이렉트
+		        // success=true 파라미터와 메시지를 전달하여 브라우저에서 confirm/alert 창을 띄움
+		        return "redirect:/teacher/lecture_management";
+		        
+		    } catch (Exception e) {
+		        // 오류 발생 시 목록 페이지로 리다이렉트하며 오류 메시지 전달
+		        System.err.println("강의 등록 오류: " + e.getMessage());
+		        return "redirect:/teacher/lecture_management"; 
+		    }
+		}
+	}
+
+// ===============================================
+// 이하늘 작업 시작 부분
+// ===============================================

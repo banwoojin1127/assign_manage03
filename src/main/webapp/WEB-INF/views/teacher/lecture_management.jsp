@@ -1,11 +1,53 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="../include/head_teacher.jsp"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!-- content field start -->
+<script>
+    // 기존 DeleteLecture() 함수는 제거하거나 사용하지 않도록 합니다.
 
-
-
-
+    // 페이지 로드 시 URL 파라미터 확인
+    window.onload = function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const deleteSuccess = urlParams.get('deleteSuccess');
+        
+        if (deleteSuccess === 'true') {
+            alert("강의가 성공적으로 삭제 처리되었습니다.");
+        } else if (deleteSuccess === 'false') {
+            alert("강의 삭제 중 오류가 발생했습니다.");
+        }
+        
+        // 메시지 표시 후 URL에서 파라미터 제거 (선택 사항, 깔끔한 URL 유지를 위해)
+        if (deleteSuccess) {
+             history.replaceState(null, null, location.pathname + location.search.replace(/&deleteSuccess=[^&]+/, '').replace(/\?deleteSuccess=[^&]+&?/, '?'));
+        }
+    }
+    
+    window.onload = function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const registerSuccess = urlParams.get('registerSuccess');
+        const message = urlParams.get('msg');
+        
+        /* if (registerSuccess === 'true') {
+            // Confirm 창 요청 반영: 메시지를 사용자에게 보여줍니다.
+            if (confirm(message + "\n확인을 누르면 목록이 초록색으로 바뀝니다.")) {
+                // 입력 완료하면 초록색으로 바꾸기 요청 반영
+                document.getElementById('formLoginTitle').style.backgroundColor = '#e6ffe6'; // 예시: 제목 영역을 초록색으로
+                document.body.style.backgroundColor = '#f0fff0'; // 예시: 배경 전체를 연한 초록색으로
+            }
+        } else if (registerSuccess === 'false') {
+            alert("강의 등록 중 오류가 발생했습니다. (교수 이름, 데이터 형식 등 확인)");
+        } */
+        
+        // 메시지 표시 후 URL에서 파라미터 제거 (선택 사항)
+        /* if (registerSuccess) {
+             // URL 정리
+             history.replaceState(null, null, location.pathname);
+        } */
+        
+        // ... (기존 삭제 관련 스크립트도 여기에 유지) ...
+    }
+</script>
 <div style="padding: 80px 100px; text-align: center;">
 	<h3 style="text-align: left; width: 500px;">
 		<div id="formLoginTitle"
@@ -14,380 +56,141 @@
 			<div id="" class="decoWideTitle" style="width: 12px;"></div>
 			&nbsp;&nbsp; <b>강의 관리</b>
 	</h3>
-
-	<div style="text-align: center; margin: 5%;">
-		<form class="search-box" action="" method="get";>
-			<input type="text" id="class" class="form-control"
-				style="width: 250px; float: left;" placeholder="강의명">
-			<button type="submit" class="btn btn-primary"
-				style="float: left; background-color: #3a8efd;">검색</button>
-		</form>
 		<br>
-		<div stlye="height:30px;"></div>
-		<form class="showBtn" style="display: none;">
-			<button type="submit" class="btn btn-outline-primary"
-				style="float: right; padding-block: 5px; color: #000000;">
-				<b>저장</b>
-			</button>
+		<div style="text-align: center; class="mb-3 d-flex justify-content-end">
+		    <form action="lecture_management" method="get" class="d-flex">
+		        <input type="text" name="keyword" class="form-control me-2" style="width: 250px; float: left;" placeholder="강의명" value="${keyword}">
+		        <button type="submit" class="btn btn-primary ms-2">검색</button>
+		        <a href="lecture_management" class="btn btn-outline-secondary ms-2">전체 목록</a>
+		    </form>
+		</div>
 
-			<button type="submit" class="btn btn-outline-secondary"
-				style="color: #000000; float: right; padding-block: 5px; margin-right: 5px;">
-				<b>추가</b>
-			</button>
-
-			<button type="submit" class="btn btn-outline-secondary"
-				style="color: #000000; float: right; padding-block: 5px; margin-right: 5px;">
-				<b>제거</b>
-			</button>
-		</form>
-		<div style="height: 40px;"></div>
-		<table id="table_add">
-			<tbody>
-				<!-- 테이블 행 추가 -->
-			</tbody>
-		</table>
-
-		<div style="height: 50px;"></div>
+		<div style="height: 20px;"></div>
 		<form>
-			<button type="button" onclick="addRow(); showBtn();"
-				class="btn btn-outline-primary"
-				style="float: right; padding-block: 5px; color: #000000;">
-				<b>생성</b>
-			</button>
+    <button onclick="document.location='<c:url value='/teacher/lecture_register'/>'"
+            type="button" class="d-flex btn btn-primary" id="btnRegister" style="margin-left: 950px; width: 100px; text-align: center;">
+        강의 등록
+    </button>
+</form>
+		<div style="height: 20px;"></div>
 
-			<button type="button" class="btn btn-outline-secondary"
-				style="color: #000000; float: right; padding-block: 5px; margin-right: 5px;">
-				<b>편집</b>
-			</button>
-
-			<button type="button" class="btn btn-outline-secondary"
-				onclick="class_Delete()"
-				style="color: #000000; float: right; padding-block: 5px; margin-right: 5px;">
-				<b>삭제</b>
-			</button>
-		</form>
-		<div style="height: 40px;"></div>
-		</form>
-
-		<table id="class_content">
-			<tr style="height: 40px;">
-				<!-- 전체 선택 체크 박스 버튼 -->
-				<th class="tea-th chwidth1"><input type="checkbox" name="check"
-					class="class_add" onclick='selectAll(this)'>
-				</td>
-				<th class="tea-th thwidth1">번호
-				</td>
-				<th class="tea-th">강의명
-				</td>
-				<th class="tea-th thwidth2">정원
-				</td>
-				<th class="tea-th thwidth3">시작일
-				</td>
-				<th class="tea-th thwidth3">종료일
-				</td>
-			</tr>
-			<tr>
+		<table id="class_content">		
+			<thead>
+				<tr style="height: 40px;">
+					<th class="tea-th thwidth1">번호
+					</th>
+					<th class="tea-th thwidth2">강의명
+					</th>
+					<th class="tea-th thwidth2">교사명
+					</th>
+					<th class="tea-th thwidth3" style="width:100px;">정원
+					</th>
+					<th class="tea-th thwidth3">시작일
+					</th>
+					<th class="tea-th thwidth3">종료일
+					</th>
+					<th class="edit_th" ></th>
+				</tr>
+			</thead>
+		
+		<%-- <tr>
 				<!-- 체크 박스 네임 지정 -->
 				<td class="tea-td"><input type="checkbox" name="check"></td>
 				<td class="tea-td">1</td>
 				<td class="tea-td"><a href="../teacher/assignment_list"
-					style="width: 100%; height: 100%; text-decoration: none;">자바의
-						정석</a></td>
-				<td class=" class="tea-td"">29/35
+					style="width: 100%; height: 100%; text-decoration: none;">${lecture.lecture_name}</a></td>
+				<td class="tea-td">${lecture.user_name}</td>
+				<td class="tea-td"" data-ref="http://localhost:8080/control/admin/user_management">29/35
 					<button type="button" class="btn btn-primary"
 						data-bs-toggle="modal" data-bs-target="#addStudentModal">추가</button>
 				</td>
-				<td class="tea-td">2025.09.29</td>
-				<td class="tea-td">2025.09.29</td>
-			</tr>
-			<tr>
-				<td class="tea-td"><input type="checkbox" name="check"></td>
-				<td class="tea-td">2</td>
-				<td class="tea-td"></td>
-				<td class="tea-td"></td>
-				<td class="tea-td"></td>
-				<td class="tea-td"></td>
-			</tr>
-			<tr>
-				<td class="tea-td"><input type="checkbox" name="check"></td>
-				<td class="tea-td">3</td>
-				<td class="tea-td"></td>
-				<td class="tea-td"></td>
-				<td class="tea-td"></td>
-				<td class="tea-td"></td>
-			</tr>
-			<tr>
-				<td class="tea-td"><input type="checkbox" name="check"></td>
-				<td class="tea-td">4</td>
-				<td class="tea-td"></td>
-				<td class="tea-td"></td>
-				<td class="tea-td"></td>
-				<td class="tea-td"></td>
-			</tr>
-			<tr>
-				<td class="tea-td"><input type="checkbox" name="check"></td>
-				<td class="tea-td">5</td>
-				<td class="tea-td"></td>
-				<td class="tea-td"></td>
-				<td class="tea-td"></td>
-				<td class="tea-td"></td>
-			</tr>
-			<tr>
-				<td class="tea-td"><input type="checkbox" name="check"></td>
-				<td class="tea-td">6</td>
-				<td class="tea-td"></td>
-				<td class="tea-td"></td>
-				<td class="tea-td"></td>
-				<td class="tea-td"></td>
-			</tr>
-			<tr>
-				<td class="tea-td"><input type="checkbox" name="check"></td>
-				<td class="tea-td">7</td>
-				<td class="tea-td"></td>
-				<td class="tea-td"></td>
-				<td class="tea-td"></td>
-				<td class="tea-td"></td>
-			</tr>
+				<td class="tea-td">${lecture.start_date}</td>
+				<td class="tea-td">${lecture.end_date}</td>
+				<td id="edit_td"><button class="edit" onclick="edit(this)">✏️</button></td>
+			</tr> --%>
+
+			<tbody class="saveAdd">
+				<c:forEach var="lecture" items="${lectureList}" varStatus="status">
+					<tr>
+				 	<!-- 이후 추가되는 데이터가 여기에 들어갈 것입니다. -->
+				 		<td>${status.count}</td>
+				 		<td><a style="text-decoration-line: none; color:black;" href="../teacher/assignment_list/${lecture.lecture_no}">${lecture.lecture_name}</a></td>
+				 		<td>${lecture.user_name}</td>
+				 		<td>
+					 		<a style="text-decoration-line: none; color:black;" href="${pageContext.request.contextPath}/teacher/lecture_student_view?no=${lecture.lecture_no}">
+					 		${lecture.cnt}/${lecture.cap}
+					 		</a>
+				 		</td>
+				 		<td>${lecture.start_date}</td>
+				 		<td>${lecture.end_date}</td>
+				 		<td>
+						    <button onclick="document.location='lecture_register/${lecture.lecture_no}'" 
+						            type="button" class="btn btn-primary">
+						        수정
+						    </button>
+				 			<button onclick="if(confirm('강의를 삭제하시겠습니까?')) { document.location='lecture_delete?no=${lecture.lecture_no}' }" 
+                    				type="button" class="btn btn-danger">삭제</button>
+                    				
+				 			<button onclick="document.location='lecture_student_add?no=${lecture.lecture_no}'" 
+				 			type="button" class="btn btn-secondary" >학생추가</button>
+				 		</td>
+				 	</tr>
+				</c:forEach>
+			 </tbody>
 		</table>
+		
+		<br><br>
+		
+		<p class="text-center">총 ${totalCount}개의 강의 중 ${startRow + 1} ~ ${startRow + lectureList.size()}번째 강의</p>
+
+<div class="d-flex justify-content-center mt-4">
+    <nav aria-label="Page navigation example" id="page">
+        <ul class="pagination justify-content-center">
+        
+            <c:if test="${startPage > pageBlock}">
+                <li class="page-item">
+                    <a class="page-link" href="lecture_management?pageNum=${startPage - pageBlock}&keyword=${keyword}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            </c:if>
+
+            <c:if test="${pageNum > 1}">
+                <li class="page-item">
+                    <a class="page-link" href="lecture_management?pageNum=${pageNum - 1}&keyword=${keyword}" aria-label="Previous">
+                        <span aria-hidden="true">&lt;</span>
+                    </a>
+                </li>
+            </c:if>
+
+            <c:forEach var="i" begin="${startPage}" end="${endPage}">
+                <li class="page-item ${i == pageNum ? 'active' : ''}">
+                    <a class="page-link" href="lecture_management?pageNum=${i}&keyword=${keyword}">${i}</a>
+                </li>
+            </c:forEach>
+
+            <c:if test="${pageNum < totalPage}">
+                <li class="page-item">
+                    <a class="page-link" href="lecture_management?pageNum=${pageNum + 1}&keyword=${keyword}" aria-label="Next">
+                        <span aria-hidden="true">&gt;</span>
+                    </a>
+                </li>
+            </c:if>
+
+            <c:if test="${endPage < totalPage}">
+                <li class="page-item">
+                    <a class="page-link" href="lecture_management?pageNum=${startPage + pageBlock}&keyword=${keyword}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </c:if>
+
+        </ul>
+    </nav>
+</div>
+		
 	</div>
 	<!-- content field end -->
 </div>
-<script>
-let rowsAdded = 0;
 
-function addRow() {
-    const tableBody = document.getElementById("table_add").getElementsByTagName("tbody")[0];
-
-    if (rowsAdded === 0) {
-        // 처음 추가: 2개 서로 다른 행
-
-        const row1 = tableBody.insertRow();
-        row1.style.backgroundColor = "#c2dcff";
-        
-        // --- 첫 번째 행 (헤더 역할) 수정 ---
-        const cell0 = row1.insertCell(0);
-        cell0.innerHTML = "<input type='checkbox'>";
-        cell0.className = "chwidth1 tea-td"; // 클래스 추가
-        
-        const cell1 = row1.insertCell(1);
-        cell1.innerText = "번호";
-        cell1.className = "thwidth1 tea-td"; // 클래스 추가
-
-        const cell2 = row1.insertCell(2);
-        cell2.innerText = "강의명";
-        cell2.className = "tea-td"; // 클래스 추가
-
-        const cell3 = row1.insertCell(3);
-        cell3.innerText = "정원";
-        cell3.className = "thwidth2 tea-td"; // 클래스 추가
-
-        const cell4 = row1.insertCell(4);
-        cell4.innerText = "시작일";
-        cell4.className = "thwidth3 tea-td"; // 클래스 추가
-
-        const cell5 = row1.insertCell(5);
-        cell5.innerText = "종료일";
-        cell5.className = "thwidth3 tea-td"; // 클래스 추가
-        // ------------------------------------
-
-        for (let i = 0; i < row1.cells.length; i++) {
-            row1.cells[i].style.fontWeight = "bold";
-        }
-
-        const row2 = tableBody.insertRow();
-        
-        // --- 두 번째 행 (데이터 역할) 수정 ---
-        const r2_c0 = row2.insertCell(0);
-        r2_c0.innerHTML = "<input type='checkbox' style='width:20px;'>";
-        r2_c0.className = "tea-td"; // 클래스 추가
-        
-        const r2_c1 = row2.insertCell(1);
-        r2_c1.innerText = rowsAdded + 1;
-        r2_c1.className = "tea-td"; // 클래스 추가
-        
-        const r2_c2 = row2.insertCell(2);
-        r2_c2.innerHTML = "<input type='text' style='border:none; box-sizing: content-box; width: 97%;'>";
-        r2_c2.className = "tea-td"; // 클래스 추가
-        
-        const r2_c3 = row2.insertCell(3);
-        r2_c3.innerHTML = "<input type='text' style='border:none; box-sizing: content-box; width: 90%;'>";
-        r2_c3.className = "tea-td"; // 클래스 추가
-        
-        const r2_c4 = row2.insertCell(4);
-        r2_c4.innerHTML = "<input type='text' style='border:none; box-sizing: content-box; width: 90%;'>";
-        r2_c4.className = "tea-td"; // 클래스 추가
-        
-        const r2_c5 = row2.insertCell(5);
-        r2_c5.innerHTML = "<input type='text' style='border:none; box-sizing: content-box; width: 90%;'>";
-        r2_c5.className = "tea-td"; // 클래스 추가
-        // ------------------------------------
-        
-        rowsAdded = 2;
-    }
-    else {
-        // 이후 추가: 한 줄씩
-        const newRow = tableBody.insertRow();
-
-        // --- 이후 추가되는 행 수정 ---
-        const new_c0 = newRow.insertCell(0);
-        new_c0.innerHTML = "<input type='checkbox' style='width:20px;'>";
-        new_c0.className = "tea-td"; // 클래스 추가
-        
-        const new_c1 = newRow.insertCell(1);
-        new_c1.innerText = `${rowsAdded + 1 - 1}`;
-        new_c1.className = "tea-td"; // 클래스 추가
-        
-        const new_c2 = newRow.insertCell(2);
-        new_c2.innerHTML = "<input type='text' style='border:none; box-sizing: content-box; width: 97%;'>";
-        new_c2.className = "tea-td"; // 클래스 추가
-        
-        const new_c3 = newRow.insertCell(3);
-        new_c3.innerHTML = "<input type='text' style='border:none; box-sizing: content-box; width: 90%;'>";
-        new_c3.className = "tea-td"; // 클래스 추가
-        
-        const new_c4 = newRow.insertCell(4);
-        new_c4.innerHTML = "<input type='text' style='border:none; box-sizing: content-box; width: 90%;'>";
-        new_c4.className = "tea-td"; // 클래스 추가
-        
-        const new_c5 = newRow.insertCell(5);
-        new_c5.innerHTML = "<input type='text' style='border:none; box-sizing: content-box; width: 90%;'>";
-        new_c5.className = "tea-td"; // 클래스 추가
-        // ------------------------------------
-
-        rowsAdded += 1;
-    }
-}
-
-    // 전체 선택 체크 박스 실행
-    function selectAll(selectAll){
-        let checkboxes = document.getElementsByName("check");
-
-        for(let checkbox of checkboxes){
-            checkbox.checked = selectAll.checked;
-        }
-    };
-
-    // 버튼 띄우기
-    function showBtn(){
-        const buttons = document.getElementsByClassName("showBtn");
-        for(let i  = 0; i < buttons.length; i++)
-        {
-            buttons[i].style.display = "block";
-        }
-    };
-
-    function class_Delete(){
-        const checkboxes = document.getElementsByName("check");
-        
-        let isChecked = false;
-
-        for(let i = 0; i < checkboxes.length; i++)
-        {
-            if(checkboxes[i].checked)
-            {
-                isChecked = true;
-                break;
-            }
-        }
-
-        if(isChecked){
-            confirm("삭제하시겠습니까?");
-        }
-        else{
-            alert("삭제할 행을 선택해주세요.");
-        }
-    };
-
-    </script>
-<!-- add student Modal start-->
-<div class="modal fade" id="addStudentModal" data-bs-backdrop="static"
-	tabindex="-1" aria-labelledby="addStudentModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
-		style="min-width: 777px; max-width: 777px;">
-		<div class="modal-content">
-			<div class="modal-header">
-				<!-- content main title start -->
-				<div id=""
-					class="d-flex flex-wrap justify-content-start align-content-start"
-					style="width: 100%;">
-					<div id="" class="decoWideTitle" style="width: 12px; height: 40px;"></div>
-					&nbsp;&nbsp;
-					<div id=""
-						class="textWideTitle d-flex flex-wrap align-content-center px-1">
-						<p class="flex-grow-1 m-0" style="font-size: 1.5em;">학생 추가</p>
-					</div>
-				</div>
-				<!-- content main title end -->
-				<button type="button" class="btn-close" data-bs-dismiss="modal"
-					aria-label="Close"></button>
-			</div>
-			<div class="modal-body">
-				<div class="container-fluid">
-					<!-- info massge start -->
-					<div>
-						<span>학생 이름을 검색 하실 수 있습니다.</span>
-					</div>
-					<!-- info massge end -->
-					<!-- add student form start -->
-					<!-- student search by name start -->
-					<div class="input-group mb-3">
-						<input type="text" class="form-control" placeholder="학생 명"
-							aria-describedby="searchButton"> <a
-							class="btn btn-outline-primary" type="button" id="searchButton">검색</a>
-					</div>
-					<!-- student search by name end -->
-					<!-- search results table start -->
-					<div class="sSearchReTab rounded"
-						style="border: #a9a9a9; border-style: solid; border-width: 1px;">
-						<div class="sSearchReTabRowName d-flex justify-content-between"
-							style="background-color: lightgrey; font-weight: bold;">
-							<div class="sSearchReTabCol d-flex justify-content-center p-2"
-								style="width: 50%; border: #a9a9a9; border-style: solid; border-width: 1px;">
-								아이디</div>
-							<div class="sSearchReTabCol d-flex justify-content-center p-2"
-								style="width: 25%; border: #a9a9a9; border-style: solid; border-width: 1px;">
-								이름</div>
-							<div class="sSearchReTabCol d-flex justify-content-center p-2"
-								style="width: 25%; border: #a9a9a9; border-style: solid; border-width: 1px;">
-								성별</div>
-						</div>
-						<input type="radio" class="btn-check" name="studentResult"
-							id="student00" autocomplete="off"> <label for="student00"
-							class="sSearchReTabRowVal btn d-flex justify-content-between m-0 p-0">
-							<div class="sSearchReTabCol d-flex justify-content-center p-2"
-								style="width: 50%; border: #a9a9a9; border-style: solid; border-width: 1px;">
-								hong123</div>
-							<div class="sSearchReTabCol d-flex justify-content-center p-2"
-								style="width: 25%; border: #a9a9a9; border-style: solid; border-width: 1px;">
-								홍길동</div>
-							<div class="sSearchReTabCol d-flex justify-content-center p-2"
-								style="width: 25%; border: #a9a9a9; border-style: solid; border-width: 1px;">
-								남</div>
-						</label> <input type="radio" class="btn-check" name="studentResult"
-							id="student01" autocomplete="off"> <label for="student01"
-							class="sSearchReTabRowVal btn d-flex justify-content-between m-0 p-0">
-							<div class="sSearchReTabCol d-flex justify-content-center p-2"
-								style="width: 50%; border: #a9a9a9; border-style: solid; border-width: 1px;">
-								chun789</div>
-							<div class="sSearchReTabCol d-flex justify-content-center p-2"
-								style="width: 25%; border: #a9a9a9; border-style: solid; border-width: 1px;">
-								성춘향</div>
-							<div class="sSearchReTabCol d-flex justify-content-center p-2"
-								style="width: 25%; border: #a9a9a9; border-style: solid; border-width: 1px;">
-								여</div>
-						</label>
-					</div>
-					<!-- search results table end -->
-					<!-- add student form end -->
-				</div>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary"
-					data-bs-dismiss="modal">취소</button>
-				<a href="" class="btn btn-primary" data-bs-dismiss="modal">추가</a>
-			</div>
-		</div>
-	</div>
-</div>
-<!-- add student Modal end-->
 <%@ include file="../include/tail.jsp"%>
